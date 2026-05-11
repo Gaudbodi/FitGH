@@ -1,21 +1,14 @@
 """Tests for GET /health.
 
-WS-B.5 acceptance:
-- /health returns 200 {ok:true, mongo:'stubbed'} when MONGODB_URI is unset.
+WS-B.5 + WS-C.2 acceptance:
 - /health returns 200 {mongo:'connected'} when client.admin.command('ping') OK.
 - /health returns 503 {mongo:'error'} on connection failure.
+- The 'stubbed' branch is gone — MONGODB_URI is mandatory at module import (WS-C.2).
 """
 
 from __future__ import annotations
 
 from unittest.mock import patch
-
-
-def test_health_stubbed_when_mongo_uri_unset(client):
-    """Slice B path: client is None, /health returns stubbed."""
-    r = client.get("/health")
-    assert r.status_code == 200
-    assert r.get_json() == {"ok": True, "mongo": "stubbed"}
 
 
 def test_health_connected_when_ping_succeeds(client):

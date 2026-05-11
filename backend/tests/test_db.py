@@ -1,26 +1,25 @@
 """Tests for the PyMongo singleton config (SEC-04).
 
-WS-B.5 acceptance:
+WS-B.5 + WS-C.2 acceptance:
 - MongoClient configured with maxPoolSize=10 (M0 cluster connection-cap).
 - tls=True (Atlas requires TLS).
-
-WS-C.2 will add: 'importing db with MONGODB_URI absent must raise'.
+- Importing db with MONGODB_URI absent MUST raise KeyError (WS-C.2 — shim removed).
 """
 
 from __future__ import annotations
 
 import importlib
 
+import pytest
 
-def test_db_module_imports_clean_without_mongo_uri(monkeypatch):
-    """In Slice B, missing MONGODB_URI must NOT raise — the shim allows None."""
+
+def test_db_module_import_raises_when_mongo_uri_absent(monkeypatch):
+    """WS-C.2: missing MONGODB_URI fails loudly at module import."""
     monkeypatch.delenv("MONGODB_URI", raising=False)
     import app.db as db_mod
 
-    importlib.reload(db_mod)
-    assert db_mod.client is None
-    assert db_mod.db is None
-    assert db_mod.users is None
+    with pytest.raises(KeyError, match="MONGODB_URI"):
+        importlib.reload(db_mod)
 
 
 def test_db_singleton_uses_max_pool_size_10_and_tls(monkeypatch):

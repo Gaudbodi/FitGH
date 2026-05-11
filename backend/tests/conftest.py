@@ -4,9 +4,12 @@ Phase 1 Walking Skeleton — WS-B.5.
 
 The `client` fixture builds a Flask test client with stubbed env vars; the
 `mongo_users` fixture monkey-patches `app.db.users` to a mongomock collection
-so route tests can write/read without touching real Atlas. Per WS-B.5
-acceptance: 'env vars stubbed (CLERK_SECRET_KEY=sk_test_stub, ..., MONGODB_URI
-unset → stubbed mode)'.
+so route tests can write/read without touching real Atlas.
+
+WS-C.2: MONGODB_URI is now mandatory at db module import. Conftest sets a
+non-resolvable URI so `import app.db` succeeds (construction is lazy) but any
+actual network call would fail — tests that need DB behavior must use the
+`mongo_users` fixture to swap in mongomock.
 """
 
 from __future__ import annotations
@@ -19,6 +22,8 @@ import pytest
 
 # ---- Env setup -------------------------------------------------------------
 
+_FAKE_MONGODB_URI = "mongodb://fake-host-not-resolvable:27017/fitgh"
+
 
 @pytest.fixture(autouse=True)
 def _set_env(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -27,9 +32,10 @@ def _set_env(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("CLERK_AUTHORIZED_PARTIES", "http://localhost:3000")
     monkeypatch.setenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000")
     monkeypatch.setenv("FLASK_ENV", "development")
-    # MONGODB_URI deliberately unset by default — tests that need it patch
-    # app.db.users / app.db.client directly via the `mongo_users` fixture.
-    monkeypatch.delenv("MONGODB_URI", raising=False)
+    # Non-resolvable URI so `import app.db` succeeds (PyMongo construction is
+    # lazy — DNS only happens on first command). Tests requiring DB behavior
+    # use the `mongo_users` fixture to swap in mongomock.
+    monkeypatch.setenv("MONGODB_URI", _FAKE_MONGODB_URI)
     monkeypatch.delenv("SENTRY_DSN_BACKEND", raising=False)
     # Reset the lazy-init globals in middleware.auth so each test starts clean.
     import app.middleware.auth as auth_mod
