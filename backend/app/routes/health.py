@@ -1,17 +1,42 @@
 """GET /health — liveness + Mongo connectivity check.
 
-Phase 1 Walking Skeleton — WS-B.3 fills in the real ping; WS-B.2 lands the
-empty blueprint shell so create_app() can register it.
+Phase 1 Walking Skeleton — WS-B.3.
+
+Reports:
+  - {ok: True, mongo: 'stubbed'}    when MONGODB_URI is unset (Slice B).
+  - {ok: True, mongo: 'connected'}  when MongoClient.admin.command('ping') OK.
+  - {ok: False, mongo: 'error', detail: str(e)}  on connection error.
+
+The /health endpoint is the canary used by Fly.io's HTTP healthcheck (fly.toml,
+WS-G.2) — its job is to fail fast (5s timeout) when Mongo is unreachable so
+Fly can route around the bad machine.
 """
 
 from __future__ import annotations
 
-from flask import Blueprint
+from flask import Blueprint, jsonify
+
+from app.db import client
 
 bp = Blueprint("health", __name__)
 
 
 @bp.get("/health")
-def health() -> dict:  # noqa: D401 — terse handler
-    """Stubbed health response — Slice C / WS-B.3 wires real Mongo ping."""
-    return {"ok": True, "mongo": "stubbed"}
+def health():
+    """Liveness + Mongo connectivity."""
+    if client is None:
+        # Slice B: MONGODB_URI not set — known stub state.
+        return jsonify({"ok": True, "mongo": "stubbed"}), 200
+
+    try:
+        # Lightweight ping against the admin db; obeys serverSelectionTimeoutMS
+        # configured at the singleton (5s in db.py).
+        client.admin.command("ping")
+    except Exception as e:  # pylint: disable=broad-except
+        # Don't leak the URI / credentials in the error message — keep detail terse.
+        return (
+            jsonify({"ok": False, "mongo": "error", "detail": type(e).__name__}),
+            503,
+        )
+
+    return jsonify({"ok": True, "mongo": "connected"}), 200
