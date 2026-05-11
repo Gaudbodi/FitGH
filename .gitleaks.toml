@@ -1,0 +1,88 @@
+# gitleaks config for FitGH. Extends the default ruleset and adds an allowlist for paths and
+# placeholder patterns that would otherwise create noise (lockfiles, .planning/ research notes,
+# .env.example with documented `<from-clerk-dashboard>` placeholders).
+# See gitleaks docs: https://github.com/gitleaks/gitleaks
+#
+# IMPORTANT: gitleaks' default ruleset does NOT include a MongoDB connection-string detector
+# as of v8.21 (verified during WS-0.4 smoke test). The skeleton invariant SEC-01 requires
+# blocking a Mongo URI commit, so we add an explicit rule below in addition to the default
+# AWS/GitHub/Stripe/etc. detectors.
+
+[extend]
+useDefault = true
+
+# --- Custom rules for FitGH ---
+
+[[rules]]
+id = "mongodb-connection-string"
+description = "MongoDB connection string with embedded credentials (SRV or standard)"
+regex = '''mongodb(\+srv)?:\/\/[^:\s'"<>]+:[^@\s'"<>]+@[^\s'"<>]+'''
+tags = ["secret", "mongodb", "database", "fitgh"]
+
+[[rules]]
+id = "clerk-secret-key-live"
+description = "Clerk production secret key"
+regex = '''sk_live_[A-Za-z0-9]{20,}'''
+tags = ["secret", "clerk", "fitgh"]
+
+[[rules]]
+id = "clerk-secret-key-test"
+description = "Clerk test secret key (real, not placeholder)"
+# Match `sk_test_` followed by 20+ alphanumeric chars; the allowlist below excludes
+# documented placeholders like `sk_test_xxx` and `sk_test_<...>`.
+regex = '''sk_test_[A-Za-z0-9]{20,}'''
+tags = ["secret", "clerk", "fitgh"]
+
+[[rules]]
+id = "clerk-webhook-secret"
+description = "Clerk svix webhook signing secret"
+regex = '''whsec_[A-Za-z0-9+/=]{20,}'''
+tags = ["secret", "clerk", "webhook", "fitgh"]
+
+[[rules]]
+id = "sentry-dsn-with-secret"
+description = "Sentry DSN containing a secret"
+regex = '''https:\/\/[a-f0-9]{32}@[a-z0-9]+\.ingest\.(us\.)?sentry\.io\/[0-9]+'''
+tags = ["secret", "sentry", "fitgh"]
+
+[allowlist]
+description = "FitGH global allowlist (Phase 1 WS-0.4)"
+
+# Paths that gitleaks should not scan — pure manifests, planning docs, and the documented
+# env-template. These do not contain secrets by definition.
+paths = [
+  '''^pnpm-lock\.yaml$''',
+  '''^package-lock\.json$''',
+  '''^backend/requirements\.txt$''',
+  '''^backend/requirements-dev\.txt$''',
+  '''^\.planning/''',
+  '''^\.env\.example$''',
+  '''^frontend/\.env\.local\.example$''',
+  '''^README\.md$''',
+  '''^CLAUDE\.md$''',
+  '''^GEMINI\.md$''',
+]
+
+# Regex patterns that look like secrets but are intentionally documented placeholders.
+regexes = [
+  '''pk_test_xxx''',
+  '''sk_test_xxx''',
+  '''pk_test_<.+?>''',
+  '''sk_test_<.+?>''',
+  '''whsec_xxx''',
+  '''whsec_<.+?>''',
+  '''<from-clerk-dashboard>''',
+  '''<from-sentry-dashboard>''',
+  '''<from-sentry-ws-g\.5>''',
+  '''<rotated-uri-from-ws-0\.1>''',
+  '''<rotated-password>''',
+  '''<egress-IPv4>''',
+  '''<your-ngrok>''',
+  '''<password>''',
+  '''<user>''',
+  # The Atlas hostname is public; only the password portion is sensitive. Allow the literal
+  # placeholder URI shape used throughout docs.
+  '''mongodb\+srv://<user>:<password>@cluster0\.pcd3g\.mongodb\.net''',
+  '''mongodb\+srv://fitgh-app:<password>@cluster0\.pcd3g\.mongodb\.net''',
+  '''mongodb\+srv://fitgh-app:\*\*\*@cluster0\.pcd3g\.mongodb\.net''',
+]

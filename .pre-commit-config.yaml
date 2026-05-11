@@ -1,0 +1,12 @@
+# Pre-commit hooks for FitGH. Install with `pre-commit install` after `pip install pre-commit`.
+# The gitleaks hook blocks any commit containing a secret matching its rules (with our allowlist
+# carve-outs in .gitleaks.toml). This MUST be the first hook installed before any commit could
+# touch a rotated credential — see SEC-01 + Phase 1 plan WS-0.4.
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        name: gitleaks (block committed secrets)
+        args: ["--config=.gitleaks.toml", "--verbose"]
