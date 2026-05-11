@@ -12,11 +12,12 @@ on:
       - "frontend/**"
       - ".github/workflows/frontend.yml"
 
-# Phase 1 plan WS-0.5 + WS-A.5. Jobs are stubs until Slice A wires real targets,
-# then `continue-on-error` is flipped to false to enforce the gate.
+# Phase 1 plan WS-A.5. Slices A wired the real targets; flags below are
+# continue-on-error=false now — the gates enforce.
 
 permissions:
   contents: read
+  pull-requests: write  # required for andresz1/size-limit-action PR comments
 
 defaults:
   run:
@@ -26,15 +27,14 @@ jobs:
   lint-typecheck-build:
     name: lint + typecheck + build
     runs-on: ubuntu-latest
-    # Flip to false in Slice A once frontend/package.json has the targets wired.
-    continue-on-error: true
+    continue-on-error: false
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -45,34 +45,30 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile
-        # Stub: skip gracefully if frontend/ not yet scaffolded.
-        if: ${{ hashFiles('frontend/package.json') != '' }}
 
       - name: Lint
         run: pnpm lint
-        if: ${{ hashFiles('frontend/package.json') != '' }}
 
       - name: Typecheck
         run: pnpm tsc --noEmit
-        if: ${{ hashFiles('frontend/tsconfig.json') != '' }}
 
       - name: Build
         run: pnpm build
-        if: ${{ hashFiles('frontend/package.json') != '' }}
 
   size-limit:
     name: size-limit (180 KB First Load JS gate)
     runs-on: ubuntu-latest
-    # Flip to false in WS-A.5 once .size-limit.json is wired and the smoke test
-    # has proved a bloated PR fails the build.
-    continue-on-error: true
+    # WS-A.5: gate is live. PRs that push First Load JS above 180 KB gzipped
+    # on /dashboard MUST fail this job. Smoke-tested via a deliberate Three.js
+    # bloat PR; see SUMMARY.md for the smoke-test PR URL.
+    continue-on-error: false
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -81,14 +77,17 @@ jobs:
           cache: pnpm
           cache-dependency-path: frontend/pnpm-lock.yaml
 
-      - name: Install
-        run: pnpm install --frozen-lockfile
-        if: ${{ hashFiles('frontend/.size-limit.json') != '' }}
-
-      - name: Build
-        run: pnpm build
-        if: ${{ hashFiles('frontend/.size-limit.json') != '' }}
-
-      - name: size-limit
-        run: pnpm size
-        if: ${{ hashFiles('frontend/.size-limit.json') != '' }}
+      # andresz1/size-limit-action installs pnpm deps, runs `pnpm build`, then
+      # `pnpm size` and posts a comment on the PR with the delta vs base branch.
+      # Falls back to plain `pnpm size` invocation on push events.
+      - name: size-limit (PR comment + gate)
+        uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          directory: frontend
+          package_manager: pnpm
+          skip_step: install  # we install via pnpm/action-setup above
+        env:
+          # andresz1/size-limit-action runs `pnpm install` itself unless
+          # skip_step=install; we let it run install in CI to avoid duplication.
+          CI: true
