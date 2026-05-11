@@ -127,7 +127,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Walking Skeleton | 0/TBD | Not started | - |
+| 1. Walking Skeleton | 0/1 (file work done; SaaS gated) | Partial — awaiting user dashboard work | - |
 | 2. Onboarding + Profile + Targets | 0/TBD | Not started | - |
 | 3. Manual Meal Log + Ghana Table | 0/TBD | Not started | - |
 | 4. Image -> Kcal Core Loop | 0/TBD | Not started | - |
