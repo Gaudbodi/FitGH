@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "size": "size-limit"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -24,12 +25,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@size-limit/preset-app": "^12.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "size-limit": "^12.1.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
