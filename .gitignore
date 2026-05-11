@@ -1,4 +1,4 @@
-# Secrets — never commit
+# --- Secrets — never commit ---
 .env
 .env.local
 .env.*.local
@@ -7,16 +7,18 @@
 *.pem
 *.key
 
-# Node
+# --- Node / Next.js ---
 node_modules/
 .next/
 out/
 dist/
 build/
+frontend/.next/
+frontend/node_modules/
 *.log
 .DS_Store
 
-# Python (Flask backend)
+# --- Python (Flask backend) ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -26,11 +28,14 @@ env/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+backend/.venv/
+backend/__pycache__/
 
-# IDE
+# --- IDE ---
 .vscode/
 .idea/
 *.swp
 
-# OS
+# --- OS ---
 Thumbs.db
+.DS_Store
