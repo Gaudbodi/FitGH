@@ -40,8 +40,9 @@ def test_me_returns_503_when_db_not_configured(client, monkeypatch):
     sets g.clerk_user_id. We're testing the route's db-unwired branch, not
     the JWT verification path.
     """
-    import app.routes.me as me_route
     from flask import g
+
+    import app.routes.me as me_route
 
     def passthrough_decorator(fn):
         def wrapper(*args, **kwargs):

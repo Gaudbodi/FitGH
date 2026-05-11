@@ -18,7 +18,8 @@ breadcrumbs.data.kcal and breadcrumbs.data.image — folded in.
 
 from __future__ import annotations
 
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration

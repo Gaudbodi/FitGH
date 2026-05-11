@@ -1,0 +1,23 @@
+# Backend tooling config for FitGH.
+# Phase 1 Walking Skeleton — WS-B.6.
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".venv", "__pycache__", ".pytest_cache", ".ruff_cache"]
+
+[tool.ruff.lint]
+# E   — pycodestyle errors (whitespace, indentation)
+# F   — pyflakes (unused imports, undefined names)
+# I   — isort (import ordering)
+# B   — flake8-bugbear (likely bug patterns)
+# UP  — pyupgrade (modernize syntax for target-version)
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests may have long assertion messages and reuse fixtures via star imports.
+"tests/*" = ["E501"]
+"backend/tests/*" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]

@@ -16,7 +16,7 @@ defence-in-depth signal but does NOT trust it for authentication.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from flask import Blueprint, jsonify, request
 
@@ -54,7 +54,7 @@ def clerk_webhook():
             if email_addresses and isinstance(email_addresses[0], dict)
             else None
         )
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         users.update_one(
             {"clerk_id": clerk_id},
             {

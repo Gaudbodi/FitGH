@@ -10,7 +10,6 @@ WS-C.2 will add: 'importing db with MONGODB_URI absent must raise'.
 from __future__ import annotations
 
 import importlib
-import os
 
 
 def test_db_module_imports_clean_without_mongo_uri(monkeypatch):
