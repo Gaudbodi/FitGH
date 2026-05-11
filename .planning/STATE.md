@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: "Phase 01 partial execution complete; 14 autonomous tasks shipped (Slice 0 + Slice A + Slice B). Remaining 16 tasks blocked on user dashboard work (WS-0.1 Atlas rotation, WS-0.2 Atlas+Fly billing, WS-A.5 bloat-PR, WS-C.1, WS-D.1, WS-D.3, WS-D.4, WS-F.1, WS-G.3-5, WS-H.1-3, WS-I.1-3, WS-J.1). See .planning/phases/01-walking-skeleton/01-SUMMARY.md."
-last_updated: "2026-05-11T11:30:00Z"
-last_activity: "2026-05-11 -- Phase 01 partial execution: Slice 0 + Slice A + Slice B + shared schema committed (15 commits); 22 backend tests passing; size-limit gate measures 133.3 kB / 180 kB budget; gitleaks gate verified by deliberate-leak smoke test."
+status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
+stopped_at: Slice 0 + Slice A + Slice B file work complete. 22 backend tests passing. Size-limit reports 133.3 kB on /dashboard vs 180 kB budget. Gitleaks pre-commit gate verified by deliberate-leak smoke test. Awaiting user to complete WS-0.1 (Atlas rotation) and the other 13 dashboard-action checkpoints listed in `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" before the executor can wire MONGODB_URI / Clerk / Fly / Vercel and run the E2E sign-off.
+last_updated: "2026-05-11T14:34:04.798Z"
+last_activity: 2026-05-11 -- Slice 0 + Slice A + Slice B + shared schema committed (15 commits, 22 tests passing)
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 1
-  completed_plans: 0
-  percent: 5
+  completed_plans: 1
+  percent: 100
 ---
 
 # Project State
@@ -71,6 +71,7 @@ Decisions are logged in PROJECT.md Key Decisions table and research/SUMMARY.md "
 - Phase 3: **Multi-component `meals` schema from day 1** (`components: []`). Single `dish_name` is forbidden — this is the most expensive schema mistake.
 - Phase 4: **Claude Sonnet 4.6** via Anthropic SDK with prompt caching; pin in env; **no image storage** in v1.
 - Phase 4: **Per-user 8/day cap** + **global $/day breaker** + **Sentry alert at $/DAU/day > $0.05**.
+- [Phase ?]: Phase 1 WS-0.1/C.1/C.2 verified 2026-05-11 — Atlas password rotated to fitgh-app/readWrite@fitgh; /health returns mongo:connected; db.py shim removed (MONGODB_URI mandatory at import)
 
 ### Pending Todos
 
@@ -82,7 +83,6 @@ None yet.
 
 [Issues that affect future work]
 
-- **WS-0.1 MongoDB Atlas password rotation** — STATE.md blocker; gates Slices C-J. User dashboard action required. See `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" section for exact steps.
 - **WS-0.2 Atlas cluster tier verify + Fly.io billing card** — needed before WS-G.5 (egress IP allocation).
 - **WS-G.5 Fly.io static egress IPv4 cost** — verify $3.60/mo (or actual 2026 price) against the $5/mo halt threshold before WS-H.1.
 - **No git remote configured** — blocks WS-A.5 bloat-PR smoke test, WS-B.6 docker CI verification, WS-I.1 Vercel connect. Run `git remote add origin <url> && git push -u origin master` when ready.
