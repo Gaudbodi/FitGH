@@ -150,17 +150,82 @@
 
 ## Traceability
 
-Empty — populated by the roadmapper in the next step.
+Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| _to be filled by ROADMAP.md_ | | |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 2 | Pending |
+| AUTH-05 | Phase 2 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| PROF-01 | Phase 2 | Pending |
+| PROF-02 | Phase 2 | Pending |
+| PROF-03 | Phase 2 | Pending |
+| PROF-04 | Phase 2 | Pending |
+| PROF-05 | Phase 2 | Pending |
+| PROF-06 | Phase 2 | Pending |
+| PROF-07 | Phase 2 | Pending |
+| LOG-01 | Phase 3 | Pending |
+| LOG-02 | Phase 3 | Pending |
+| LOG-03 | Phase 3 | Pending |
+| LOG-04 | Phase 3 | Pending |
+| LOG-05 | Phase 3 | Pending |
+| LOG-06 | Phase 3 | Pending |
+| LOG-07 | Phase 3 | Pending |
+| LOG-08 | Phase 3 | Pending |
+| VIS-01 | Phase 4 | Pending |
+| VIS-02 | Phase 4 | Pending |
+| VIS-03 | Phase 4 | Pending |
+| VIS-04 | Phase 4 | Pending |
+| VIS-05 | Phase 4 | Pending |
+| VIS-06 | Phase 4 | Pending |
+| VIS-07 | Phase 4 | Pending |
+| VIS-08 | Phase 4 | Pending |
+| VIS-09 | Phase 4 | Pending |
+| VIS-10 | Phase 4 | Pending |
+| VIS-11 | Phase 4 | Pending |
+| VIS-12 | Phase 4 | Pending |
+| DASH-01 | Phase 5 | Pending |
+| DASH-02 | Phase 5 | Pending |
+| DASH-03 | Phase 5 | Pending |
+| DASH-04 | Phase 5 | Pending |
+| DASH-05 | Phase 5 | Pending |
+| DASH-06 | Phase 5 | Pending |
+| DASH-07 | Phase 5 | Pending |
+| WORK-01 | Phase 6 | Pending |
+| WORK-02 | Phase 6 | Pending |
+| WORK-03 | Phase 6 | Pending |
+| WORK-04 | Phase 6 | Pending |
+| WORK-05 | Phase 6 | Pending |
+| WORK-06 | Phase 6 | Pending |
+| WORK-07 | Phase 6 | Pending |
+| WORK-08 | Phase 6 | Pending |
+| PERF-01 | Phase 1 | Pending |
+| PERF-02 | Phase 6 | Pending |
+| PERF-03 | Phase 6 | Pending |
+| PERF-04 | Phase 7 | Pending |
+| OBS-01 | Phase 1 | Pending |
+| OBS-02 | Phase 1 | Pending |
+| OBS-03 | Phase 4 | Pending |
+| SEC-01 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Pending |
+| SEC-04 | Phase 1 | Pending |
+| DATA-01 | Phase 3 | Pending |
+| LEGAL-01 | Phase 7 | Pending |
+| LEGAL-02 | Phase 7 | Pending |
+| LEGAL-03 | Phase 7 | Pending |
+| DEPLOY-01 | Phase 1 | Pending |
+| DEPLOY-02 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 60 total
-- Mapped to phases: 0 (roadmapper will fill)
-- Unmapped: 60 ⚠️ (expected until roadmap runs)
+- v1 requirements: **65 total** (re-enumerated by roadmapper — original "60 total" tally was a miscount; categories breakdown: AUTH 6, PROF 7, LOG 8, VIS 12, DASH 7, WORK 8, PERF 4, OBS 3, SEC 4, DATA 1, LEGAL 3, DEPLOY 2)
+- Mapped to phases: **65 / 65** ✓
+- Unmapped: **0** ✓
+- Duplicates (a req mapped to >1 phase): **0** ✓
 
 ---
 *Requirements defined: 2026-05-11*
-*Last updated: 2026-05-11 after initial definition*
+*Last updated: 2026-05-11 — traceability table populated by gsd-roadmapper.*
