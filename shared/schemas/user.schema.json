@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fitgh.vercel.app/schemas/user.schema.json",
+  "title": "User",
+  "description": "FitGH user document stored in the `users` collection. Phase 1 Walking Skeleton ships only the auth-bound minimum (clerk_id + email + timestamps); Phase 2 will extend with profile {name, sex, height, weight, goal} and Phase 3 will reference users[] from the meals[] collection.",
+  "type": "object",
+  "required": ["clerk_id", "email"],
+  "properties": {
+    "_id": {
+      "description": "MongoDB ObjectId (assigned by the driver, not by app code)."
+    },
+    "clerk_id": {
+      "type": "string",
+      "description": "Clerk user id (e.g. user_2abc...). Used as the trust anchor; never invent or accept this from a request body.",
+      "pattern": "^user_[a-zA-Z0-9]+$"
+    },
+    "email": {
+      "type": ["string", "null"],
+      "format": "email",
+      "description": "Primary email at sign-up time. Null if Clerk did not provide one (e.g. anonymous OAuth flows — not used in Phase 1)."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC ISO-8601 timestamp written by the user.created webhook handler (Slice F)."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC ISO-8601 timestamp; updated on every webhook event (and on every profile-edit in Phase 2)."
+    }
+  },
+  "additionalProperties": false
+}
