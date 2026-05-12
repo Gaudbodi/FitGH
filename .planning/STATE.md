@@ -4,8 +4,8 @@ milestone: v1.0
 milestone_name: milestone
 status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
 stopped_at: Slice 0 + Slice A + Slice B file work complete. 22 backend tests passing. Size-limit reports 133.3 kB on /dashboard vs 180 kB budget. Gitleaks pre-commit gate verified by deliberate-leak smoke test. Awaiting user to complete WS-0.1 (Atlas rotation) and the other 13 dashboard-action checkpoints listed in `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" before the executor can wire MONGODB_URI / Clerk / Fly / Vercel and run the E2E sign-off.
-last_updated: "2026-05-11T14:43:42.746Z"
-last_activity: 2026-05-11 -- Slice 0 + Slice A + Slice B + shared schema committed (15 commits, 22 tests passing)
+last_updated: "2026-05-12T00:00:00.000Z"
+last_activity: 2026-05-12 -- Phase 1 rearchitected to Render-only deploy (ROADMAP edited); re-plan pending via /gsd-plan-phase 1 --replan
 progress:
   total_phases: 7
   completed_phases: 1
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-11)
 Phase: 01 (Walking Skeleton) — PARTIAL (file-side scaffold done; SaaS-account checkpoints pending)
 Plan: 1 of 1
 Status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
-Last activity: 2026-05-11 -- Slice 0 + Slice A + Slice B + shared schema committed (15 commits, 22 tests passing)
+Last activity: 2026-05-12 -- Phase 1 rearchitected to Render-only deploy (ROADMAP edited); re-plan pending via /gsd-plan-phase 1 --replan
 
 Progress: [█░░░░░░░░░] 5%   (14 of 30 tasks done; remaining 16 are user-gated checkpoints + follow-on code)
 
@@ -73,6 +73,7 @@ Decisions are logged in PROJECT.md Key Decisions table and research/SUMMARY.md "
 - Phase 4: **Per-user 8/day cap** + **global $/day breaker** + **Sentry alert at $/DAU/day > $0.05**.
 - [Phase ?]: Phase 1 WS-0.1/C.1/C.2 verified 2026-05-11 — Atlas password rotated to fitgh-app/readWrite@fitgh; /health returns mongo:connected; db.py shim removed (MONGODB_URI mandatory at import)
 - [Phase ?]: WS-0.2 verified 2026-05-11 — Atlas cluster0 tier=M0 (100-connection cap; maxPoolSize=10 sized correctly); Fly.io billing has card on file (egress IP allocation unblocked for WS-G.5)
+- [Roadmap evolution] 2026-05-12: Phase 1 rearchitected (ROADMAP edited; tracked in memory/render-only-rewrite.md). Out: Vercel, Fly.io JNB + static egress IPv4 add-on, Clerk Dev+Prod twin instances, Sentry FE/BE, custom gitleaks CI rules, size-limit 180 KB CI gate. In: both Next.js and Flask deploy as Render web services on `git push main`; Atlas allowlist `0.0.0.0/0` + 32-char password + readWrite@fitgh; Clerk single Production instance. User-facing Phase 1 checkpoints 14 → 3. Follow-up: REQUIREMENTS.md traceability table (SEC-01/02/03, OBS-01/02, PERF-01 deferrals), research/SUMMARY.md Locked Stack Decisions, .planning/phases/01-walking-skeleton/SKELETON.md, 01-PLAN.md replan. Fly.io billing card on file now unused — Fly subscription can be cancelled.
 
 ### Pending Todos
 

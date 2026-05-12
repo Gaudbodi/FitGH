@@ -15,7 +15,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 
 ## Phases
 
-- [ ] **Phase 1: Walking Skeleton** - End-to-end Clerk auth + Flask + MongoDB Atlas on Fly.io JNB + Vercel, with CI bundle gate, gitleaks, Sentry, and static egress IP
+- [ ] **Phase 1: Walking Skeleton** - End-to-end Clerk auth + Next.js BFF + Flask + MongoDB Atlas on Render (single platform, push-to-deploy), with one CI gate (pytest + pnpm build). Drops Fly.io, Vercel, Sentry, custom gitleaks CI rules, size-limit gate, and Atlas IP-pinning.
 - [ ] **Phase 2: Onboarding + Profile + Targets** - 3-screen onboarding, Mifflin-St Jeor TDEE, weight log, target on dashboard skeleton, privacy disclosure, GDPR delete-account
 - [ ] **Phase 3: Manual Meal Log + Ghana Table** - 25-dish FAO/INFOODS catalogue, search, multi-component meal schema, daily total, remaining-kcal pill, nightly mongodump
 - [ ] **Phase 4: Image -> Kcal Core Loop** - Client compression, Sonnet 4.6 with cached system + Ghana table + components tool-use, table re-match, component chips, inline correction, per-user cap + global $/day breaker
@@ -26,18 +26,19 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 ## Phase Details
 
 ### Phase 1: Walking Skeleton
-**Goal:** Prove the entire trust boundary end-to-end — a Clerk-authenticated user can hit a `/dashboard` page that fetches their record from Flask, which reads it from MongoDB Atlas — with every supporting platform concern (deploy, secrets, CI, observability, network) wired correctly from day one.
+**Goal:** Prove the trust boundary end-to-end on Render — a Clerk-authenticated user signs in on the Render-hosted Next.js frontend, the BFF calls Flask on Render's Python web service, Flask reads the user from MongoDB Atlas, and the dashboard renders their email — all from a single `git push main` auto-deploy. One CI gate (`pytest` + `pnpm build` at deploy time), one platform (Render), three SaaS dashboard checkpoints (Atlas user, Render account, Clerk Production instance).
 **Mode:** mvp
 **Depends on:** Nothing (first phase)
-**Requirements:** AUTH-01, AUTH-02, AUTH-03, AUTH-06, SEC-01, SEC-02, SEC-03, SEC-04, OBS-01, OBS-02, PERF-01, DEPLOY-01, DEPLOY-02
+**Requirements:** AUTH-01, AUTH-02, AUTH-03, AUTH-06, SEC-04, DEPLOY-01, DEPLOY-02
+(Deferred from this phase by 2026-05-12 rewrite: SEC-01 custom gitleaks CI rules → local-only pre-commit; SEC-02 Atlas IP-allowlist tightening → `0.0.0.0/0` + 32-char password + scoped role accepted for MVP; SEC-03 CORS hardening → same-origin via Next.js BFF; OBS-01 Sentry → deferred until a real bug; OBS-02 Vercel Analytics → dropped; PERF-01 size-limit CI gate → manual check at phase boundaries. REQUIREMENTS.md traceability table needs a follow-up edit to reflect this.)
 **Success Criteria** (what must be TRUE):
-  1. A user can sign in via Clerk-hosted UI (email/password OR Google) and land on `/dashboard` showing their email pulled from MongoDB Atlas through Flask — page renders end-to-end with no shortcuts.
-  2. A user can sign out from any page; refreshing after sign-out lands them on the sign-in screen (httpOnly session cookie cleared).
-  3. The Flask `/health` endpoint returns `{ok: true, mongo: "connected"}` from the Fly.io JNB machine, and the static egress IP is pinned in the Atlas allowlist (no `0.0.0.0/0` in production config).
-  4. A CI pull request that pushes First Load JS above 180 KB gzipped on the dashboard route fails the build; a commit that contains a Mongo URI is blocked by the gitleaks pre-commit hook.
-  5. Sentry (frontend + backend) and Vercel Analytics + Speed Insights receive at least one real event from the deployed app, and the Flask `Authorization: Bearer <jwt>` path is verified networkless on every protected request.
-**Plans:** TBD
-**Skeleton spec:** `.planning/phases/01-walking-skeleton/SKELETON.md`
+  1. A user signs up + signs in via the Clerk Production instance (email/password OR Google) on the Render-hosted Next.js frontend, and lands on `/dashboard` showing their email pulled from MongoDB Atlas through Flask — page renders end-to-end with no shortcuts.
+  2. A user can sign out from any page; refreshing after sign-out lands them on the sign-in screen (Clerk session cleared).
+  3. The Flask `/health` endpoint returns `{ok: true, mongo: "connected"}` from the Render Starter web service, against MongoDB Atlas M0 with a `0.0.0.0/0` allowlist + 32-char password + scoped `readWrite@fitgh` role.
+  4. A `git push main` triggers Render auto-deploys of both web services in parallel; the backend build runs `pytest` and the frontend build runs `pnpm build` — failures halt the deploy and the previous version stays live.
+  5. Three SaaS dashboard checkpoints complete Phase 1 setup: (a) Atlas `fitgh-app` user with rotated password, (b) Render account linked to the GitHub repo with `fitgh-web` + `fitgh-api` services configured, (c) Clerk Production instance with the Render URL + `localhost:3000` in authorized origins. No Fly.io, no Vercel, no Sentry FE/BE wizards, no static egress IPv4 add-on, no custom gitleaks CI rules, no size-limit CI gate.
+**Plans:** TBD (re-plan via `/gsd-plan-phase 1 --replan` after this edit lands)
+**Skeleton spec:** `.planning/phases/01-walking-skeleton/SKELETON.md` (needs follow-up update — current version describes the Fly.io + Vercel + Clerk twin-instance shape)
 
 ### Phase 2: Onboarding + Profile + Targets
 **Goal:** A new user can finish a ≤3-screen onboarding in under 60 seconds, leaves with a daily kcal target (and protein target if muscle-gain) shown on the dashboard, can log their weight, edit their profile later, and has signed an explicit consent that meal photos will be sent to an LLM vision provider — plus a working account-deletion path.
