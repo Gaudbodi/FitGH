@@ -38,6 +38,7 @@ from app.lib.meals import (
 )
 from app.middleware.auth import require_auth
 from app.models.meal import ComponentCreate, MealCreate, MealUpdate
+from app.models.vision import AiMetadata
 
 bp = Blueprint("meals", __name__)
 
@@ -77,11 +78,19 @@ def _validate_logged_at(supplied: datetime | None) -> datetime:
     return supplied.astimezone(UTC)
 
 
-def _resolve_component(cc: ComponentCreate) -> dict:
+def _resolve_component(cc: ComponentCreate, *, meal_source: str = "manual") -> dict:
     """Build the persisted-shape Component dict from a ComponentCreate.
 
     Raises _UnknownFoodIdError when a matched food_id is not catalogued.
+
+    Phase 4 (ai_vision path): when `meal_source == "ai_vision"`, the
+    vision-only fields (kcal_low, kcal_high, confidence) are carried
+    through to the persisted shape. The `source` field flips to
+    "llm_then_table_rematch" (matched) or "user_corrected" (free-text).
+    kcal_point is STILL server-computed from the table on the matched
+    path (T-04-05 trust anchor).
     """
+    is_vision = meal_source == "ai_vision"
     if cc.food_id is not None:
         food = db_mod.ghana_foods.find_one({"food_id": cc.food_id})
         if food is None:
@@ -90,27 +99,27 @@ def _resolve_component(cc: ComponentCreate) -> dict:
             "name": food["name"],
             "matched_food_id": cc.food_id,
             "portion_g": cc.portion_g,
-            "kcal_low": None,
-            "kcal_high": None,
+            "kcal_low": cc.kcal_low if is_vision else None,
+            "kcal_high": cc.kcal_high if is_vision else None,
             "kcal_point": compute_kcal_for_component(
                 food["kcal_per_100g"], cc.portion_g
             ),
             "protein_g_point": compute_protein_for_component(
                 food["protein_g_per_100g"], cc.portion_g
             ),
-            "confidence": None,
-            "source": "table",
+            "confidence": cc.confidence if is_vision else None,
+            "source": "llm_then_table_rematch" if is_vision else "table",
         }
     # Free-text fall-back.
     return {
         "name": cc.name,
         "matched_food_id": None,
         "portion_g": cc.portion_g,
-        "kcal_low": None,
-        "kcal_high": None,
+        "kcal_low": cc.kcal_low if is_vision else None,
+        "kcal_high": cc.kcal_high if is_vision else None,
         "kcal_point": cc.kcal_point,
         "protein_g_point": 0,
-        "confidence": None,
+        "confidence": cc.confidence if is_vision else None,
         "source": "user_corrected",
     }
 
@@ -175,7 +184,10 @@ def post_meal():
         return jsonify({"error": str(ve)}), 422
 
     try:
-        resolved = [_resolve_component(cc) for cc in payload.components]
+        resolved = [
+            _resolve_component(cc, meal_source=payload.source)
+            for cc in payload.components
+        ]
     except _UnknownFoodIdError as ex:
         return (
             jsonify(
@@ -187,16 +199,30 @@ def post_meal():
             422,
         )
 
+    # Phase 4: AiMetadata.extra="ignore" drops unknown client-supplied
+    # keys silently (T-04-05); the persisted shape is the canonical
+    # sub-doc Phase 3's Meal.ai_metadata reserved.
+    ai_meta_persisted: dict | None = None
+    if payload.source == "ai_vision" and payload.ai_metadata is not None:
+        try:
+            ai_meta_persisted = AiMetadata.model_validate(
+                payload.ai_metadata
+            ).model_dump()
+        except ValidationError:
+            # Bad ai_metadata is non-fatal — the meal still saves, just
+            # without provenance. Logging is fine; not user-facing.
+            ai_meta_persisted = None
+
     total_kcal, total_protein = recompute_meal_totals(resolved)
     now = datetime.now(UTC)
     doc = {
         "user_id": clerk_id,
         "logged_at": logged_at,
-        "source": "manual",
+        "source": payload.source,
         "components": resolved,
         "total_kcal": total_kcal,
         "total_protein_g": total_protein,
-        "ai_metadata": None,
+        "ai_metadata": ai_meta_persisted,
         "created_at": now,
         "updated_at": now,
     }

@@ -3,47 +3,11 @@
     "Component": {
       "description": "Embedded sub-document inside `Meal.components`.\n\n`name` is copied from `GhanaFood.name` at write time for matched\ncomponents so deletions from the catalogue do not break history.\n`kcal_low / kcal_high / confidence` are vision-only fields \u2014 Phase 3\nwrites them as None; Phase 4 fills them.",
       "properties": {
-        "confidence": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Confidence"
-        },
-        "kcal_high": {
-          "anyOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Kcal High"
-        },
-        "kcal_low": {
-          "anyOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Kcal Low"
-        },
-        "kcal_point": {
-          "maximum": 5000,
-          "minimum": 0,
-          "title": "Kcal Point",
-          "type": "integer"
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
         },
         "matched_food_id": {
           "anyOf": [
@@ -57,16 +21,40 @@
           "default": null,
           "title": "Matched Food Id"
         },
-        "name": {
-          "maxLength": 80,
-          "minLength": 1,
-          "title": "Name",
-          "type": "string"
-        },
         "portion_g": {
           "maximum": 800,
           "minimum": 10,
           "title": "Portion G",
+          "type": "integer"
+        },
+        "kcal_low": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kcal Low"
+        },
+        "kcal_high": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kcal High"
+        },
+        "kcal_point": {
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Kcal Point",
           "type": "integer"
         },
         "protein_g_point": {
@@ -74,6 +62,18 @@
           "minimum": 0,
           "title": "Protein G Point",
           "type": "integer"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
         },
         "source": {
           "enum": [
@@ -96,35 +96,11 @@
       "type": "object"
     }
   },
-  "$id": "https://fitgh.app/schemas/meal.schema.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "FitGH meal stored in the meals collection. Day-1 multi-component schema (ROADMAP Hard Constraint #3): vision-only fields components[].{kcal_low, kcal_high, confidence} + ai_metadata are persisted as null from Phase 3 manual writes; Phase 4 vision pipeline fills them in without a schema migration. There is NEVER a separate ai_meals collection.",
+  "description": "Full Meal document as stored in `meals` collection.",
   "properties": {
-    "ai_metadata": {
-      "anyOf": [
-        {
-          "additionalProperties": true,
-          "type": "object"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Ai Metadata"
-    },
-    "components": {
-      "items": {
-        "$ref": "#/$defs/Component"
-      },
-      "maxItems": 10,
-      "minItems": 1,
-      "title": "Components",
-      "type": "array"
-    },
-    "created_at": {
-      "format": "date-time",
-      "title": "Created At",
+    "user_id": {
+      "pattern": "^user_[a-zA-Z0-9_]+$",
+      "title": "User Id",
       "type": "string"
     },
     "logged_at": {
@@ -140,6 +116,15 @@
       "title": "Source",
       "type": "string"
     },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/Component"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Components",
+      "type": "array"
+    },
     "total_kcal": {
       "minimum": 0,
       "title": "Total Kcal",
@@ -150,14 +135,27 @@
       "title": "Total Protein G",
       "type": "integer"
     },
+    "ai_metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ai Metadata"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
     "updated_at": {
       "format": "date-time",
       "title": "Updated At",
-      "type": "string"
-    },
-    "user_id": {
-      "pattern": "^user_[a-zA-Z0-9_]+$",
-      "title": "User Id",
       "type": "string"
     }
   },

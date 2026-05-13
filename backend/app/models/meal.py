@@ -92,6 +92,13 @@ class ComponentCreate(BaseModel):
     `extra="forbid"` so a matched-component body cannot smuggle in a
     client-supplied kcal_point (T-03-02): the field is declared on this model
     but the validator enforces it is None in the matched path.
+
+    Phase 4 adds OPTIONAL kcal_low / kcal_high / confidence / source —
+    populated when the meal is being persisted from a vision scan (the
+    FE's Confirm POSTs the chip drafts with these advisory fields). The
+    persisted kcal_point is still server-recomputed from the table for
+    matched components (T-04-05 trust anchor) — the advisory range is
+    carried through, not the kcal_point.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -100,6 +107,11 @@ class ComponentCreate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=80)
     portion_g: int = Field(..., ge=10, le=800)
     kcal_point: int | None = Field(default=None, ge=0, le=5000)
+    # Phase 4 — vision-only fields.
+    kcal_low: int | None = Field(default=None, ge=0, le=5000)
+    kcal_high: int | None = Field(default=None, ge=0, le=5000)
+    confidence: float | None = Field(default=None, ge=0.0, le=1.0)
+    source: ComponentSource | None = Field(default=None)
 
     @model_validator(mode="after")
     def _exactly_one_path(self):
@@ -116,12 +128,22 @@ class ComponentCreate(BaseModel):
 
 
 class MealCreate(BaseModel):
-    """POST /meals body."""
+    """POST /meals body.
+
+    Phase 4 adds OPTIONAL `source` ("manual" | "ai_vision", default
+    "manual") + `ai_metadata` (dict). When source="ai_vision", the
+    server persists ai_metadata as-is through Pydantic AiMetadata's
+    extra="ignore" so unknown LLM-derived keys are silently dropped
+    (T-04-05).
+    """
 
     model_config = ConfigDict(extra="forbid")
 
     logged_at: datetime | None = Field(default=None)
     components: list[ComponentCreate] = Field(..., min_length=1, max_length=10)
+    # Phase 4 — vision metadata.
+    source: MealSource = Field(default="manual")
+    ai_metadata: dict | None = Field(default=None)
 
 
 class MealUpdate(BaseModel):

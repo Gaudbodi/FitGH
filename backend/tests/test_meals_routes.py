@@ -9,7 +9,6 @@ import json
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -758,3 +757,182 @@ def test_delete_meal_invalid_id_422(
         "/meals/not-an-objectid", headers={"Authorization": "Bearer stub"}
     )
     assert r.status_code == 422
+
+
+# ===========================================================================
+# Phase 4 — POST /meals with source="ai_vision" (P4-B.3)
+# ===========================================================================
+
+
+def _valid_ai_metadata() -> dict:
+    return {
+        "model": "claude-sonnet-4-6",
+        "prompt_hash": "a" * 64,
+        "image_dims": {"w": 1024, "h": 768},
+        "latency_ms": 2400,
+        "cost_usd": 0.0042,
+    }
+
+
+def test_post_meal_with_source_ai_vision_persists_ai_metadata(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "ai_vision",
+        "ai_metadata": _valid_ai_metadata(),
+        "components": [
+            {
+                "food_id": "gh-jollof-rice",
+                "portion_g": 350,
+                "kcal_low": 500,
+                "kcal_high": 650,
+                "confidence": 0.85,
+            }
+        ],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201, r.get_data(as_text=True)
+    out = r.get_json()
+    assert out["source"] == "ai_vision"
+    assert out["ai_metadata"]["model"] == "claude-sonnet-4-6"
+    assert out["ai_metadata"]["latency_ms"] == 2400
+
+
+def test_post_meal_with_ai_vision_components_persists_kcal_low_high_confidence(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "ai_vision",
+        "ai_metadata": _valid_ai_metadata(),
+        "components": [
+            {
+                "food_id": "gh-jollof-rice",
+                "portion_g": 350,
+                "kcal_low": 500,
+                "kcal_high": 650,
+                "confidence": 0.85,
+            }
+        ],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    out = r.get_json()
+    c = out["components"][0]
+    assert c["kcal_low"] == 500
+    assert c["kcal_high"] == 650
+    assert c["confidence"] == 0.85
+    assert c["source"] == "llm_then_table_rematch"
+
+
+def test_post_meal_with_source_manual_does_not_persist_ai_metadata(
+    client, mongo_collections, monkeypatch
+):
+    """Regression: manual log still works exactly as Phase 3 did."""
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "manual",
+        "components": [{"food_id": "gh-jollof-rice", "portion_g": 350}],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201
+    out = r.get_json()
+    assert out["source"] == "manual"
+    assert out["ai_metadata"] is None
+    assert out["components"][0]["source"] == "table"
+    assert out["components"][0]["kcal_low"] is None
+
+
+def test_post_meal_ai_vision_component_kcal_point_still_server_recomputed(
+    client, mongo_collections, monkeypatch
+):
+    """T-04-05: even on source=ai_vision, kcal_point is server-recomputed
+    from the Ghana table for matched components — the client cannot
+    smuggle a value (the request shape exposes no kcal_point field on
+    the matched path due to Pydantic exactly-one-of)."""
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "ai_vision",
+        "ai_metadata": _valid_ai_metadata(),
+        "components": [
+            {
+                "food_id": "gh-jollof-rice",
+                "portion_g": 350,
+                # Note: matched components cannot supply kcal_point —
+                # the Pydantic _exactly_one_path validator 422s if both
+                # food_id and kcal_point are present. The table value
+                # is the only kcal_point that lands.
+                "kcal_low": 999,
+                "kcal_high": 999,
+                "confidence": 0.5,
+            }
+        ],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201
+    out = r.get_json()
+    # 165 * 350 / 100 = 577.5 → banker's-even → 578
+    assert out["components"][0]["kcal_point"] == 578
+
+
+def test_post_meal_ai_vision_drops_unknown_ai_metadata_keys(
+    client, mongo_collections, monkeypatch
+):
+    """T-04-05: AiMetadata.extra='ignore' silently drops unknown keys."""
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "ai_vision",
+        "ai_metadata": {
+            **_valid_ai_metadata(),
+            "smuggled_field": "should-be-dropped",
+            "image_path": "/var/secrets/user.jpg",  # adversarial
+        },
+        "components": [{"food_id": "gh-jollof-rice", "portion_g": 350}],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201
+    out = r.get_json()
+    assert "smuggled_field" not in out["ai_metadata"]
+    assert "image_path" not in out["ai_metadata"]
+
+
+def test_post_meal_ai_vision_free_text_component(
+    client, mongo_collections, monkeypatch
+):
+    """Free-text component on the ai_vision path carries kcal_low/high
+    + source="user_corrected"."""
+    _seed_profile(mongo_collections, "user_a")
+    _seed_foods(mongo_collections)
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    body = {
+        "source": "ai_vision",
+        "ai_metadata": _valid_ai_metadata(),
+        "components": [
+            {
+                "name": "Exotic dish",
+                "portion_g": 200,
+                "kcal_point": 350,
+                "kcal_low": 250,
+                "kcal_high": 450,
+                "confidence": 0.4,
+            }
+        ],
+    }
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201, r.get_data(as_text=True)
+    out = r.get_json()
+    c = out["components"][0]
+    assert c["kcal_point"] == 350
+    assert c["kcal_low"] == 250
+    assert c["kcal_high"] == 450
+    assert c["source"] == "user_corrected"
