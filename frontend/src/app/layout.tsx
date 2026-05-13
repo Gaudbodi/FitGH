@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ServicePausedBanner } from "@/components/service-paused-banner";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -31,6 +32,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.variable} antialiased font-sans flex min-h-screen flex-col`}>
+          {/* Phase 4 — site-wide banner when global $/day cap is reached.
+              Server component; renders null for unsigned-in users or when
+              under cap (no extra JS shipped to the client). */}
+          <ServicePausedBanner />
           <div className="flex-1">{children}</div>
           {/* Global footer — AUTH-05: a /privacy link must be reachable
               from every page. Phase 7 LEGAL-02 will expand this. */}
