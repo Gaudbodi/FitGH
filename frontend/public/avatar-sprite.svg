@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FitGH avatar sprite — Phase 5 Plan 05 (P5-B.1).
+  20 states: (m|f) x (slim|healthy-lean|healthy-firm|heavier|much-heavier) x (toward|steady|away)
+  Theme via CSS variables on consumer side: --skin-tone, --clothing-color, --accent.
+  Breath + blink keyframes inside <defs><style>; collapsed by globals.css [data-motion='disabled'].
+  States are referenced via <use href="/avatar-sprite.svg#state-{sex}-{bmi}-{dir}"> in Avatar.tsx.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" style="--skin-tone:#d4a574;--clothing-color:#2563eb;--accent:#10b981">
+  <defs>
+    <style><![CDATA[
+      :root, svg { --skin-tone:#d4a574; --clothing-color:#2563eb; --accent:#10b981; }
+      .skin { fill: var(--skin-tone); }
+      .clothing { fill: var(--clothing-color); }
+      .accent { fill: var(--accent); stroke: var(--accent); }
+      .outline { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+      .eye { fill: #1f2937; transform-box: fill-box; transform-origin: center; animation: blink 4s linear infinite; }
+      .torso { transform-box: fill-box; transform-origin: center; animation: breath 4s ease-in-out infinite; }
+      .arrow-up { fill: #10b981; }
+      .arrow-down { fill: #ef4444; }
+      .arrow-flat { fill: #6b7280; }
+      @keyframes breath { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+      @keyframes blink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
+      @media (prefers-reduced-motion: reduce) {
+        .eye, .torso { animation: none; }
+      }
+    ]]></style>
+
+    <!-- Reusable head + face primitives. Heads vary by sex (hair shape). -->
+    <g id="head-m">
+      <circle class="skin" cx="100" cy="50" r="20"/>
+      <!-- short hair -->
+      <path d="M82,42 Q100,28 118,42 Q118,38 100,32 Q82,38 82,42 Z" fill="#1f2937"/>
+      <circle class="eye" cx="93" cy="50" r="1.8"/>
+      <circle class="eye" cx="107" cy="50" r="1.8"/>
+      <path d="M96,58 Q100,61 104,58" class="outline"/>
+    </g>
+    <g id="head-f">
+      <circle class="skin" cx="100" cy="50" r="20"/>
+      <!-- longer hair -->
+      <path d="M80,46 Q78,30 100,28 Q122,30 120,46 L120,62 L114,62 L114,52 Q100,42 86,52 L86,62 L80,62 Z" fill="#1f2937"/>
+      <circle class="eye" cx="93" cy="50" r="1.8"/>
+      <circle class="eye" cx="107" cy="50" r="1.8"/>
+      <path d="M96,58 Q100,61 104,58" class="outline"/>
+    </g>
+
+    <!-- Direction arrows (small chip at upper-right corner of figure). -->
+    <g id="arrow-toward">
+      <polygon class="arrow-up" points="170,30 178,38 174,38 174,46 166,46 166,38 162,38"/>
+    </g>
+    <g id="arrow-steady">
+      <rect class="arrow-flat" x="162" y="34" width="16" height="6"/>
+    </g>
+    <g id="arrow-away">
+      <polygon class="arrow-down" points="170,46 178,38 174,38 174,30 166,30 166,38 162,38"/>
+    </g>
+
+    <!-- Body silhouettes — torso width + leg width grow across BMI bands. -->
+    <!-- slim: w=24 -->
+    <g id="body-slim">
+      <rect class="clothing torso" x="88" y="70" width="24" height="40" rx="6"/>
+      <rect class="skin" x="76" y="74" width="10" height="28" rx="5"/>
+      <rect class="skin" x="114" y="74" width="10" height="28" rx="5"/>
+      <rect class="clothing" x="89" y="110" width="10" height="44" rx="4"/>
+      <rect class="clothing" x="101" y="110" width="10" height="44" rx="4"/>
+      <rect class="skin" x="89" y="154" width="10" height="10" rx="3"/>
+      <rect class="skin" x="101" y="154" width="10" height="10" rx="3"/>
+    </g>
+    <!-- healthy-lean: w=32 -->
+    <g id="body-healthy-lean">
+      <rect class="clothing torso" x="84" y="70" width="32" height="44" rx="8"/>
+      <rect class="skin" x="72" y="74" width="11" height="30" rx="5"/>
+      <rect class="skin" x="117" y="74" width="11" height="30" rx="5"/>
+      <rect class="clothing" x="87" y="114" width="11" height="44" rx="4"/>
+      <rect class="clothing" x="102" y="114" width="11" height="44" rx="4"/>
+      <rect class="skin" x="87" y="158" width="11" height="10" rx="3"/>
+      <rect class="skin" x="102" y="158" width="11" height="10" rx="3"/>
+    </g>
+    <!-- healthy-firm: w=38 -->
+    <g id="body-healthy-firm">
+      <rect class="clothing torso" x="81" y="70" width="38" height="46" rx="9"/>
+      <rect class="skin" x="68" y="74" width="12" height="32" rx="5"/>
+      <rect class="skin" x="120" y="74" width="12" height="32" rx="5"/>
+      <rect class="clothing" x="85" y="116" width="13" height="46" rx="5"/>
+      <rect class="clothing" x="102" y="116" width="13" height="46" rx="5"/>
+      <rect class="skin" x="85" y="162" width="13" height="10" rx="3"/>
+      <rect class="skin" x="102" y="162" width="13" height="10" rx="3"/>
+    </g>
+    <!-- heavier: w=46 -->
+    <g id="body-heavier">
+      <rect class="clothing torso" x="77" y="70" width="46" height="50" rx="11"/>
+      <rect class="skin" x="63" y="74" width="13" height="34" rx="6"/>
+      <rect class="skin" x="124" y="74" width="13" height="34" rx="6"/>
+      <rect class="clothing" x="82" y="120" width="16" height="46" rx="6"/>
+      <rect class="clothing" x="102" y="120" width="16" height="46" rx="6"/>
+      <rect class="skin" x="82" y="166" width="16" height="10" rx="3"/>
+      <rect class="skin" x="102" y="166" width="16" height="10" rx="3"/>
+    </g>
+    <!-- much-heavier: w=54 -->
+    <g id="body-much-heavier">
+      <rect class="clothing torso" x="73" y="70" width="54" height="54" rx="13"/>
+      <rect class="skin" x="58" y="74" width="14" height="36" rx="6"/>
+      <rect class="skin" x="128" y="74" width="14" height="36" rx="6"/>
+      <rect class="clothing" x="78" y="124" width="19" height="46" rx="7"/>
+      <rect class="clothing" x="103" y="124" width="19" height="46" rx="7"/>
+      <rect class="skin" x="78" y="170" width="19" height="10" rx="3"/>
+      <rect class="skin" x="103" y="170" width="19" height="10" rx="3"/>
+    </g>
+  </defs>
+
+  <!-- ==== 20 STATES (sex x bmi x direction) ==== -->
+
+  <!-- MALE x SLIM -->
+  <g id="state-m-slim-toward"><use href="#body-slim"/><use href="#head-m"/><use href="#arrow-toward"/></g>
+  <g id="state-m-slim-steady"><use href="#body-slim"/><use href="#head-m"/><use href="#arrow-steady"/></g>
+  <g id="state-m-slim-away"><use href="#body-slim"/><use href="#head-m"/><use href="#arrow-away"/></g>
+
+  <!-- MALE x HEALTHY-LEAN -->
+  <g id="state-m-healthy-lean-toward"><use href="#body-healthy-lean"/><use href="#head-m"/><use href="#arrow-toward"/></g>
+  <g id="state-m-healthy-lean-steady"><use href="#body-healthy-lean"/><use href="#head-m"/><use href="#arrow-steady"/></g>
+  <g id="state-m-healthy-lean-away"><use href="#body-healthy-lean"/><use href="#head-m"/><use href="#arrow-away"/></g>
+
+  <!-- MALE x HEALTHY-FIRM -->
+  <g id="state-m-healthy-firm-toward"><use href="#body-healthy-firm"/><use href="#head-m"/><use href="#arrow-toward"/></g>
+  <g id="state-m-healthy-firm-steady"><use href="#body-healthy-firm"/><use href="#head-m"/><use href="#arrow-steady"/></g>
+
+  <!-- MALE x HEAVIER -->
+  <g id="state-m-heavier-toward"><use href="#body-heavier"/><use href="#head-m"/><use href="#arrow-toward"/></g>
+  <g id="state-m-heavier-steady"><use href="#body-heavier"/><use href="#head-m"/><use href="#arrow-steady"/></g>
+
+  <!-- MALE x MUCH-HEAVIER -->
+  <g id="state-m-much-heavier-toward"><use href="#body-much-heavier"/><use href="#head-m"/><use href="#arrow-toward"/></g>
+
+  <!-- FEMALE x SLIM -->
+  <g id="state-f-slim-toward"><use href="#body-slim"/><use href="#head-f"/><use href="#arrow-toward"/></g>
+  <g id="state-f-slim-steady"><use href="#body-slim"/><use href="#head-f"/><use href="#arrow-steady"/></g>
+  <g id="state-f-slim-away"><use href="#body-slim"/><use href="#head-f"/><use href="#arrow-away"/></g>
+
+  <!-- FEMALE x HEALTHY-LEAN -->
+  <g id="state-f-healthy-lean-toward"><use href="#body-healthy-lean"/><use href="#head-f"/><use href="#arrow-toward"/></g>
+  <g id="state-f-healthy-lean-steady"><use href="#body-healthy-lean"/><use href="#head-f"/><use href="#arrow-steady"/></g>
+  <g id="state-f-healthy-lean-away"><use href="#body-healthy-lean"/><use href="#head-f"/><use href="#arrow-away"/></g>
+
+  <!-- FEMALE x HEALTHY-FIRM -->
+  <g id="state-f-healthy-firm-toward"><use href="#body-healthy-firm"/><use href="#head-f"/><use href="#arrow-toward"/></g>
+  <g id="state-f-healthy-firm-steady"><use href="#body-healthy-firm"/><use href="#head-f"/><use href="#arrow-steady"/></g>
+
+  <!-- FEMALE x HEAVIER -->
+  <g id="state-f-heavier-toward"><use href="#body-heavier"/><use href="#head-f"/><use href="#arrow-toward"/></g>
+</svg>
