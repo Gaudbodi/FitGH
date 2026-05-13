@@ -38,3 +38,15 @@ client: MongoClient = MongoClient(
 # is readWrite@fitgh only — see SEC-02 / WS-0.1).
 db: Database = client["fitgh"]
 users: Collection = db["users"]
+
+# Phase 2 — Onboarding + Profile + Targets (Task P2-A.2).
+# These collections are added module-level alongside `users` so route modules
+# can `from app.db import profiles` exactly like Phase 1 does for users.
+#
+# Index strategy (D-STORAGE-NEW-COLLECTIONS, no `ensure_index` on import —
+# Phase 1 pattern of zero import-time side effects beyond MongoClient
+# construction). Run these once via mongosh after deploy:
+#   db.profiles.createIndex({clerk_id: 1}, {unique: true})
+#   db.weight_logs.createIndex({user_id: 1, logged_at: -1})
+profiles: Collection = db["profiles"]
+weight_logs: Collection = db["weight_logs"]

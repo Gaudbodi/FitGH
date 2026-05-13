@@ -1,0 +1,30 @@
+{
+  "description": "FitGH weight log entry stored in the weight_logs collection. One document per weight entry, keyed on (user_id, logged_at). Added in Phase 2.",
+  "properties": {
+    "user_id": {
+      "pattern": "^user_[a-zA-Z0-9_]+$",
+      "title": "User Id",
+      "type": "string"
+    },
+    "kg": {
+      "maximum": 400.0,
+      "minimum": 20.0,
+      "title": "Kg",
+      "type": "number"
+    },
+    "logged_at": {
+      "format": "date-time",
+      "title": "Logged At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "kg",
+    "logged_at"
+  ],
+  "title": "WeightLog",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fitgh.vercel.app/schemas/weight-log.schema.json"
+}

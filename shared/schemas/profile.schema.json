@@ -1,0 +1,134 @@
+{
+  "description": "FitGH user profile stored in the profiles collection (one per Clerk user, keyed by clerk_id). Added in Phase 2 \u2014 Onboarding + Profile + Targets. Server-computed fields (daily_kcal_target, daily_protein_g_target, floor_hit, privacy_consent_at, created_at, updated_at) are derived from the onboarding form input via app.lib.tdee and must never be accepted from request bodies (T-02-07).",
+  "properties": {
+    "clerk_id": {
+      "pattern": "^user_[a-zA-Z0-9_]+$",
+      "title": "Clerk Id",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "sex": {
+      "enum": [
+        "male",
+        "female"
+      ],
+      "title": "Sex",
+      "type": "string"
+    },
+    "height_cm": {
+      "maximum": 230,
+      "minimum": 100,
+      "title": "Height Cm",
+      "type": "integer"
+    },
+    "weight_kg": {
+      "maximum": 300.0,
+      "minimum": 30.0,
+      "title": "Weight Kg",
+      "type": "number"
+    },
+    "age": {
+      "maximum": 100,
+      "minimum": 13,
+      "title": "Age",
+      "type": "integer"
+    },
+    "timezone": {
+      "minLength": 1,
+      "title": "Timezone",
+      "type": "string"
+    },
+    "locale": {
+      "enum": [
+        "ghana",
+        "diaspora"
+      ],
+      "title": "Locale",
+      "type": "string"
+    },
+    "activity_level": {
+      "enum": [
+        "sedentary",
+        "lightly_active",
+        "moderately_active",
+        "very_active",
+        "extra_active"
+      ],
+      "title": "Activity Level",
+      "type": "string"
+    },
+    "primary_goal": {
+      "enum": [
+        "weight_loss",
+        "muscle_gain"
+      ],
+      "title": "Primary Goal",
+      "type": "string"
+    },
+    "daily_kcal_target": {
+      "maximum": 10000,
+      "minimum": 1000,
+      "title": "Daily Kcal Target",
+      "type": "integer"
+    },
+    "daily_protein_g_target": {
+      "anyOf": [
+        {
+          "maximum": 600,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Daily Protein G Target"
+    },
+    "floor_hit": {
+      "default": false,
+      "title": "Floor Hit",
+      "type": "boolean"
+    },
+    "privacy_consent_at": {
+      "format": "date-time",
+      "title": "Privacy Consent At",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "clerk_id",
+    "name",
+    "sex",
+    "height_cm",
+    "weight_kg",
+    "age",
+    "timezone",
+    "locale",
+    "activity_level",
+    "primary_goal",
+    "daily_kcal_target",
+    "privacy_consent_at",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "Profile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fitgh.vercel.app/schemas/profile.schema.json"
+}
