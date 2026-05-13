@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 // Per WS-A.3: control caching by pinning to a single subset; Inter is the
@@ -30,6 +31,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.variable} antialiased font-sans`}>
           {children}
+          <Toaster richColors closeButton position="top-right" />
         </body>
       </html>
     </ClerkProvider>
