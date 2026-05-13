@@ -14,6 +14,13 @@
 
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// Phase 6 (Workout Library + PWA): /workouts(.*) is intentionally NOT in
+//   the protected route list. The workout library is browseable pre-login
+//   as an onboarding incentive (CONTEXT.md D-PUBLIC-WORKOUTS). The Clerk
+//   middleware default-public behaviour applies; no edit to
+//   isProtectedRoute is needed. T-01-01 inheritance (Phase 1 middleware
+//   threat model) still applies for /dashboard + /api/*.
+
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/onboarding(.*)",
