@@ -22,7 +22,6 @@ services:
     name: fitgh-api
     rootDir: backend
     env: python
-    runtime: python-3.12
     plan: starter
     region: oregon
     branch: main
