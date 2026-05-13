@@ -46,13 +46,15 @@ class Config:
     CLERK_AUTHORIZED_PARTIES: list[str] = field(
         default_factory=lambda: _csv("CLERK_AUTHORIZED_PARTIES")
     )
-    # Svix webhook signing secret (used only inside the Flask handler if we ever
-    # accept the webhook directly; in v1 the BFF does the svix verify).
-    CLERK_WEBHOOK_SECRET: str = field(
-        default_factory=lambda: os.environ.get("CLERK_WEBHOOK_SECRET", "")
-    )
+    # (CLERK_WEBHOOK_SECRET removed 2026-05-12: webhook route deleted in
+    # WS-E.1; sync-on-demand inside /me replaces the user.created upsert.)
 
     # CORS allowlist (SEC-03). NEVER '*' with credentials.
+    # Optional under the Render-only architecture — the BFF and Flask are on
+    # different Render hostnames but the browser only ever calls the BFF
+    # (same-origin), so Flask has no cross-origin browser callers in v1.
+    # If empty, Flask-CORS rejects all cross-origin browser requests, which
+    # is the intended posture.
     CORS_ALLOWED_ORIGINS: list[str] = field(
         default_factory=lambda: _csv("CORS_ALLOWED_ORIGINS")
     )
@@ -71,6 +73,11 @@ class Config:
 
         Called by create_app() at startup (when not in development). Tests may
         skip this by constructing Config() directly without calling validate().
+
+        2026-05-12 rewrite (WS-E.4): CORS_ALLOWED_ORIGINS is no longer
+        mandatory in production — under the Render-only architecture the BFF
+        and Flask are on different hosts but the browser only ever calls the
+        BFF (same-origin), so Flask has no cross-origin browser callers in v1.
         """
         # In production every var below is mandatory.
         if self.FLASK_ENV == "production":
@@ -79,8 +86,6 @@ class Config:
                 missing.append("CLERK_SECRET_KEY")
             if not self.CLERK_AUTHORIZED_PARTIES:
                 missing.append("CLERK_AUTHORIZED_PARTIES")
-            if not self.CORS_ALLOWED_ORIGINS:
-                missing.append("CORS_ALLOWED_ORIGINS")
             if not self.MONGODB_URI:
                 missing.append("MONGODB_URI")
             if missing:
