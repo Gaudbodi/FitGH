@@ -34,6 +34,28 @@ This document is the single load-bearing read for the roadmapper. Full detail li
 
 **Rejected (do not reopen):** Next.js 16, Vite, Tailwind v3, MUI/Chakra, NextAuth v5, Better Auth, Supabase Auth, hand-rolled JWT, MongoEngine/uMongo/Beanie, GPT-4o (v1), Claude Opus 4.7 (v1), Render free dyno, Railway, Cloudinary/UploadThing (v1), MongoDB GridFS for images, `mongodb` driver in Next.js.
 
+### Stack amendment 2026-05-12: Render-only deploy
+
+The original Phase 1 plan (Vercel frontend + Fly.io JNB backend + Clerk Dev/Prod twin + four CI gates + Sentry FE/BE wizards) was simplified to a single-platform Render deploy after a deliberate cost/complexity review. Full rationale: [`memory/render-only-rewrite.md`](../../../memory/render-only-rewrite.md).
+
+| Concern | Old pick | New pick (effective 2026-05-12) | Why |
+|---------|----------|---------------------------------|-----|
+| Frontend host | Vercel Hobby | **Render Free** (`fitgh-web` Node web service) | One platform to learn. Phase 7 can upgrade if Ghana p75 demands. |
+| Backend host | Fly.io JNB always-on + static egress IPv4 add-on | **Render Starter** $7/mo (`fitgh-api`, no cold starts) | Phase 4 vision loop locks out Render Free's 30–60 s cold start. Render-internal egress is acceptable without static IP because Atlas allowlist is `0.0.0.0/0` for v1. |
+| Auth | Clerk Dev + Prod twin (`pk_test_` + `pk_live_`) | **Clerk single Production instance** with `http://localhost:3000` + Render URL in Authorized Origins | One application, two origins. Skips the twin-instance config tax. |
+| CI gates | 4 workflows (frontend, backend, gitleaks, size-limit) | **One workflow** (`.github/workflows/ci.yml`) — pytest + pnpm build in parallel | Render reruns the build inside its container; CI is the cheap pre-flight gate. |
+| Webhook → user creation | Clerk `user.created` svix webhook to Flask `/webhooks/clerk` | **Sync-on-demand inside `/me`** ($setOnInsert upsert) | No webhook endpoint to host, no signature path to verify. |
+| Observability | Sentry FE + BE wizards live from Phase 1 | **Deferred (OBS-01)** — scrubber code stays, init no-ops until DSN is set | Re-enabling is one env-var away. |
+| Secrets gate | Local pre-commit `gitleaks` + CI `gitleaks` workflow | **Local pre-commit only** (custom MongoDB / Clerk / Sentry rules retained) | User owns local commits; Render env vars hold production secrets. |
+| Bundle size gate | `size-limit` 180 kB CI gate on `/dashboard` | **Manual `pnpm build` route-table check** at phase boundaries | No automated gate. Phase 7 may re-engage if real Ghana RUM data demands it. |
+| Atlas allowlist | Pinned to Fly.io static egress IP | **`0.0.0.0/0`** + 32-char password + scoped `readWrite@fitgh` role | Render Free/Starter egress isn't pinnable. Defense = password + role + TLS-only. |
+
+**Requirements deferred by the amendment:** SEC-01 (custom gitleaks CI), SEC-02 (Atlas allowlist tightening), SEC-03 (CORS hardening), OBS-01 (Sentry FE/BE), OBS-02 (Vercel Analytics — dropped), PERF-01 (size-limit CI gate). REQUIREMENTS.md traceability table is updated to reflect this.
+
+**Rationale (one paragraph):** at solo-build scale with no users yet, the operational complexity of two platforms + a Clerk twin + four CI gates + two Sentry wizards exceeded the user-visible value those layers buy in Phase 1. The wedge ("snap a meal, see kcal in seconds") doesn't depend on any of the deferred items being live for the first deploy. Each deferred requirement has a documented re-engagement path; none of them are gone, they're just not in the critical path for the first end-to-end proof.
+
+The original "Locked Stack Decisions" table above stays as a record of the v1 considered-and-chosen-against landscape. Anywhere it conflicts with this amendment, the amendment wins for Phase 1.
+
 ---
 
 ## Architecture Skeleton

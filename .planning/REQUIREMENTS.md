@@ -73,23 +73,23 @@
 
 ### Cross-Cutting / Non-Functional
 
-- [ ] **PERF-01**: First Load JS ≤ 180 KB gzipped per route (enforced by CI bundle-size gate from Phase 1)
+- [ ] **PERF-01**: First Load JS ≤ 180 KB gzipped per route (enforced by CI bundle-size gate from Phase 1) — *Deferred 2026-05-12: size-limit CI gate dropped in the Render-only rewrite; manual `pnpm build` route-table check at phase boundaries until a real bundle regression surfaces.*
 - [ ] **PERF-02**: Above-fold image budget ≤ 100 KB per route
 - [ ] **PERF-03**: Lighthouse mobile performance ≥ 90 on simulated mid-tier Android (Moto G Power, Slow 4G)
 - [ ] **PERF-04**: Real Ghana p75 TTFB measured from Lagos via WebPageTest before launch; gate launch on ≤ 2 s
-- [ ] **OBS-01**: Sentry captures frontend + backend errors with user privacy (no PII, no image data, no kcal totals in error context)
-- [ ] **OBS-02**: Vercel Analytics + Speed Insights track real-user perf on Vercel free tier
+- [ ] **OBS-01**: Sentry captures frontend + backend errors with user privacy (no PII, no image data, no kcal totals in error context) — *Deferred 2026-05-12: Sentry init no-ops when SENTRY_DSN_BACKEND is unset; scrubber contract enforced by tests since commit 1 so re-enabling is one env-var away.*
+- [ ] **OBS-02**: Vercel Analytics + Speed Insights track real-user perf on Vercel free tier — *Dropped 2026-05-12: no Vercel in the Render-only rewrite. If Render adds an analytics product worth integrating, Phase 6 or 7 picks it up.*
 - [ ] **OBS-03**: Sentry alert at $/DAU/day > $0.05 on the LLM cost metric
-- [ ] **SEC-01**: All secrets in `.env.local` / Fly.io secrets; `.env*` gitignored; `gitleaks` pre-commit hook in repo from Phase 1
-- [ ] **SEC-02**: Exposed MongoDB password rotated before Phase 1 deploy; least-privilege Atlas DB user (no admin)
-- [ ] **SEC-03**: Flask CORS configured with explicit origin allowlist (no `*` + credentials)
+- [ ] **SEC-01**: All secrets in `.env.local` / Render env vars; `.env*` gitignored; `gitleaks` pre-commit hook in repo from Phase 1 — *Deferred 2026-05-12: custom gitleaks CI rules dropped (local pre-commit hook with custom MongoDB / Clerk / Sentry rules remains in force).*
+- [ ] **SEC-02**: Exposed MongoDB password rotated before Phase 1 deploy; least-privilege Atlas DB user (no admin) — *Deferred 2026-05-12: `fitgh-app` user with 32-char password + scoped readWrite@fitgh role retained; Atlas allowlist relaxed to `0.0.0.0/0` because Render Free/Starter egress IPs aren't pinnable. Defense in depth = password + role + TLS-only.*
+- [ ] **SEC-03**: Flask CORS configured with explicit origin allowlist (no `*` + credentials) — *Deferred 2026-05-12: BFF same-origin posture (browser only talks to Next.js BFF; BFF -> Flask is Render-internal) moots the cross-origin browser path. Flask-CORS wiring kept; allowlist may be empty in v1.*
 - [ ] **SEC-04**: Flask uses a singleton `MongoClient` with `maxPoolSize=10` to respect M0 connection limits
 - [ ] **DATA-01**: Daily `mongodump` to Cloudflare R2 / similar; Atlas M0 has no native backups
 - [ ] **LEGAL-01**: Privacy policy live at launch, naming LLM-vision provider as a sub-processor
 - [ ] **LEGAL-02**: User can export all their data on request (account → data export endpoint)
 - [ ] **LEGAL-03**: Health-claim language audit: app is "fitness tracking," not "medical advice"; copy reviewed pre-launch
-- [ ] **DEPLOY-01**: Frontend deploys to Vercel from `/frontend` (App Router)
-- [ ] **DEPLOY-02**: Backend deploys to Fly.io in `jnb` region with always-on `shared-cpu-1x` 512 MB + static egress IP pinned in Atlas allowlist
+- [ ] **DEPLOY-01**: Frontend deploys to Render Free (`fitgh-web` Node web service) from `/frontend` via `render.yaml` Blueprint on `git push main`. *(Was Vercel until the 2026-05-12 rewrite.)*
+- [ ] **DEPLOY-02**: Backend deploys to Render Starter ($7/mo, no cold starts) (`fitgh-api` Python web service) from `/backend` via `render.yaml` Blueprint on `git push main`; `healthCheckPath: /health` rolls failed deploys back. *(Was Fly.io JNB until the 2026-05-12 rewrite.)*
 
 ## v2 Requirements
 
@@ -154,12 +154,12 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Phase 1 closing on Render deploy |
+| AUTH-02 | Phase 1 | Phase 1 closing on Render deploy |
+| AUTH-03 | Phase 1 | Phase 1 closing on Render deploy |
 | AUTH-04 | Phase 2 | Pending |
 | AUTH-05 | Phase 2 | Pending |
-| AUTH-06 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Phase 1 closing on Render deploy |
 | PROF-01 | Phase 2 | Pending |
 | PROF-02 | Phase 2 | Pending |
 | PROF-03 | Phase 2 | Pending |
@@ -202,23 +202,23 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | WORK-06 | Phase 6 | Pending |
 | WORK-07 | Phase 6 | Pending |
 | WORK-08 | Phase 6 | Pending |
-| PERF-01 | Phase 1 | Pending |
+| PERF-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | PERF-02 | Phase 6 | Pending |
 | PERF-03 | Phase 6 | Pending |
 | PERF-04 | Phase 7 | Pending |
-| OBS-01 | Phase 1 | Pending |
-| OBS-02 | Phase 1 | Pending |
+| OBS-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
+| OBS-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | OBS-03 | Phase 4 | Pending |
-| SEC-01 | Phase 1 | Pending |
-| SEC-02 | Phase 1 | Pending |
-| SEC-03 | Phase 1 | Pending |
-| SEC-04 | Phase 1 | Pending |
+| SEC-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
+| SEC-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
+| SEC-03 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
+| SEC-04 | Phase 1 | Phase 1 closing on Render deploy |
 | DATA-01 | Phase 3 | Pending |
 | LEGAL-01 | Phase 7 | Pending |
 | LEGAL-02 | Phase 7 | Pending |
 | LEGAL-03 | Phase 7 | Pending |
-| DEPLOY-01 | Phase 1 | Pending |
-| DEPLOY-02 | Phase 1 | Pending |
+| DEPLOY-01 | Phase 1 | In progress (Render) |
+| DEPLOY-02 | Phase 1 | In progress (Render) |
 
 **Coverage:**
 - v1 requirements: **65 total** (re-enumerated by roadmapper — original "60 total" tally was a miscount; categories breakdown: AUTH 6, PROF 7, LOG 8, VIS 12, DASH 7, WORK 8, PERF 4, OBS 3, SEC 4, DATA 1, LEGAL 3, DEPLOY 2)
