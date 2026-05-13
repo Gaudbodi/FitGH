@@ -260,10 +260,14 @@ def encode_webp(
 
 
 def download_image(client: httpx.Client, commit: str, rel: str) -> Image.Image:
-    """Fetch a Free Exercise DB image path (e.g. exercises/<id>/images/0.jpg)
-    and return a PIL Image. The repo stores images under /exercises/, NOT /dist/.
+    """Fetch a Free Exercise DB image path and return a PIL Image.
+
+    The `images` field in exercises.json holds paths like `3_4_Sit-Up/0.jpg`,
+    but the actual repo layout is `exercises/<id>/0.jpg` (no `images/`
+    subdir, despite the field name). Probed against the pinned commit on
+    2026-05-13 — `exercises/<id>/0.jpg` returns 200 vs. 404 for the others.
     """
-    url = f"{RAW_BASE}/{commit}/{rel.lstrip('/')}"
+    url = f"{RAW_BASE}/{commit}/exercises/{rel.lstrip('/')}"
     resp = client.get(url, timeout=30.0)
     resp.raise_for_status()
     return Image.open(io.BytesIO(resp.content))
