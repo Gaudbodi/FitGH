@@ -78,4 +78,15 @@ jobs:
         run: pnpm tsc --noEmit
 
       - name: Build
+        # Clerk v6 prerenders _not-found at build time; if no publishable key is
+        # present it throws. CI does not have a real key (Render's environment
+        # supplies the real one at deploy time). Use a placeholder key that
+        # base64-decodes to a syntactically-valid frontend API (`...$`) so the
+        # prerender passes — runtime auth on Render uses the real pk_live_*
+        # key from the service env. This key is NOT a secret; it cannot
+        # authenticate against any real Clerk instance.
+        env:
+          # base64 of "placeholder.clerk.accounts.dev$"
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_cGxhY2Vob2xkZXIuY2xlcmsuYWNjb3VudHMuZGV2JA
+          CLERK_SECRET_KEY: sk_test_ci_placeholder_not_a_real_secret
         run: pnpm build

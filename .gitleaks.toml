@@ -85,4 +85,13 @@ regexes = [
   '''mongodb\+srv://<user>:<password>@cluster0\.pcd3g\.mongodb\.net''',
   '''mongodb\+srv://fitgh-app:<password>@cluster0\.pcd3g\.mongodb\.net''',
   '''mongodb\+srv://fitgh-app:\*\*\*@cluster0\.pcd3g\.mongodb\.net''',
+  # CI build-time placeholder Clerk keys (WS-D.1). The publishable key
+  # base64-decodes to `placeholder.clerk.accounts.dev$`, which is not a
+  # real Clerk frontend API. The secret-key placeholder is literal text
+  # explicitly tagged with `ci_placeholder` so it cannot be mistaken for a
+  # real key by either humans or scanners.
+  '''pk_test_cGxhY2Vob2xkZXIuY2xlcmsuYWNjb3VudHMuZGV2JA''',
+  '''sk_test_ci_placeholder_not_a_real_secret''',
+  # pytest conftest.py stub secret (clearly named `stub_for_tests_x...`).
+  '''sk_test_stub_for_tests_x+''',
 ]
