@@ -114,6 +114,16 @@ def require_auth(f):
         # JWT verified. `sub` is the Clerk user id (e.g. user_2abc...); stash
         # on g so the route handler can use it without re-decoding.
         g.clerk_user_id = state.payload.get("sub")
+        # WS-E.2: also stash email if the JWT template includes it as a
+        # claim. /me uses this for the sync-on-demand upsert; if absent here,
+        # /me falls back to a one-time Clerk SDK fetch on the missing-user path.
+        # Clerk session JWTs by default do NOT include email — customize the
+        # JWT template in the Clerk dashboard (Sessions -> Customize session
+        # token) and add: `"email": "{{user.primary_email_address}}"`.
+        g.clerk_email = (
+            state.payload.get("email")
+            or state.payload.get("primary_email_address")
+        )
         return f(*args, **kwargs)
 
     return wrapper
