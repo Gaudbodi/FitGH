@@ -147,31 +147,9 @@ export function findExerciseById(
   return entries.find((e) => e.id === id);
 }
 
-// ---------------------------------------------------------------------------
-// Server-side manifest loader
-// ---------------------------------------------------------------------------
-
-/**
- * Read + validate the static manifest. SERVER-ONLY: uses node:fs/promises.
- *
- * Called from `/workouts/page.tsx` and `/workouts/[id]/page.tsx`. Next 15
- * dedupes the call across the same render. With `export const dynamic =
- * 'force-static'` set on both routes, this runs only at build time.
- */
-export async function loadManifest(): Promise<ExerciseEntry[]> {
-  // Import lazily so the function tree-shakes out of client bundles.
-  const { readFile } = await import("node:fs/promises");
-  const { join } = await import("node:path");
-  const manifestPath = join(
-    process.cwd(),
-    "public",
-    "exercises",
-    "manifest.json",
-  );
-  const raw = await readFile(manifestPath, "utf8");
-  const parsed = manifestSchema.parse(JSON.parse(raw));
-  return parsed.entries;
-}
+// Note: server-side `loadManifest()` lives in `./exercises.server.ts` so the
+// client bundle that imports filter helpers doesn't statically reference
+// node:fs/promises. Both modules share types + schema from this file.
 
 // ---------------------------------------------------------------------------
 // Display-label helpers (used by FilterBar + ExerciseCard)
