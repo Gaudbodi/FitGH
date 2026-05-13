@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "PortionDefault": {
+      "additionalProperties": false,
+      "description": "One culturally meaningful portion entry for a Ghana food.\n\nThe FIRST entry in a food's `portion_defaults` list is the Ghana-cultural\ncanonical portion (e.g. \"1 ball of banku\" = 200 g); subsequent entries are\ndiaspora alternatives (e.g. \"1 cup\" = 200 g, \"100 g\" = 100 g).",
+      "properties": {
+        "grams": {
+          "maximum": 2000,
+          "minimum": 1,
+          "title": "Grams",
+          "type": "integer"
+        },
+        "label": {
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "grams"
+      ],
+      "title": "PortionDefault",
+      "type": "object"
+    }
+  },
+  "$id": "https://fitgh.app/schemas/ghana-food.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "FitGH Ghana food catalogue entry stored read-only in the ghana_foods collection (Phase 3). Sourced from FAO/INFOODS WAFCT directly where possible; composite dishes such as jollof, waakye and shito use WAFCT-component summation tagged source=wafct_composite. JSON Schema is generated from app.models.ghana_food.GhanaFood and is the source of truth shared between Flask Pydantic validation and the frontend Zod mirror at frontend/src/lib/zod-schemas.ts.",
+  "properties": {
+    "alt_names": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Alt Names",
+      "type": "array"
+    },
+    "carbs_g_per_100g": {
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Carbs G Per 100G",
+      "type": "number"
+    },
+    "category": {
+      "enum": [
+        "staple",
+        "soup_stew",
+        "protein",
+        "side_snack"
+      ],
+      "title": "Category",
+      "type": "string"
+    },
+    "fat_g_per_100g": {
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Fat G Per 100G",
+      "type": "number"
+    },
+    "food_id": {
+      "pattern": "^gh-[a-z0-9-]+$",
+      "title": "Food Id",
+      "type": "string"
+    },
+    "kcal_per_100g": {
+      "maximum": 900.0,
+      "minimum": 0.0,
+      "title": "Kcal Per 100G",
+      "type": "number"
+    },
+    "name": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "portion_defaults": {
+      "items": {
+        "$ref": "#/$defs/PortionDefault"
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Portion Defaults",
+      "type": "array"
+    },
+    "protein_g_per_100g": {
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Protein G Per 100G",
+      "type": "number"
+    },
+    "source": {
+      "enum": [
+        "wafct",
+        "wafct_composite",
+        "usda"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "source_confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "Source Confidence",
+      "type": "string"
+    }
+  },
+  "required": [
+    "food_id",
+    "name",
+    "kcal_per_100g",
+    "protein_g_per_100g",
+    "fat_g_per_100g",
+    "carbs_g_per_100g",
+    "portion_defaults",
+    "category",
+    "source",
+    "source_confidence"
+  ],
+  "title": "GhanaFood",
+  "type": "object"
+}
