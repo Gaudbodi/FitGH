@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
@@ -29,8 +30,18 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.variable} antialiased font-sans`}>
-          {children}
+        <body className={`${inter.variable} antialiased font-sans flex min-h-screen flex-col`}>
+          <div className="flex-1">{children}</div>
+          {/* Global footer — AUTH-05: a /privacy link must be reachable
+              from every page. Phase 7 LEGAL-02 will expand this. */}
+          <footer className="border-t bg-muted/30 px-6 py-3 text-xs text-muted-foreground">
+            <div className="mx-auto flex max-w-2xl items-center justify-between">
+              <span>© FitGH</span>
+              <Link href="/privacy" className="underline-offset-4 hover:underline">
+                Privacy
+              </Link>
+            </div>
+          </footer>
           <Toaster richColors closeButton position="top-right" />
         </body>
       </html>
