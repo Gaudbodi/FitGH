@@ -10,11 +10,23 @@ module can be imported without side effects (important for pytest collection).
 
 from __future__ import annotations
 
-from flask import Flask
-from flask_cors import CORS
+from pathlib import Path
 
-from app.config import Config
-from app.extensions import init_sentry
+from dotenv import load_dotenv
+
+# Load .env.local (real secrets, gitignored) then .env from the backend dir.
+# python-dotenv does NOT override pre-existing env vars, so Render-injected env
+# in production and pytest monkeypatched env in tests both take precedence.
+# In local dev where neither is set, this picks up the file.
+_BACKEND_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(_BACKEND_DIR / ".env.local")
+load_dotenv(_BACKEND_DIR / ".env")
+
+from flask import Flask  # noqa: E402
+from flask_cors import CORS  # noqa: E402
+
+from app.config import Config  # noqa: E402
+from app.extensions import init_sentry  # noqa: E402
 
 
 def create_app(config: Config | None = None) -> Flask:
