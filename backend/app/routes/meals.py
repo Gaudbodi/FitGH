@@ -203,3 +203,90 @@ def post_meal():
     result = db_mod.meals.insert_one(doc)
     doc["_id"] = result.inserted_id
     return jsonify(_meal_to_json(doc)), 201
+
+
+# ---------------------------------------------------------------------------
+# GET /meals
+# ---------------------------------------------------------------------------
+
+
+def _profile_timezone(clerk_id: str) -> str | None:
+    profile = db_mod.profiles.find_one({"clerk_id": clerk_id})
+    if profile is None:
+        return None
+    return profile.get("timezone") or "UTC"
+
+
+@bp.get("/meals")
+@require_auth
+def get_meals():
+    clerk_id = g.clerk_user_id
+    date_str = request.args.get("date")
+
+    if date_str is not None:
+        # Single-day mode.
+        try:
+            target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return jsonify({"error": "invalid_date_param"}), 422
+
+        tz = _profile_timezone(clerk_id)
+        if tz is None:
+            return jsonify({"error": "no_profile"}), 422
+
+        zone = ZoneInfo(tz)
+        start_local = datetime.combine(target_date, time.min).replace(tzinfo=zone)
+        end_local = start_local + timedelta(days=1)
+        start_utc = start_local.astimezone(UTC)
+        end_utc = end_local.astimezone(UTC)
+
+        cursor = db_mod.meals.find(
+            {
+                "user_id": clerk_id,
+                "logged_at": {"$gte": start_utc, "$lt": end_utc},
+            }
+        ).sort("logged_at", 1)
+        docs = list(cursor)
+        total_k = sum(int(m.get("total_kcal", 0)) for m in docs)
+        total_p = sum(int(m.get("total_protein_g", 0)) for m in docs)
+        return (
+            jsonify(
+                {
+                    "date": date_str,
+                    "total_kcal": total_k,
+                    "total_protein_g": total_p,
+                    "meals": [_meal_to_json(m) for m in docs],
+                }
+            ),
+            200,
+        )
+
+    # N-day grouped history mode.
+    try:
+        days = int(request.args.get("days", "30"))
+    except ValueError:
+        days = 30
+    days = max(1, min(days, 30))
+
+    tz = _profile_timezone(clerk_id)
+    if tz is None:
+        return jsonify({"error": "no_profile"}), 422
+
+    zone = ZoneInfo(tz)
+    now_local = datetime.now(UTC).astimezone(zone)
+    today_local_midnight = datetime.combine(now_local.date(), time.min).replace(
+        tzinfo=zone
+    )
+    start_local = today_local_midnight - timedelta(days=days - 1)
+    end_local = today_local_midnight + timedelta(days=1)
+    start_utc = start_local.astimezone(UTC)
+    end_utc = end_local.astimezone(UTC)
+
+    cursor = db_mod.meals.find(
+        {
+            "user_id": clerk_id,
+            "logged_at": {"$gte": start_utc, "$lt": end_utc},
+        }
+    ).sort("logged_at", -1)
+    docs = list(cursor)
+    return jsonify({"days": _group_by_local_date(docs, tz)}), 200

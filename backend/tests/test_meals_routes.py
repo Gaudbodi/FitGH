@@ -352,3 +352,240 @@ def test_post_meal_uses_jwt_sub_for_user_id_not_body(
     rows = list(mongo_collections.meals.find({}))
     assert len(rows) == 1
     assert rows[0]["user_id"] == "user_a"
+
+
+# ===========================================================================
+# GET /meals?date= and ?days= — P3-B.3
+# ===========================================================================
+
+
+def _insert_meal(
+    mongo_collections,
+    user_id: str,
+    logged_at: datetime,
+    total_kcal: int = 500,
+    total_protein_g: int = 20,
+    components: list[dict] | None = None,
+) -> None:
+    now = datetime.now(UTC)
+    if components is None:
+        components = [
+            {
+                "name": "Jollof rice",
+                "matched_food_id": "gh-jollof-rice",
+                "portion_g": 300,
+                "kcal_low": None,
+                "kcal_high": None,
+                "kcal_point": total_kcal,
+                "protein_g_point": total_protein_g,
+                "confidence": None,
+                "source": "table",
+            }
+        ]
+    mongo_collections.meals.insert_one(
+        {
+            "user_id": user_id,
+            "logged_at": logged_at,
+            "source": "manual",
+            "components": components,
+            "total_kcal": total_kcal,
+            "total_protein_g": total_protein_g,
+            "ai_metadata": None,
+            "created_at": now,
+            "updated_at": now,
+        }
+    )
+
+
+def test_get_meals_date_returns_day_total_and_meals(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    # Two meals on 2026-05-13 in Accra (UTC+0 -> UTC same date).
+    _insert_meal(
+        mongo_collections,
+        "user_a",
+        datetime(2026, 5, 13, 8, 0, tzinfo=UTC),
+        total_kcal=400,
+        total_protein_g=10,
+    )
+    _insert_meal(
+        mongo_collections,
+        "user_a",
+        datetime(2026, 5, 13, 19, 30, tzinfo=UTC),
+        total_kcal=600,
+        total_protein_g=20,
+    )
+
+    r = client.get("/meals?date=2026-05-13", headers={"Authorization": "Bearer stub"})
+    assert r.status_code == 200, r.get_data(as_text=True)
+    out = r.get_json()
+    assert out["date"] == "2026-05-13"
+    assert out["total_kcal"] == 1000
+    assert out["total_protein_g"] == 30
+    assert len(out["meals"]) == 2
+
+
+def test_get_meals_date_isolated_by_user_id(
+    client, mongo_collections, monkeypatch
+):
+    """T-03-03: cross-user reads must not leak."""
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _seed_profile(mongo_collections, "user_b", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    _insert_meal(
+        mongo_collections,
+        "user_b",
+        datetime(2026, 5, 13, 12, 0, tzinfo=UTC),
+        total_kcal=999,
+    )
+    r = client.get(
+        "/meals?date=2026-05-13", headers={"Authorization": "Bearer stub"}
+    )
+    out = r.get_json()
+    assert out["meals"] == []
+    assert out["total_kcal"] == 0
+
+
+def test_get_meals_date_uses_profile_timezone_for_day_boundary(
+    client, mongo_collections, monkeypatch
+):
+    """Planner-flagged risk #1: 23:30 local in Accra is the same day's date
+    for an Accra user but the next-UTC-day for an LA user."""
+    _seed_profile(mongo_collections, "user_accra", timezone="Africa/Accra")
+    _seed_profile(
+        mongo_collections, "user_la", timezone="America/Los_Angeles"
+    )
+    # Meal logged at 2026-05-13 23:30 Accra local = 2026-05-13 23:30 UTC
+    # = 2026-05-13 16:30 PT (still 2026-05-13 in LA).
+    accra_local_2330 = datetime(2026, 5, 13, 23, 30, tzinfo=UTC)
+    _insert_meal(mongo_collections, "user_accra", accra_local_2330)
+    _insert_meal(mongo_collections, "user_la", accra_local_2330)
+
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_accra")
+    r1 = client.get(
+        "/meals?date=2026-05-13", headers={"Authorization": "Bearer stub"}
+    )
+    assert len(r1.get_json()["meals"]) == 1
+
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_la")
+    r2 = client.get(
+        "/meals?date=2026-05-13", headers={"Authorization": "Bearer stub"}
+    )
+    assert len(r2.get_json()["meals"]) == 1
+
+    # Meal logged at 2026-05-13 06:00 UTC = 2026-05-12 23:00 LA local.
+    early_utc = datetime(2026, 5, 13, 6, 0, tzinfo=UTC)
+    _insert_meal(mongo_collections, "user_la", early_utc)
+    r3 = client.get(
+        "/meals?date=2026-05-12", headers={"Authorization": "Bearer stub"}
+    )
+    # The new meal must show up under 2026-05-12 in LA's tz.
+    assert len(r3.get_json()["meals"]) == 1
+
+
+def test_get_meals_date_malformed_returns_422(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    r = client.get("/meals?date=2026/05/13", headers={"Authorization": "Bearer stub"})
+    assert r.status_code == 422
+
+
+def test_get_meals_date_no_profile_returns_422(
+    client, mongo_collections, monkeypatch
+):
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_orphan")
+    r = client.get(
+        "/meals?date=2026-05-13", headers={"Authorization": "Bearer stub"}
+    )
+    assert r.status_code == 422
+
+
+def test_get_meals_days_default_30_groups_correctly(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    now = datetime.now(UTC)
+    _insert_meal(mongo_collections, "user_a", now - timedelta(days=1), total_kcal=200)
+    _insert_meal(mongo_collections, "user_a", now - timedelta(days=2), total_kcal=300)
+    _insert_meal(mongo_collections, "user_a", now, total_kcal=400)
+    r = client.get("/meals", headers={"Authorization": "Bearer stub"})
+    assert r.status_code == 200
+    out = r.get_json()
+    assert "days" in out
+    assert len(out["days"]) == 3
+
+
+def test_get_meals_days_omits_empty_days(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    now = datetime.now(UTC)
+    _insert_meal(mongo_collections, "user_a", now - timedelta(days=10))
+    _insert_meal(mongo_collections, "user_a", now)
+    r = client.get("/meals?days=30", headers={"Authorization": "Bearer stub"})
+    out = r.get_json()
+    # Two non-empty days only; empty days between are skipped.
+    assert len(out["days"]) == 2
+
+
+def test_get_meals_days_clamps_to_1_30_range(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    r99 = client.get("/meals?days=99", headers={"Authorization": "Bearer stub"})
+    assert r99.status_code == 200
+    r0 = client.get("/meals?days=0", headers={"Authorization": "Bearer stub"})
+    assert r0.status_code == 200
+
+
+def test_get_meals_days_groups_by_user_local_date_not_utc(
+    client, mongo_collections, monkeypatch
+):
+    """A meal logged at 23:30 Africa/Accra appears under 2026-05-13 not 14."""
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    # 2026-05-13 23:30 UTC == 2026-05-13 23:30 Accra
+    _insert_meal(
+        mongo_collections,
+        "user_a",
+        datetime(2026, 5, 13, 23, 30, tzinfo=UTC),
+    )
+    r = client.get("/meals?days=30", headers={"Authorization": "Bearer stub"})
+    out = r.get_json()
+    if out["days"]:
+        # The day key must reflect Accra local, not UTC drift.
+        assert out["days"][0]["date"] == "2026-05-13"
+
+
+def test_get_meals_days_isolated_by_user_id(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _seed_profile(mongo_collections, "user_b")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    _insert_meal(mongo_collections, "user_b", datetime.now(UTC))
+    r = client.get("/meals?days=30", headers={"Authorization": "Bearer stub"})
+    out = r.get_json()
+    assert out["days"] == []
+
+
+def test_get_meals_days_newest_first(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a", timezone="Africa/Accra")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    now = datetime.now(UTC)
+    _insert_meal(mongo_collections, "user_a", now - timedelta(days=3), total_kcal=100)
+    _insert_meal(mongo_collections, "user_a", now - timedelta(days=1), total_kcal=200)
+    _insert_meal(mongo_collections, "user_a", now, total_kcal=300)
+    r = client.get("/meals?days=30", headers={"Authorization": "Bearer stub"})
+    out = r.get_json()
+    dates = [d["date"] for d in out["days"]]
+    assert dates == sorted(dates, reverse=True)
