@@ -1,0 +1,2315 @@
+{
+  "meta": {
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "commit": "acd61f751fe15d618862ee3084f27e839222a28f",
+    "license": "Unlicense",
+    "generated_at": "2026-05-13T13:44:50.353866Z"
+  },
+  "entries": [
+    {
+      "id": "3_4_Sit-Up",
+      "name": "3/4 Sit-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie down on the floor and secure your feet. Your legs should be bent at the knees.",
+        "Place your hands behind or to the side of your head. You will begin with your back on the ground. This will be your starting position.",
+        "Flex your hips and spine to raise your torso toward your knees.",
+        "At the top of the contraction your torso should be perpendicular to the ground. Reverse the motion, going only \u00be of the way down.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/3_4_Sit-Up/poster.webp",
+      "detail": "/exercises/3_4_Sit-Up/detail.webp"
+    },
+    {
+      "id": "Advanced_Kettlebell_Windmill",
+      "name": "Advanced Kettlebell Windmill",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "isolation",
+      "instructions": [
+        "Clean and press a kettlebell overhead with one arm.",
+        "Keeping the kettlebell locked out at all times, push your butt out in the direction of the locked out kettlebell. Keep the non-working arm behind your back and turn your feet out at a forty-five degree angle from the arm with the kettlebell.",
+        "Lower yourself as far as possible.",
+        "Pause for a second and reverse the motion back to the starting position."
+      ],
+      "poster": "/exercises/Advanced_Kettlebell_Windmill/poster.webp",
+      "detail": "/exercises/Advanced_Kettlebell_Windmill/detail.webp"
+    },
+    {
+      "id": "Air_Bike",
+      "name": "Air Bike",
+      "equipment": "none",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie flat on the floor with your lower back pressed to the ground. For this exercise, you will need to put your hands beside your head. Be careful however to not strain with the neck as you perform it. Now lift your shoulders into the crunch position.",
+        "Bring knees up to where they are perpendicular to the floor, with your lower legs parallel to the floor. This will be your starting position.",
+        "Now simultaneously, slowly go through a cycle pedal motion kicking forward with the right leg and bringing in the knee of the left leg. Bring your right elbow close to your left knee by crunching to the side, as you breathe out.",
+        "Go back to the initial position as you breathe in.",
+        "Crunch to the opposite side as you cycle your legs and bring closer your left elbow to your right knee and exhale.",
+        "Continue alternating in this manner until all of the recommended repetitions for each side have been completed."
+      ],
+      "poster": "/exercises/Air_Bike/poster.webp",
+      "detail": "/exercises/Air_Bike/detail.webp"
+    },
+    {
+      "id": "Alternate_Hammer_Curl",
+      "name": "Alternate Hammer Curl",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up with your torso upright and a dumbbell in each hand being held at arms length. The elbows should be close to the torso.",
+        "The palms of the hands should be facing your torso. This will be your starting position.",
+        "While holding the upper arm stationary, curl the right weight forward while contracting the biceps as you breathe out. Continue the movement until your biceps is fully contracted and the dumbbells are at shoulder level. Hold the contracted position for a second as you squeeze the biceps. Tip: Only the forearms should move.",
+        "Slowly begin to bring the dumbbells back to starting position as your breathe in.",
+        "Repeat the movement with the left hand. This equals one repetition.",
+        "Continue alternating in this manner for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Alternate_Hammer_Curl/poster.webp",
+      "detail": "/exercises/Alternate_Hammer_Curl/detail.webp"
+    },
+    {
+      "id": "Alternate_Heel_Touchers",
+      "name": "Alternate Heel Touchers",
+      "equipment": "none",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Lie on the floor with the knees bent and the feet on the floor around 18-24 inches apart. Your arms should be extended by your side. This will be your starting position.",
+        "Crunch over your torso forward and up about 3-4 inches to the right side and touch your right heel as you hold the contraction for a second. Exhale while performing this movement.",
+        "Now go back slowly to the starting position as you inhale.",
+        "Now crunch over your torso forward and up around 3-4 inches to the left side and touch your left heel as you hold the contraction for a second. Exhale while performing this movement and then go back to the starting position as you inhale. Now that both heels have been touched, that is considered 1 repetition.",
+        "Continue alternating sides in this manner until all prescribed repetitions are done."
+      ],
+      "poster": "/exercises/Alternate_Heel_Touchers/poster.webp",
+      "detail": "/exercises/Alternate_Heel_Touchers/detail.webp"
+    },
+    {
+      "id": "Alternate_Incline_Dumbbell_Curl",
+      "name": "Alternate Incline Dumbbell Curl",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Sit down on an incline bench with a dumbbell in each hand being held at arms length. Tip: Keep the elbows close to the torso.This will be your starting position.",
+        "While holding the upper arm stationary, curl the right weight forward while contracting the biceps as you breathe out. As you do so, rotate the hand so that the palm is facing up. Continue the movement until your biceps is fully contracted and the dumbbells are at shoulder level. Hold the contracted position for a second as you squeeze the biceps. Tip: Only the forearms should move.",
+        "Slowly begin to bring the dumbbell back to starting position as your breathe in.",
+        "Repeat the movement with the left hand. This equals one repetition.",
+        "Continue alternating in this manner for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Alternate_Incline_Dumbbell_Curl/poster.webp",
+      "detail": "/exercises/Alternate_Incline_Dumbbell_Curl/detail.webp"
+    },
+    {
+      "id": "Alternating_Deltoid_Raise",
+      "name": "Alternating Deltoid Raise",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "In a standing position, hold a pair of dumbbells at your side.",
+        "Keeping your elbows slightly bent, raise the weights directly in front of you to shoulder height, avoiding any swinging or cheating.",
+        "Return the weights to your side.",
+        "On the next repetition, raise the weights laterally, raising them out to your side to about shoulder height.",
+        "Return the weights to the starting position and continue alternating to the front and side."
+      ],
+      "poster": "/exercises/Alternating_Deltoid_Raise/poster.webp",
+      "detail": "/exercises/Alternating_Deltoid_Raise/detail.webp"
+    },
+    {
+      "id": "Alternating_Floor_Press",
+      "name": "Alternating Floor Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "core",
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on the floor with two kettlebells next to your shoulders.",
+        "Position one in place on your chest and then the other, gripping the kettlebells on the handle with the palms facing forward.",
+        "Extend both arms, so that the kettlebells are being held above your chest. Lower one kettlebell, bringing it to your chest and turn the wrist in the direction of the locked out kettlebell.",
+        "Raise the kettlebell and repeat on the opposite side."
+      ],
+      "poster": "/exercises/Alternating_Floor_Press/poster.webp",
+      "detail": "/exercises/Alternating_Floor_Press/detail.webp"
+    },
+    {
+      "id": "Alternating_Hang_Clean",
+      "name": "Alternating Hang Clean",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "legs",
+        "arms",
+        "glutes",
+        "back",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place two kettlebells between your feet. To get in the starting position, push your butt back and look straight ahead.",
+        "Clean one kettlebell to your shoulder and hold on to the other kettlebell in a hanging position. Clean the kettlebell to your shoulder by extending through the legs and hips as you pull the kettlebell towards your shoulders. Rotate your wrist as you do so.",
+        "Lower the cleaned kettlebell to a hanging position and clean the alternate kettlebell. Repeat."
+      ],
+      "poster": "/exercises/Alternating_Hang_Clean/poster.webp",
+      "detail": "/exercises/Alternating_Hang_Clean/detail.webp"
+    },
+    {
+      "id": "Alternating_Kettlebell_Press",
+      "name": "Alternating Kettlebell Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Clean two kettlebells to your shoulders. Clean the kettlebells to your shoulders by extending through the legs and hips as you pull the kettlebells towards your shoulders. Rotate your wrists as you do so.",
+        "Press one directly overhead by extending through the elbow, turning it so the palm faces forward while holding the other kettlebell stationary .",
+        "Lower the pressed kettlebell to the starting position and immediately press with your other arm."
+      ],
+      "poster": "/exercises/Alternating_Kettlebell_Press/poster.webp",
+      "detail": "/exercises/Alternating_Kettlebell_Press/detail.webp"
+    },
+    {
+      "id": "Alternating_Kettlebell_Row",
+      "name": "Alternating Kettlebell Row",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "isolation",
+      "instructions": [
+        "Place two kettlebells in front of your feet. Bend your knees slightly and push your butt out as much as possible. As you bend over to get into the starting position grab both kettlebells by the handles.",
+        "Pull one kettlebell off of the floor while holding on to the other kettlebell. Retract the shoulder blade of the working side, as you flex the elbow, drawing the kettlebell towards your stomach or rib cage.",
+        "Lower the kettlebell in the working arm and repeat with your other arm."
+      ],
+      "poster": "/exercises/Alternating_Kettlebell_Row/poster.webp",
+      "detail": "/exercises/Alternating_Kettlebell_Row/detail.webp"
+    },
+    {
+      "id": "Alternating_Renegade_Row",
+      "name": "Alternating Renegade Row",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "core",
+        "arms",
+        "chest",
+        "back",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "expert",
+      "mechanic": "compound",
+      "instructions": [
+        "Place two kettlebells on the floor about shoulder width apart. Position yourself on your toes and your hands as though you were doing a pushup, with the body straight and extended. Use the handles of the kettlebells to support your upper body. You may need to position your feet wide for support.",
+        "Push one kettlebell into the floor and row the other kettlebell, retracting the shoulder blade of the working side as you flex the elbow, pulling it to your side.",
+        "Then lower the kettlebell to the floor and begin the kettlebell in the opposite hand. Repeat for several reps."
+      ],
+      "poster": "/exercises/Alternating_Renegade_Row/poster.webp",
+      "detail": "/exercises/Alternating_Renegade_Row/detail.webp"
+    },
+    {
+      "id": "Anti-Gravity_Press",
+      "name": "Anti-Gravity Press",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "back",
+        "back",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a bar on the ground behind the head of an incline bench.",
+        "Lay on the bench face down. With a pronated grip, pick the barbell up from the floor. Flex the elbows, performing a reverse curl to bring the bar near your chest. This will be your starting position.",
+        "To begin, press the barbell out in front of your head by extending your elbows. Keep your arms parallel to the ground throughout the movement.",
+        "Return to the starting position and repeat to complete the set."
+      ],
+      "poster": "/exercises/Anti-Gravity_Press/poster.webp",
+      "detail": "/exercises/Anti-Gravity_Press/detail.webp"
+    },
+    {
+      "id": "Arnold_Dumbbell_Press",
+      "name": "Arnold Dumbbell Press",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Sit on an exercise bench with back support and hold two dumbbells in front of you at about upper chest level with your palms facing your body and your elbows bent. Tip: Your arms should be next to your torso. The starting position should look like the contracted portion of a dumbbell curl.",
+        "Now to perform the movement, raise the dumbbells as you rotate the palms of your hands until they are facing forward.",
+        "Continue lifting the dumbbells until your arms are extended above you in straight arm position. Breathe out as you perform this portion of the movement.",
+        "After a second pause at the top, begin to lower the dumbbells to the original position by rotating the palms of your hands towards you. Tip: The left arm will be rotated in a counter clockwise manner while the right one will be rotated clockwise. Breathe in as you perform this portion of the movement.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Arnold_Dumbbell_Press/poster.webp",
+      "detail": "/exercises/Arnold_Dumbbell_Press/detail.webp"
+    },
+    {
+      "id": "Around_The_Worlds",
+      "name": "Around The Worlds",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Lay down on a flat bench holding a dumbbell in each hand with the palms of the hands facing towards the ceiling. Tip: Your arms should be parallel to the floor and next to your thighs. To avoid injury, make sure that you keep your elbows slightly bent. This will be your starting position.",
+        "Now move the dumbbells by creating a semi-circle as you displace them from the initial position to over the head. All of the movement should happen with the arms parallel to the floor at all times. Breathe in as you perform this portion of the movement.",
+        "Reverse the movement to return the weight to the starting position as you exhale."
+      ],
+      "poster": "/exercises/Around_The_Worlds/poster.webp",
+      "detail": "/exercises/Around_The_Worlds/detail.webp"
+    },
+    {
+      "id": "Back_Flyes_-_With_Bands",
+      "name": "Back Flyes - With Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "back",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Run a band around a stationary post like that of a squat rack.",
+        "Grab the band by the handles and stand back so that the tension in the band rises.",
+        "Extend and lift the arms straight in front of you. Tip: Your arms should be straight and parallel to the floor while perpendicular to your torso. Your feet should be firmly planted on the floor spread at shoulder width. This will be your starting position.",
+        "As you exhale, move your arms to the sides and back. Keep your arms extended and parallel to the floor. Continue the movement until the arms are extended to your sides.",
+        "After a pause, go back to the original position as you inhale.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Back_Flyes_-_With_Bands/poster.webp",
+      "detail": "/exercises/Back_Flyes_-_With_Bands/detail.webp"
+    },
+    {
+      "id": "Band_Hip_Adductions",
+      "name": "Band Hip Adductions",
+      "equipment": "bands",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Anchor a band around a solid post or other object.",
+        "Stand with your left side to the post, and put your right foot through the band, getting it around the ankle.",
+        "Stand up straight and hold onto the post if needed. This will be your starting position.",
+        "Keeping the knee straight, raise your right legs out to the side as far as you can.",
+        "Return to the starting position and repeat for the desired rep count.",
+        "Switch sides."
+      ],
+      "poster": "/exercises/Band_Hip_Adductions/poster.webp",
+      "detail": "/exercises/Band_Hip_Adductions/detail.webp"
+    },
+    {
+      "id": "Band_Pull_Apart",
+      "name": "Band Pull Apart",
+      "equipment": "bands",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "back",
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Begin with your arms extended straight out in front of you, holding the band with both hands.",
+        "Initiate the movement by performing a reverse fly motion, moving your hands out laterally to your sides.",
+        "Keep your elbows extended as you perform the movement, bringing the band to your chest. Ensure that you keep your shoulders back during the exercise.",
+        "Pause as you complete the movement, returning to the starting position under control."
+      ],
+      "poster": "/exercises/Band_Pull_Apart/poster.webp",
+      "detail": "/exercises/Band_Pull_Apart/detail.webp"
+    },
+    {
+      "id": "Band_Skull_Crusher",
+      "name": "Band Skull Crusher",
+      "equipment": "bands",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Secure a band to the base of a rack or the bench. Lay on the bench so that the band is lined up with your head.",
+        "Take hold of the band, raising your elbows so that the upper arm is perpendicular to the floor. With the elbow flexed, the band should be above your head. This will be your starting position.",
+        "Extend through the elbow to straighten your arm, keeping your upper arm in place. Pause at the top of the motion, and return to the starting position."
+      ],
+      "poster": "/exercises/Band_Skull_Crusher/poster.webp",
+      "detail": "/exercises/Band_Skull_Crusher/detail.webp"
+    },
+    {
+      "id": "Barbell_Ab_Rollout",
+      "name": "Barbell Ab Rollout",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "back",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "For this exercise you will need to get into a pushup position, but instead of having your hands of the floor, you will be grabbing on to an Olympic barbell (loaded with 5-10 lbs on each side) instead. This will be your starting position.",
+        "While keeping a slight arch on your back, lift your hips and roll the barbell towards your feet as you exhale. Tip: As you perform the movement, your glutes should be coming up, you should be keeping the abs tight and should maintain your back posture at all times. Also your arms should be staying perpendicular to the floor throughout the movement. If you don't, you will work out your shoulders and back more than the abs.",
+        "After a second contraction at the top, start to roll the barbell back forward to the starting position slowly as you inhale.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Ab_Rollout/poster.webp",
+      "detail": "/exercises/Barbell_Ab_Rollout/detail.webp"
+    },
+    {
+      "id": "Barbell_Ab_Rollout_-_On_Knees",
+      "name": "Barbell Ab Rollout - On Knees",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "back",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "expert",
+      "mechanic": "compound",
+      "instructions": [
+        "Hold an Olympic barbell loaded with 5-10lbs on each side and kneel on the floor.",
+        "Now place the barbell on the floor in front of you so that you are on all your hands and knees (as in a kneeling push up position). This will be your starting position.",
+        "Slowly roll the barbell straight forward, stretching your body into a straight position. Tip: Go down as far as you can without touching the floor with your body. Breathe in during this portion of the movement.",
+        "After a second pause at the stretched position, start pulling yourself back to the starting position as you breathe out. Tip: Go slowly and keep your abs tight at all times."
+      ],
+      "poster": "/exercises/Barbell_Ab_Rollout_-_On_Knees/poster.webp",
+      "detail": "/exercises/Barbell_Ab_Rollout_-_On_Knees/detail.webp"
+    },
+    {
+      "id": "Barbell_Bench_Press_-_Medium_Grip",
+      "name": "Barbell Bench Press - Medium Grip",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie back on a flat bench. Using a medium width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over you with your arms locked. This will be your starting position.",
+        "From the starting position, breathe in and begin coming down slowly until the bar touches your middle chest.",
+        "After a brief pause, push the bar back to the starting position as you breathe out. Focus on pushing the bar using your chest muscles. Lock your arms and squeeze your chest in the contracted position at the top of the motion, hold for a second and then start coming down slowly again. Tip: Ideally, lowering the weight should take about twice as long as raising it.",
+        "Repeat the movement for the prescribed amount of repetitions.",
+        "When you are done, place the bar back in the rack."
+      ],
+      "poster": "/exercises/Barbell_Bench_Press_-_Medium_Grip/poster.webp",
+      "detail": "/exercises/Barbell_Bench_Press_-_Medium_Grip/detail.webp"
+    },
+    {
+      "id": "Barbell_Curl",
+      "name": "Barbell Curl",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up with your torso upright while holding a barbell at a shoulder-width grip. The palm of your hands should be facing forward and the elbows should be close to the torso. This will be your starting position.",
+        "While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move.",
+        "Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard.",
+        "Slowly begin to bring the bar back to starting position as your breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Curl/poster.webp",
+      "detail": "/exercises/Barbell_Curl/detail.webp"
+    },
+    {
+      "id": "Barbell_Curls_Lying_Against_An_Incline",
+      "name": "Barbell Curls Lying Against An Incline",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Lie against an incline bench, with your arms holding a barbell and hanging down in a horizontal line. This will be your starting position.",
+        "While keeping the upper arms stationary, curl the weight up as high as you can while squeezing the biceps. Breathe out as you perform this portion of the movement. Tip: Only the forearms should move. Do not swing the arms.",
+        "After a second contraction, slowly go back to the starting position as you inhale. Tip: Make sure that you go all of the way down.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Curls_Lying_Against_An_Incline/poster.webp",
+      "detail": "/exercises/Barbell_Curls_Lying_Against_An_Incline/detail.webp"
+    },
+    {
+      "id": "Barbell_Deadlift",
+      "name": "Barbell Deadlift",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "arms",
+        "glutes",
+        "legs",
+        "back",
+        "back",
+        "legs",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand in front of a loaded barbell.",
+        "While keeping the back as straight as possible, bend your knees, bend forward and grasp the bar using a medium (shoulder width) overhand grip. This will be the starting position of the exercise. Tip: If it is difficult to hold on to the bar with this grip, alternate your grip or use wrist straps.",
+        "While holding the bar, start the lift by pushing with your legs while simultaneously getting your torso to the upright position as you breathe out. In the upright position, stick your chest out and contract the back by bringing the shoulder blades back. Think of how the soldiers in the military look when they are in standing in attention.",
+        "Go back to the starting position by bending at the knees while simultaneously leaning the torso forward at the waist while keeping the back straight. When the weights on the bar touch the floor you are back at the starting position and ready to perform another repetition.",
+        "Perform the amount of repetitions prescribed in the program."
+      ],
+      "poster": "/exercises/Barbell_Deadlift/poster.webp",
+      "detail": "/exercises/Barbell_Deadlift/detail.webp"
+    },
+    {
+      "id": "Barbell_Full_Squat",
+      "name": "Barbell Full Squat",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "This exercise is best performed inside a squat rack for safety purposes. To begin, first set the bar on a rack just above shoulder level. Once the correct height is chosen and the bar is loaded, step under the bar and place the back of your shoulders (slightly below the neck) across it.",
+        "Hold on to the bar using both arms at each side and lift it off the rack by first pushing with your legs and at the same time straightening your torso.",
+        "Step away from the rack and position your legs using a shoulder-width medium stance with the toes slightly pointed out. Keep your head up at all times and maintain a straight back. This will be your starting position.",
+        "Begin to slowly lower the bar by bending the knees and sitting back with your hips as you maintain a straight posture with the head up. Continue down until your hamstrings are on your calves. Inhale as you perform this portion of the movement.",
+        "Begin to raise the bar as you exhale by pushing the floor with the heel or middle of your foot as you straighten the legs and extend the hips to go back to the starting position.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Full_Squat/poster.webp",
+      "detail": "/exercises/Barbell_Full_Squat/detail.webp"
+    },
+    {
+      "id": "Barbell_Guillotine_Bench_Press",
+      "name": "Barbell Guillotine Bench Press",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Using a medium width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over your neck with your arms locked. This will be your starting position.",
+        "As you breathe in, bring the bar down slowly until it is about 1 inch from your neck.",
+        "After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your chest muscles. Lock your arms and squeeze your chest in the contracted position, hold for a second and then start coming down slowly again. It should take at least twice as long to go down than to come up.",
+        "Repeat the movement for the prescribed amount of repetitions.",
+        "When you are done, place the bar back in the rack."
+      ],
+      "poster": "/exercises/Barbell_Guillotine_Bench_Press/poster.webp",
+      "detail": "/exercises/Barbell_Guillotine_Bench_Press/detail.webp"
+    },
+    {
+      "id": "Barbell_Hack_Squat",
+      "name": "Barbell Hack Squat",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "arms",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand up straight while holding a barbell behind you at arms length and your feet at shoulder width. Tip: A shoulder width grip is best with the palms of your hands facing back. You can use wrist wraps for this exercise for a better grip. This will be your starting position.",
+        "While keeping your head and eyes up and back straight, squat until your upper thighs are parallel to the floor. Breathe in as you slowly go down.",
+        "Pressing mainly with the heel of the foot and squeezing the thighs, go back up as you breathe out.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Hack_Squat/poster.webp",
+      "detail": "/exercises/Barbell_Hack_Squat/detail.webp"
+    },
+    {
+      "id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+      "name": "Barbell Incline Bench Press - Medium Grip",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie back on an incline bench. Using a medium-width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over you with your arms locked. This will be your starting position.",
+        "As you breathe in, come down slowly until you feel the bar on you upper chest.",
+        "After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your chest muscles. Lock your arms in the contracted position, squeeze your chest, hold for a second and then start coming down slowly again. Tip: it should take at least twice as long to go down than to come up.",
+        "Repeat the movement for the prescribed amount of repetitions.",
+        "When you are done, place the bar back in the rack."
+      ],
+      "poster": "/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/poster.webp",
+      "detail": "/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/detail.webp"
+    },
+    {
+      "id": "Barbell_Incline_Shoulder_Raise",
+      "name": "Barbell Incline Shoulder Raise",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "chest"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie back on an Incline Bench. Using a medium width grip (a grip that is slightly wider than shoulder width), lift the bar from the rack and hold it straight over you with your arms straight. This will be your starting position.",
+        "While keeping the arms straight, lift the bar by protracting your shoulder blades, raising the shoulders from the bench as you breathe out.",
+        "Bring back the bar to the starting position as you breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Incline_Shoulder_Raise/poster.webp",
+      "detail": "/exercises/Barbell_Incline_Shoulder_Raise/detail.webp"
+    },
+    {
+      "id": "Barbell_Lunge",
+      "name": "Barbell Lunge",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "This exercise is best performed inside a squat rack for safety purposes. To begin, first set the bar on a rack just below shoulder level. Once the correct height is chosen and the bar is loaded, step under the bar and place the back of your shoulders (slightly below the neck) across it.",
+        "Hold on to the bar using both arms at each side and lift it off the rack by first pushing with your legs and at the same time straightening your torso.",
+        "Step away from the rack and step forward with your right leg and squat down through your hips, while keeping the torso upright and maintaining balance. Inhale as you go down. Note: Do not allow your knee to go forward beyond your toes as you come down, as this will put undue stress on the knee joint. li>",
+        "Using mainly the heel of your foot, push up and go back to the starting position as you exhale.",
+        "Repeat the movement for the recommended amount of repetitions and then perform with the left leg."
+      ],
+      "poster": "/exercises/Barbell_Lunge/poster.webp",
+      "detail": "/exercises/Barbell_Lunge/detail.webp"
+    },
+    {
+      "id": "Barbell_Rear_Delt_Row",
+      "name": "Barbell Rear Delt Row",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back",
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand up straight while holding a barbell using a wide (higher than shoulder width) and overhand (palms facing your body) grip.",
+        "Bend knees slightly and bend over as you keep the natural arch of your back. Let the arms hang in front of you as they hold the bar. Once your torso is parallel to the floor, flare the elbows out and away from your body. Tip: Your torso and your arms should resemble the letter \"T\". Now you are ready to begin the exercise.",
+        "While keeping the upper arms perpendicular to the torso, pull the barbell up towards your upper chest as you squeeze the rear delts and you breathe out. Tip: When performed correctly, this exercise should resemble a bench press in reverse. Also, refrain from using your biceps to do the work. Focus on targeting the rear delts; the arms should only act as hooks.",
+        "Slowly go back to the initial position as you breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Rear_Delt_Row/poster.webp",
+      "detail": "/exercises/Barbell_Rear_Delt_Row/detail.webp"
+    },
+    {
+      "id": "Barbell_Rollout_from_Bench",
+      "name": "Barbell Rollout from Bench",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs",
+        "back",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a loaded barbell on the ground, near the end of a bench. Kneel with both legs on the bench, and take a medium to narrow grip on the barbell. This will be your starting position.",
+        "To begin, extend through the hips to slowly roll the bar forward. As you roll out, flex the shoulder to roll the bar above your head. Ensure that your arms remain extended throughout the movement.",
+        "When the bar has been moved as far forward as possible, return to the starting position."
+      ],
+      "poster": "/exercises/Barbell_Rollout_from_Bench/poster.webp",
+      "detail": "/exercises/Barbell_Rollout_from_Bench/detail.webp"
+    },
+    {
+      "id": "Barbell_Seated_Calf_Raise",
+      "name": "Barbell Seated Calf Raise",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Place a block about 12 inches in front of a flat bench.",
+        "Sit on the bench and place the ball of your feet on the block.",
+        "Have someone place a barbell over your upper thighs about 3 inches above your knees and hold it there. This will be your starting position.",
+        "Raise up on your toes as high as possible as you squeeze the calves and as you breathe out.",
+        "After a second contraction, slowly go back to the starting position. Tip: To get maximum benefit stretch your calves as far as you can.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Seated_Calf_Raise/poster.webp",
+      "detail": "/exercises/Barbell_Seated_Calf_Raise/detail.webp"
+    },
+    {
+      "id": "Barbell_Shoulder_Press",
+      "name": "Barbell Shoulder Press",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "chest",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Sit on a bench with back support in a squat rack. Position a barbell at a height that is just above your head. Grab the barbell with a pronated grip (palms facing forward).",
+        "Once you pick up the barbell with the correct grip width, lift the bar up over your head by locking your arms. Hold at about shoulder level and slightly in front of your head. This is your starting position.",
+        "Lower the bar down to the shoulders slowly as you inhale.",
+        "Lift the bar back up to the starting position as you exhale.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Shoulder_Press/poster.webp",
+      "detail": "/exercises/Barbell_Shoulder_Press/detail.webp"
+    },
+    {
+      "id": "Barbell_Shrug",
+      "name": "Barbell Shrug",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up straight with your feet at shoulder width as you hold a barbell with both hands in front of you using a pronated grip (palms facing the thighs). Tip: Your hands should be a little wider than shoulder width apart. You can use wrist wraps for this exercise for a better grip. This will be your starting position.",
+        "Raise your shoulders up as far as you can go as you breathe out and hold the contraction for a second. Tip: Refrain from trying to lift the barbell by using your biceps.",
+        "Slowly return to the starting position as you breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Shrug/poster.webp",
+      "detail": "/exercises/Barbell_Shrug/detail.webp"
+    },
+    {
+      "id": "Barbell_Shrug_Behind_The_Back",
+      "name": "Barbell Shrug Behind The Back",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up straight with your feet at shoulder width as you hold a barbell with both hands behind your back using a pronated grip (palms facing back). Tip: Your hands should be a little wider than shoulder width apart. You can use wrist wraps for this exercise for better grip. This will be your starting position.",
+        "Raise your shoulders up as far as you can go as you breathe out and hold the contraction for a second. Tip: Refrain from trying to lift the barbell by using your biceps. The arms should remain stretched out at all times.",
+        "Slowly return to the starting position as you breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Shrug_Behind_The_Back/poster.webp",
+      "detail": "/exercises/Barbell_Shrug_Behind_The_Back/detail.webp"
+    },
+    {
+      "id": "Barbell_Side_Bend",
+      "name": "Barbell Side Bend",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up straight while holding a barbell placed on the back of your shoulders (slightly below the neck). Your feet should be shoulder width apart. This will be your starting position.",
+        "While keeping your back straight and your head up, bend only at the waist to the right as far as possible. Breathe in as you bend to the side. Then hold for a second and come back up to the starting position as you exhale. Tip: Keep the rest of the body stationary.",
+        "Now repeat the movement but bending to the left instead. Hold for a second and come back to the starting position.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Barbell_Side_Bend/poster.webp",
+      "detail": "/exercises/Barbell_Side_Bend/detail.webp"
+    },
+    {
+      "id": "Bench_Dips",
+      "name": "Bench Dips",
+      "equipment": "none",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "chest",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "For this exercise you will need to place a bench behind your back. With the bench perpendicular to your body, and while looking away from it, hold on to the bench on its edge with the hands fully extended, separated at shoulder width. The legs will be extended forward, bent at the waist and perpendicular to your torso. This will be your starting position.",
+        "Slowly lower your body as you inhale by bending at the elbows until you lower yourself far enough to where there is an angle slightly smaller than 90 degrees between the upper arm and the forearm. Tip: Keep the elbows as close as possible throughout the movement. Forearms should always be pointing down.",
+        "Using your triceps to bring your torso up again, lift yourself back to the starting position.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Bench_Dips/poster.webp",
+      "detail": "/exercises/Bench_Dips/detail.webp"
+    },
+    {
+      "id": "Bench_Press_-_With_Bands",
+      "name": "Bench Press - With Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Using a flat bench secure a band under the leg of the bench that is nearest to your head.",
+        "Once the band is secure, grab it by both handles and lie down on the bench.",
+        "Extend your arms so that you are holding the band handles in front of you at shoulder width.",
+        "Once at shoulder width, rotate your wrists forward so that the palms of your hands are facing away from you. This will be your starting position.",
+        "Bring down the handles slowly until your elbow forms a 90 degree angle. Keep full control at all times.",
+        "As you breathe out, bring the handles up using your pectoral muscles. Lock your arms in the contracted position, squeeze your chest, hold for a second and then start coming down slowly. Tip: It should take at least twice as long to go down than to come up.",
+        "Repeat the movement for the prescribed amount of repetitions of your training program."
+      ],
+      "poster": "/exercises/Bench_Press_-_With_Bands/poster.webp",
+      "detail": "/exercises/Bench_Press_-_With_Bands/detail.webp"
+    },
+    {
+      "id": "Bent-Arm_Barbell_Pullover",
+      "name": "Bent-Arm Barbell Pullover",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "chest",
+        "back",
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on a flat bench with a barbell using a shoulder grip width.",
+        "Hold the bar straight over your chest with a bend in your arms. This will be your starting position.",
+        "While keeping your arms in the bent arm position, lower the weight slowly in an arc behind your head while breathing in until you feel a stretch on the chest.",
+        "At that point, bring the barbell back to the starting position using the arc through which the weight was lowered and exhale as you perform this movement.",
+        "Hold the weight on the initial position for a second and repeat the motion for the prescribed number of repetitions."
+      ],
+      "poster": "/exercises/Bent-Arm_Barbell_Pullover/poster.webp",
+      "detail": "/exercises/Bent-Arm_Barbell_Pullover/detail.webp"
+    },
+    {
+      "id": "Bent-Arm_Dumbbell_Pullover",
+      "name": "Bent-Arm Dumbbell Pullover",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "back",
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a dumbbell standing up on a flat bench.",
+        "Ensuring that the dumbbell stays securely placed at the top of the bench, lie perpendicular to the bench (torso across it as in forming a cross) with only your shoulders lying on the surface. Hips should be below the bench and legs bent with feet firmly on the floor. The head will be off the bench as well.",
+        "Grasp the dumbbell with both hands and hold it straight over your chest with a bend in your arms. Both palms should be pressing against the underside one of the sides of the dumbbell. This will be your starting position. Caution: Always ensure that the dumbbell used for this exercise is secure. Using a dumbbell with loose plates can result in the dumbbell falling apart and falling on your face.",
+        "While keeping your arms locked in the bent arm position, lower the weight slowly in an arc behind your head while breathing in until you feel a stretch on the chest.",
+        "At that point, bring the dumbbell back to the starting position using the arc through which the weight was lowered and exhale as you perform this movement.",
+        "Hold the weight on the initial position for a second and repeat the motion for the prescribed number of repetitions."
+      ],
+      "poster": "/exercises/Bent-Arm_Dumbbell_Pullover/poster.webp",
+      "detail": "/exercises/Bent-Arm_Dumbbell_Pullover/detail.webp"
+    },
+    {
+      "id": "Bent_Over_Dumbbell_Rear_Delt_Raise_With_Head_On_Bench",
+      "name": "Bent Over Dumbbell Rear Delt Raise With Head On Bench",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up straight while holding a dumbbell in each hand and with an incline bench in front of you.",
+        "While keeping your back straight and maintaining the natural arch of your back, lean forward until your forehead touches the bench in front of you. Let the arms hang in front of you perpendicular to the ground. The palms of your hands should be facing each other and your torso should be parallel to the floor. This will be your starting position.",
+        "Keeping your torso forward and stationary, and the arms straight with a slight bend at the elbows, lift the dumbbells straight to the side until both arms are parallel to the floor. Exhale as you lift the weights. Caution: avoid swinging the torso or bringing the arms back as opposed to the side.",
+        "After a one second contraction at the top, slowly lower the dumbbells back to the starting position.",
+        "Repeat the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Bent_Over_Dumbbell_Rear_Delt_Raise_With_Head_On_Bench/poster.webp",
+      "detail": "/exercises/Bent_Over_Dumbbell_Rear_Delt_Raise_With_Head_On_Bench/detail.webp"
+    },
+    {
+      "id": "Bent_Over_Two-Dumbbell_Row",
+      "name": "Bent Over Two-Dumbbell Row",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "With a dumbbell in each hand (palms facing your torso), bend your knees slightly and bring your torso forward by bending at the waist; as you bend make sure to keep your back straight until it is almost parallel to the floor. Tip: Make sure that you keep the head up. The weights should hang directly in front of you as your arms hang perpendicular to the floor and your torso. This is your starting position.",
+        "While keeping the torso stationary, lift the dumbbells to your side (as you breathe out), keeping the elbows close to the body (do not exert any force with the forearm other than holding the weights). On the top contracted position, squeeze the back muscles and hold for a second.",
+        "Slowly lower the weight again to the starting position as you inhale.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Bent_Over_Two-Dumbbell_Row/poster.webp",
+      "detail": "/exercises/Bent_Over_Two-Dumbbell_Row/detail.webp"
+    },
+    {
+      "id": "Bent_Over_Two-Dumbbell_Row_With_Palms_In",
+      "name": "Bent Over Two-Dumbbell Row With Palms In",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "With a dumbbell in each hand (palms facing each other), bend your knees slightly and bring your torso forward, by bending at the waist, while keeping the back straight until it is almost parallel to the floor. Tip: Make sure that you keep the head up. The weights should hang directly in front of you as your arms hang perpendicular to the floor and your torso. This is your starting position.",
+        "While keeping the torso stationary, lift the dumbbells to your side as you breathe out, squeezing your shoulder blades together. On the top contracted position, squeeze the back muscles and hold for a second.",
+        "Slowly lower the weight again to the starting position as you inhale.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Bent_Over_Two-Dumbbell_Row_With_Palms_In/poster.webp",
+      "detail": "/exercises/Bent_Over_Two-Dumbbell_Row_With_Palms_In/detail.webp"
+    },
+    {
+      "id": "Bent_Press",
+      "name": "Bent Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs",
+        "back",
+        "legs",
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "expert",
+      "mechanic": "compound",
+      "instructions": [
+        "Clean a kettlebell to your shoulder. Clean the kettlebell to your shoulders by extending through the legs and hips as you raise the kettlebell towards your shoulder. The wrist should rotate as you do so. This will be your starting position.",
+        "Begin my leaning to the side opposite the kettlebell, continuing until you are able to touch the ground with your free hand, keeping your eyes on the kettlebell. As you do so, press the weight vertically be extending through the elbow, keeping your arm perpendicular to the ground.",
+        "Return to an upright position, with the kettlebell above your head. Return the kettlebell to the shoulder and repeat for the desired number of repetitions."
+      ],
+      "poster": "/exercises/Bent_Press/poster.webp",
+      "detail": "/exercises/Bent_Press/detail.webp"
+    },
+    {
+      "id": "Body-Up",
+      "name": "Body-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "core",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "isolation",
+      "instructions": [
+        "Assume a plank position on the ground. You should be supporting your bodyweight on your toes and forearms, keeping your torso straight. Your forearms should be shoulder-width apart. This will be your starting position.",
+        "Pressing your palms firmly into the ground, extend through the elbows to raise your body from the ground. Keep your torso rigid as you perform the movement.",
+        "Slowly lower your forearms back to the ground by allowing the elbows to flex.",
+        "Repeat."
+      ],
+      "poster": "/exercises/Body-Up/poster.webp",
+      "detail": "/exercises/Body-Up/detail.webp"
+    },
+    {
+      "id": "Body_Tricep_Press",
+      "name": "Body Tricep Press",
+      "equipment": "none",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Position a bar in a rack at chest height.",
+        "Standing, take a shoulder width grip on the bar and step a yard or two back, feet together and arms extended so that you are leaning on the bar. This will be your starting position.",
+        "Begin by flexing the elbow, lowering yourself towards the bar.",
+        "Pause, and then reverse the motion by extending the elbows.",
+        "Progress from bodyweight by adding chains over your shoulders."
+      ],
+      "poster": "/exercises/Body_Tricep_Press/poster.webp",
+      "detail": "/exercises/Body_Tricep_Press/detail.webp"
+    },
+    {
+      "id": "Bodyweight_Squat",
+      "name": "Bodyweight Squat",
+      "equipment": "none",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand with your feet shoulder width apart. You can place your hands behind your head. This will be your starting position.",
+        "Begin the movement by flexing your knees and hips, sitting back with your hips.",
+        "Continue down to full depth if you are able,and quickly reverse the motion until you return to the starting position. As you squat, keep your head and chest up and push your knees out."
+      ],
+      "poster": "/exercises/Bodyweight_Squat/poster.webp",
+      "detail": "/exercises/Bodyweight_Squat/detail.webp"
+    },
+    {
+      "id": "Bodyweight_Walking_Lunge",
+      "name": "Bodyweight Walking Lunge",
+      "equipment": "none",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Begin standing with your feet shoulder width apart and your hands on your hips.",
+        "Step forward with one leg, flexing the knees to drop your hips. Descend until your rear knee nearly touches the ground. Your posture should remain upright, and your front knee should stay above the front foot.",
+        "Drive through the heel of your lead foot and extend both knees to raise yourself back up.",
+        "Step forward with your rear foot, repeating the lunge on the opposite leg."
+      ],
+      "poster": "/exercises/Bodyweight_Walking_Lunge/poster.webp",
+      "detail": "/exercises/Bodyweight_Walking_Lunge/detail.webp"
+    },
+    {
+      "id": "Bottoms-Up_Clean_From_The_Hang_Position",
+      "name": "Bottoms-Up Clean From The Hang Position",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Initiate the exercise by standing upright with a kettlebell in one hand.",
+        "Swing the kettlebell back forcefully and then reverse the motion forcefully. Crush the kettlebell handle as hard as possible and raise the kettlebell to your shoulder."
+      ],
+      "poster": "/exercises/Bottoms-Up_Clean_From_The_Hang_Position/poster.webp",
+      "detail": "/exercises/Bottoms-Up_Clean_From_The_Hang_Position/detail.webp"
+    },
+    {
+      "id": "Butt_Lift_Bridge",
+      "name": "Butt Lift (Bridge)",
+      "equipment": "none",
+      "muscles_primary": [
+        "glutes"
+      ],
+      "muscles_secondary": [
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Lie flat on the floor on your back with the hands by your side and your knees bent. Your feet should be placed around shoulder width. This will be your starting position.",
+        "Pushing mainly with your heels, lift your hips off the floor while keeping your back straight. Breathe out as you perform this part of the motion and hold at the top for a second.",
+        "Slowly go back to the starting position as you breathe in."
+      ],
+      "poster": "/exercises/Butt_Lift_Bridge/poster.webp",
+      "detail": "/exercises/Butt_Lift_Bridge/detail.webp"
+    },
+    {
+      "id": "Calf_Raise_On_A_Dumbbell",
+      "name": "Calf Raise On A Dumbbell",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "isolation",
+      "instructions": [
+        "Hang on to a sturdy object for balance and stand on a dumbbell handle, preferably one with round plates so that it rolls as in this manner you have to work harder to stabilize yourself; thus increasing the effectiveness of the exercise.",
+        "Now roll your foot slightly forward so that you can get a nice stretch of the calf. This will be your starting position.",
+        "Lift the calf as you roll your foot over the top of the handle so that you get a full extension. Exhale during the execution of this movement. Contract the calf hard at the top and hold for a second. Tip: As you come up, roll the dumbbell slightly backward.",
+        "Now inhale as you roll the dumbbell slightly forward as you come down to get a better stretch.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Calf_Raise_On_A_Dumbbell/poster.webp",
+      "detail": "/exercises/Calf_Raise_On_A_Dumbbell/detail.webp"
+    },
+    {
+      "id": "Calf_Raises_-_With_Bands",
+      "name": "Calf Raises - With Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Grab an exercise band and stand on it with your toes making sure that the length of the band between the foot and the arms is the same for both sides.",
+        "While holding the handles of the band, raise the arms to the side of your head as if you were getting ready to perform a shoulder press. The palms should be facing forward with the elbows bent and to the sides. This movement will create tension on the band. This will be your starting position.",
+        "Keeping the hands by your shoulder, stand up on your toes as you exhale and contract the calves hard at the top of the movement.",
+        "After a one second contraction, slowly go back down to the starting position.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Calf_Raises_-_With_Bands/poster.webp",
+      "detail": "/exercises/Calf_Raises_-_With_Bands/detail.webp"
+    },
+    {
+      "id": "Chin-Up",
+      "name": "Chin-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "arms",
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Grab the pull-up bar with the palms facing your torso and a grip closer than the shoulder width.",
+        "As you have both arms extended in front of you holding the bar at the chosen grip width, keep your torso as straight as possible while creating a curvature on your lower back and sticking your chest out. This is your starting position. Tip: Keeping the torso as straight as possible maximizes biceps stimulation while minimizing back involvement.",
+        "As you breathe out, pull your torso up until your head is around the level of the pull-up bar. Concentrate on using the biceps muscles in order to perform the movement. Keep the elbows close to your body. Tip: The upper torso should remain stationary as it moves through space and only the arms should move. The forearms should do no other work other than hold the bar.",
+        "After a second of squeezing the biceps in the contracted position, slowly lower your torso back to the starting position; when your arms are fully extended. Breathe in as you perform this portion of the movement.",
+        "Repeat this motion for the prescribed amount of repetitions."
+      ],
+      "poster": "/exercises/Chin-Up/poster.webp",
+      "detail": "/exercises/Chin-Up/detail.webp"
+    },
+    {
+      "id": "Clock_Push-Up",
+      "name": "Clock Push-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Move into a prone position on the floor, supporting your weight on your hands and toes.",
+        "Your arms should be fully extended with the hands around shoulder width. Keep your body straight throughout the movement. This will be your starting position.",
+        "Descend by flexing at the elbow, lowering your chest toward the ground.",
+        "At the bottom, reverse the motion by pushing yourself up through elbow extension as quickly as possible until you are air borne. Aim to \"jump\" 12-18 inches to one side.",
+        "As you accelerate up, move your outside foot away from your direction of travel. Leaving the ground, shift your body about 30 degrees for the next repetition.",
+        "Return to the starting position and repeat the exercise, working all the way around until you are back where you started."
+      ],
+      "poster": "/exercises/Clock_Push-Up/poster.webp",
+      "detail": "/exercises/Clock_Push-Up/detail.webp"
+    },
+    {
+      "id": "Close-Grip_Barbell_Bench_Press",
+      "name": "Close-Grip Barbell Bench Press",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "chest",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie back on a flat bench. Using a close grip (around shoulder width), lift the bar from the rack and hold it straight over you with your arms locked. This will be your starting position.",
+        "As you breathe in, come down slowly until you feel the bar on your middle chest. Tip: Make sure that - as opposed to a regular bench press - you keep the elbows close to the torso at all times in order to maximize triceps involvement.",
+        "After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your triceps muscles. Lock your arms in the contracted position, hold for a second and then start coming down slowly again. Tip: It should take at least twice as long to go down than to come up.",
+        "Repeat the movement for the prescribed amount of repetitions.",
+        "When you are done, place the bar back in the rack."
+      ],
+      "poster": "/exercises/Close-Grip_Barbell_Bench_Press/poster.webp",
+      "detail": "/exercises/Close-Grip_Barbell_Bench_Press/detail.webp"
+    },
+    {
+      "id": "Close-Grip_Dumbbell_Press",
+      "name": "Close-Grip Dumbbell Press",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "chest",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a dumbbell standing up on a flat bench.",
+        "Ensuring that the dumbbell stays securely placed at the top of the bench, lie perpendicular to the bench with only your shoulders lying on the surface. Hips should be below the bench and your legs bent with your feet firmly on the floor.",
+        "Grasp the dumbbell with both hands and hold it straight over your chest at arm's length. Both palms should be pressing against the underside of the sides of the dumbbell. This will be your starting position.",
+        "Initiate the movement by lowering the dumbbell to your chest.",
+        "Return to the starting position by extending the elbows."
+      ],
+      "poster": "/exercises/Close-Grip_Dumbbell_Press/poster.webp",
+      "detail": "/exercises/Close-Grip_Dumbbell_Press/detail.webp"
+    },
+    {
+      "id": "Close-Grip_EZ_Bar_Curl",
+      "name": "Close-Grip EZ Bar Curl",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up with your torso upright while holding an E-Z Curl Bar at the closer inner handle. The palm of your hands should be facing forward and they should be slightly tilted inwards due to the shape of the bar. The elbows should be close to the torso. This will be your starting position.",
+        "While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move.",
+        "Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard.",
+        "Slowly begin to bring the bar back to starting position as your breathe in.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Close-Grip_EZ_Bar_Curl/poster.webp",
+      "detail": "/exercises/Close-Grip_EZ_Bar_Curl/detail.webp"
+    },
+    {
+      "id": "Concentration_Curls",
+      "name": "Concentration Curls",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Sit down on a flat bench with one dumbbell in front of you between your legs. Your legs should be spread with your knees bent and feet on the floor.",
+        "Use your right arm to pick the dumbbell up. Place the back of your right upper arm on the top of your inner right thigh. Rotate the palm of your hand until it is facing forward away from your thigh. Tip: Your arm should be extended and the dumbbell should be above the floor. This will be your starting position.",
+        "While holding the upper arm stationary, curl the weights forward while contracting the biceps as you breathe out. Only the forearms should move. Continue the movement until your biceps are fully contracted and the dumbbells are at shoulder level. Tip: At the top of the movement make sure that the little finger of your arm is higher than your thumb. This guarantees a good contraction. Hold the contracted position for a second as you squeeze the biceps.",
+        "Slowly begin to bring the dumbbells back to starting position as your breathe in. Caution: Avoid swinging motions at any time.",
+        "Repeat for the recommended amount of repetitions. Then repeat the movement with the left arm."
+      ],
+      "poster": "/exercises/Concentration_Curls/poster.webp",
+      "detail": "/exercises/Concentration_Curls/detail.webp"
+    },
+    {
+      "id": "Cross_Over_-_With_Bands",
+      "name": "Cross Over - With Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure an exercise band around a stationary post.",
+        "While facing away from the post, grab the handles on both ends of the band and step forward enough to create tension on the band.",
+        "Raise your arms to the sides, parallel to the floor, perpendicular to your torso (your torso and the arms should resemble the letter \"T\") and with the palms facing forward. Have them extended with a slight bend at the elbows. This will be your starting position.",
+        "While keeping your arms straight, bring them across your chest in a semicircular motion to the front as you exhale and flex your pecs. Hold the contraction for a second.",
+        "Slowly return to the starting position as you inhale.",
+        "Perform for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Cross_Over_-_With_Bands/poster.webp",
+      "detail": "/exercises/Cross_Over_-_With_Bands/detail.webp"
+    },
+    {
+      "id": "Cuban_Press",
+      "name": "Cuban Press",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Take a dumbbell in each hand with a pronated grip in a standing position. Raise your upper arms so that they are parallel to the floor, allowing your lower arms to hang in the \"scarecrow\" position. This will be your starting position.",
+        "To initiate the movement, externally rotate the shoulders to move the upper arm 180 degrees. Keep the upper arms in place, rotating the upper arms until the wrists are directly above the elbows, the forearms perpendicular to the floor.",
+        "Now press the dumbbells by extending at the elbows, straightening your arms overhead.",
+        "Return to the starting position as you breathe in by reversing the steps.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Cuban_Press/poster.webp",
+      "detail": "/exercises/Cuban_Press/detail.webp"
+    },
+    {
+      "id": "Decline_Barbell_Bench_Press",
+      "name": "Decline Barbell Bench Press",
+      "equipment": "barbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure your legs at the end of the decline bench and slowly lay down on the bench.",
+        "Using a medium width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over you with your arms locked. The arms should be perpendicular to the floor. This will be your starting position. Tip: In order to protect your rotator cuff, it is best if you have a spotter help you lift the barbell off the rack.",
+        "As you breathe in, come down slowly until you feel the bar on your lower chest.",
+        "After a second pause, bring the bar back to the starting position as you breathe out and push the bar using your chest muscles. Lock your arms and squeeze your chest in the contracted position, hold for a second and then start coming down slowly again. Tip: It should take at least twice as long to go down than to come up).",
+        "Repeat the movement for the prescribed amount of repetitions.",
+        "When you are done, place the bar back in the rack."
+      ],
+      "poster": "/exercises/Decline_Barbell_Bench_Press/poster.webp",
+      "detail": "/exercises/Decline_Barbell_Bench_Press/detail.webp"
+    },
+    {
+      "id": "Decline_Dumbbell_Bench_Press",
+      "name": "Decline Dumbbell Bench Press",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure your legs at the end of the decline bench and lie down with a dumbbell on each hand on top of your thighs. The palms of your hand will be facing each other.",
+        "Once you are laying down, move the dumbbells in front of you at shoulder width.",
+        "Once at shoulder width, rotate your wrists forward so that the palms of your hands are facing away from you. This will be your starting position.",
+        "Bring down the weights slowly to your side as you breathe out. Keep full control of the dumbbells at all times. Tip: Throughout the motion, the forearms should always be perpendicular to the floor.",
+        "As you breathe out, push the dumbbells up using your pectoral muscles. Lock your arms in the contracted position, squeeze your chest, hold for a second and then start coming down slowly. Tip: It should take at least twice as long to go down than to come up..",
+        "Repeat the movement for the prescribed amount of repetitions of your training program."
+      ],
+      "poster": "/exercises/Decline_Dumbbell_Bench_Press/poster.webp",
+      "detail": "/exercises/Decline_Dumbbell_Bench_Press/detail.webp"
+    },
+    {
+      "id": "Decline_Dumbbell_Flyes",
+      "name": "Decline Dumbbell Flyes",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure your legs at the end of the decline bench and lie down with a dumbbell on each hand on top of your thighs. The palms of your hand will be facing each other.",
+        "Once you are laying down, move the dumbbells in front of you at shoulder width. The palms of the hands should be facing each other and the arms should be perpendicular to the floor and fully extended. This will be your starting position.",
+        "With a slight bend on your elbows in order to prevent stress at the biceps tendon, lower your arms out at both sides in a wide arc until you feel a stretch on your chest. Breathe in as you perform this portion of the movement. Tip: Keep in mind that throughout the movement, the arms should remain stationary; the movement should only occur at the shoulder joint.",
+        "Return your arms back to the starting position as you squeeze your chest muscles and breathe out. Tip: Make sure to use the same arc of motion used to lower the weights.",
+        "Hold for a second at the contracted position and repeat the movement for the prescribed amount of repetitions."
+      ],
+      "poster": "/exercises/Decline_Dumbbell_Flyes/poster.webp",
+      "detail": "/exercises/Decline_Dumbbell_Flyes/detail.webp"
+    },
+    {
+      "id": "Decline_Push-Up",
+      "name": "Decline Push-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on the floor face down and place your hands about 36 inches apart while holding your torso up at arms length. Move your feet up to a box or bench. This will be your starting position.",
+        "Next, lower yourself downward until your chest almost touches the floor as you inhale.",
+        "Now breathe out and press your upper body back up to the starting position while squeezing your chest.",
+        "After a brief pause at the top contracted position, you can begin to lower yourself downward again for as many repetitions as needed."
+      ],
+      "poster": "/exercises/Decline_Push-Up/poster.webp",
+      "detail": "/exercises/Decline_Push-Up/detail.webp"
+    },
+    {
+      "id": "Double_Kettlebell_Alternating_Hang_Clean",
+      "name": "Double Kettlebell Alternating Hang Clean",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "legs",
+        "arms",
+        "glutes",
+        "back",
+        "legs",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place two kettlebells between your feet. To get in the starting position, push your butt back and look straight ahead.",
+        "Clean one kettlebell to your shoulder and hold on to the other kettlebell.",
+        "With a fluid motion, lower the top kettlebell while driving the bottom kettlebell up."
+      ],
+      "poster": "/exercises/Double_Kettlebell_Alternating_Hang_Clean/poster.webp",
+      "detail": "/exercises/Double_Kettlebell_Alternating_Hang_Clean/detail.webp"
+    },
+    {
+      "id": "Double_Kettlebell_Jerk",
+      "name": "Double Kettlebell Jerk",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "legs",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Hold a kettlebell by the handle in each hand.",
+        "Clean the kettlebells to your shoulders by extending through the legs and hips as you pull the kettlebells towards your shoulders. Rotate your wrists as you do so, so that the palms face forward. This will be your starting position.",
+        "Dip your body by bending the knees, keeping your torso upright.",
+        "Immediately reverse direction, driving through the heels, in essence jumping to create momentum.",
+        "As you do so, press the kettlebells overhead to lockout by extending the arms, using your body's momentum to move the weights.",
+        "Return your feet to the ground in a split fashion, with one foot forward and one foot back.",
+        "Keeping the weights overhead, return to a standing position, bringing your feet together. Lower the weights to perform the next repetition."
+      ],
+      "poster": "/exercises/Double_Kettlebell_Jerk/poster.webp",
+      "detail": "/exercises/Double_Kettlebell_Jerk/detail.webp"
+    },
+    {
+      "id": "Double_Kettlebell_Push_Press",
+      "name": "Double Kettlebell Push Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "legs",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Clean two kettlebells to your shoulders.",
+        "Squat down a few inches and reverse the motion rapidly. Use the momentum from the legs to drive the kettlebells overhead.",
+        "Once the kettlebells are locked out, lower the kettlebells to your shoulders and repeat."
+      ],
+      "poster": "/exercises/Double_Kettlebell_Push_Press/poster.webp",
+      "detail": "/exercises/Double_Kettlebell_Push_Press/detail.webp"
+    },
+    {
+      "id": "Double_Kettlebell_Snatch",
+      "name": "Double Kettlebell Snatch",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "expert",
+      "mechanic": "compound",
+      "instructions": [
+        "Place two kettlebells behind your feet. Bend your knees and sit back to pick up the kettlebells.",
+        "Swing the kettlebells between your legs forcefully and reverse the direction.",
+        "Drive through with your hips and lock the ketttlebells overhead in one uninterrupted motion."
+      ],
+      "poster": "/exercises/Double_Kettlebell_Snatch/poster.webp",
+      "detail": "/exercises/Double_Kettlebell_Snatch/detail.webp"
+    },
+    {
+      "id": "Double_Kettlebell_Windmill",
+      "name": "Double Kettlebell Windmill",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs",
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": null,
+      "instructions": [
+        "Place a kettlebell in front of your front foot and clean and press a kettlebell overhead with your opposite arm. Clean the kettlebell to your shoulder by extending through the legs and hips as you pull the kettlebell towards your shoulders. Rotate your wrist as you do so, so that the palm faces forward.",
+        "Keeping the kettlebell locked out at all times, push your butt out in the direction of the locked out kettlebell. Turn your feet out at a forty-five degree angle from the arm with the locked out kettlebell.",
+        "Bending at the hip to one side, sticking your butt out, slowly lean until you can retrieve the kettlebell from the floor. Keep your eyes on the kettlebell that you hold over your head at all times.",
+        "Pause for a second after retrieving the kettlebell from the ground and reverse the motion back to the starting position."
+      ],
+      "poster": "/exercises/Double_Kettlebell_Windmill/poster.webp",
+      "detail": "/exercises/Double_Kettlebell_Windmill/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Clean",
+      "name": "Dumbbell Clean",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "arms",
+        "glutes",
+        "back",
+        "legs",
+        "shoulders",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Begin standing with a dumbbell in each hand with your feet shoulder width apart.",
+        "Lower the weights to the floor by flexing at the hips and knees, pushing your hips back until the dumbbells reach the floor. This will be your starting position.",
+        "To initiate the movement, violently jump upward by extending the hips, knees, and ankles to acclerate the weights upward. Maintaining a neutral grip on the dumbbells, keep the arms straight until full extension is reached.",
+        "After full extension, rebend the hips and knees to receive the weight in a squat position. Allow the arms to bend, guiding the dumbbells to your shoulders.",
+        "Upon receiving the weight in the squat position, extend the hips and knees to finish in a standing position with the weights on your shoulders."
+      ],
+      "poster": "/exercises/Dumbbell_Clean/poster.webp",
+      "detail": "/exercises/Dumbbell_Clean/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Incline_Row",
+      "name": "Dumbbell Incline Row",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "arms",
+        "back",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Using a neutral grip, lean into an incline bench.",
+        "Take a dumbbell in each hand with a neutral grip, beginning with the arms straight. This will be your starting position.",
+        "Retract the shoulder blades and flex the elbows to row the dumbbells to your side.",
+        "Pause at the top of the motion, and then return to the starting position."
+      ],
+      "poster": "/exercises/Dumbbell_Incline_Row/poster.webp",
+      "detail": "/exercises/Dumbbell_Incline_Row/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Lunges",
+      "name": "Dumbbell Lunges",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand with your torso upright holding two dumbbells in your hands by your sides. This will be your starting position.",
+        "Step forward with your right leg around 2 feet or so from the foot being left stationary behind and lower your upper body down, while keeping the torso upright and maintaining balance. Inhale as you go down. Note: As in the other exercises, do not allow your knee to go forward beyond your toes as you come down, as this will put undue stress on the knee joint. Make sure that you keep your front shin perpendicular to the ground.",
+        "Using mainly the heel of your foot, push up and go back to the starting position as you exhale.",
+        "Repeat the movement for the recommended amount of repetitions and then perform with the left leg."
+      ],
+      "poster": "/exercises/Dumbbell_Lunges/poster.webp",
+      "detail": "/exercises/Dumbbell_Lunges/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Rear_Lunge",
+      "name": "Dumbbell Rear Lunge",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand with your torso upright holding two dumbbells in your hands by your sides. This will be your starting position.",
+        "Step backward with your right leg around two feet or so from the left foot and lower your upper body down, while keeping the torso upright and maintaining balance. Inhale as you go down. Tip: As in the other exercises, do not allow your knee to go forward beyond your toes as you come down, as this will put undue stress on the knee joint. Make sure that you keep your front shin perpendicular to the ground. Keep the torso upright during the lunge; flexible hip flexors are important. A long lunge emphasizes the Gluteus Maximus; a short lunge emphasizes Quadriceps.",
+        "Push up and go back to the starting position as you exhale. Tip: Use the ball of your feet to push in order to accentuate the quadriceps. To focus on the glutes, press with your heels.",
+        "Now repeat with the opposite leg."
+      ],
+      "poster": "/exercises/Dumbbell_Rear_Lunge/poster.webp",
+      "detail": "/exercises/Dumbbell_Rear_Lunge/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Shrug",
+      "name": "Dumbbell Shrug",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand erect with a dumbbell on each hand (palms facing your torso), arms extended on the sides.",
+        "Lift the dumbbells by elevating the shoulders as high as possible while you exhale. Hold the contraction at the top for a second. Tip: The arms should remain extended at all times. Refrain from using the biceps to help lift the dumbbells. Only the shoulders should be moving up and down.",
+        "Lower the dumbbells back to the original position.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Dumbbell_Shrug/poster.webp",
+      "detail": "/exercises/Dumbbell_Shrug/detail.webp"
+    },
+    {
+      "id": "Dumbbell_Side_Bend",
+      "name": "Dumbbell Side Bend",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Stand up straight while holding a dumbbell on the left hand (palms facing the torso) as you have the right hand holding your waist. Your feet should be placed at shoulder width. This will be your starting position.",
+        "While keeping your back straight and your head up, bend only at the waist to the right as far as possible. Breathe in as you bend to the side. Then hold for a second and come back up to the starting position as you exhale. Tip: Keep the rest of the body stationary.",
+        "Now repeat the movement but bending to the left instead. Hold for a second and come back to the starting position.",
+        "Repeat for the recommended amount of repetitions and then change hands."
+      ],
+      "poster": "/exercises/Dumbbell_Side_Bend/poster.webp",
+      "detail": "/exercises/Dumbbell_Side_Bend/detail.webp"
+    },
+    {
+      "id": "Extended_Range_One-Arm_Kettlebell_Floor_Press",
+      "name": "Extended Range One-Arm Kettlebell Floor Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on the floor and position a kettlebell for one arm to press. The kettlebell should be held by the handle. The leg on the same side that you are pressing should be bent, with the knee crossing over the midline of the body.",
+        "Press the kettlebell by extending the elbow and adducting the arm, pressing it above your body. Return to the starting position."
+      ],
+      "poster": "/exercises/Extended_Range_One-Arm_Kettlebell_Floor_Press/poster.webp",
+      "detail": "/exercises/Extended_Range_One-Arm_Kettlebell_Floor_Press/detail.webp"
+    },
+    {
+      "id": "External_Rotation_with_Band",
+      "name": "External Rotation with Band",
+      "equipment": "bands",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Choke the band around a post. The band should be at the same height as your elbow. Stand with your left side to the band a couple of feet away.",
+        "Grasp the end of the band with your right hand, and keep your elbow pressed firmly to your side. We recommend you hold a pad or foam roll in place with your elbow to keep it firmly in position.",
+        "With your upper arm in position, your elbow should be flexed to 90 degrees with your hand reaching across the front of your torso. This will be your starting position.",
+        "Execute the movement by rotating your arm in a backhand motion, keeping your elbow in place.",
+        "Continue as far as you are able, pause, and then return to the starting position."
+      ],
+      "poster": "/exercises/External_Rotation_with_Band/poster.webp",
+      "detail": "/exercises/External_Rotation_with_Band/detail.webp"
+    },
+    {
+      "id": "Floor_Glute-Ham_Raise",
+      "name": "Floor Glute-Ham Raise",
+      "equipment": "none",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "isolation",
+      "instructions": [
+        "You can use a partner for this exercise or brace your feet under something stable.",
+        "Begin on your knees with your upper legs and torso upright. If using a partner, they will firmly hold your feet to keep you in position. This will be your starting position.",
+        "Lower yourself by extending at the knee, taking care to NOT flex the hips as you go forward.",
+        "Place your hands in front of you as you reach the floor. This movement is very difficult and you may be unable to do it unaided. Use your arms to lightly push off the floor to aid your return to the starting position."
+      ],
+      "poster": "/exercises/Floor_Glute-Ham_Raise/poster.webp",
+      "detail": "/exercises/Floor_Glute-Ham_Raise/detail.webp"
+    },
+    {
+      "id": "Flutter_Kicks",
+      "name": "Flutter Kicks",
+      "equipment": "none",
+      "muscles_primary": [
+        "glutes"
+      ],
+      "muscles_secondary": [
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "On a flat bench lie facedown with the hips on the edge of the bench, the legs straight with toes high off the floor and with the arms on top of the bench holding on to the front edge.",
+        "Squeeze your glutes and hamstrings and straighten the legs until they are level with the hips. This will be your starting position.",
+        "Start the movement by lifting the left leg higher than the right leg.",
+        "Then lower the left leg as you lift the right leg.",
+        "Continue alternating in this manner (as though you are doing a flutter kick in water) until you have done the recommended amount of repetitions for each leg. Make sure that you keep a controlled movement at all times. Tip: You will breathe normally as you perform this movement."
+      ],
+      "poster": "/exercises/Flutter_Kicks/poster.webp",
+      "detail": "/exercises/Flutter_Kicks/detail.webp"
+    },
+    {
+      "id": "Front_Squats_With_Two_Kettlebells",
+      "name": "Front Squats With Two Kettlebells",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Clean two kettlebells to your shoulders. Clean the kettlebells to your shoulders by extending through the legs and hips as you pull the kettlebells towards your shoulders. Rotate your wrists as you do so.",
+        "Looking straight ahead at all times, squat as low as you can and pause at the bottom. As you squat down, push your knees out. You should squat between your legs, keeping an upright torso, with your head and chest up.",
+        "Rise back up by driving through your heels and repeat."
+      ],
+      "poster": "/exercises/Front_Squats_With_Two_Kettlebells/poster.webp",
+      "detail": "/exercises/Front_Squats_With_Two_Kettlebells/detail.webp"
+    },
+    {
+      "id": "Glute_Kickback",
+      "name": "Glute Kickback",
+      "equipment": "none",
+      "muscles_primary": [
+        "glutes"
+      ],
+      "muscles_secondary": [
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Kneel on the floor or an exercise mat and bend at the waist with your arms extended in front of you (perpendicular to the torso) in order to get into a kneeling push-up position but with the arms spaced at shoulder width. Your head should be looking forward and the bend of the knees should create a 90-degree angle between the hamstrings and the calves. This will be your starting position.",
+        "As you exhale, lift up your right leg until the hamstrings are in line with the back while maintaining the 90-degree angle bend. Contract the glutes throughout this movement and hold the contraction at the top for a second. Tip: At the end of the movement the upper leg should be parallel to the floor while the calf should be perpendicular to it.",
+        "Go back to the initial position as you inhale and now repeat with the left leg.",
+        "Continue to alternate legs until all of the recommended repetitions have been performed."
+      ],
+      "poster": "/exercises/Glute_Kickback/poster.webp",
+      "detail": "/exercises/Glute_Kickback/detail.webp"
+    },
+    {
+      "id": "Goblet_Squat",
+      "name": "Goblet Squat",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand holding a light kettlebell by the horns close to your chest. This will be your starting position.",
+        "Squat down between your legs until your hamstrings are on your calves. Keep your chest and head up and your back straight.",
+        "At the bottom position, pause and use your elbows to push your knees out. Return to the starting position, and repeat for 10-20 repetitions."
+      ],
+      "poster": "/exercises/Goblet_Squat/poster.webp",
+      "detail": "/exercises/Goblet_Squat/detail.webp"
+    },
+    {
+      "id": "Handstand_Push-Ups",
+      "name": "Handstand Push-Ups",
+      "equipment": "none",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "expert",
+      "mechanic": "compound",
+      "instructions": [
+        "With your back to the wall bend at the waist and place both hands on the floor at shoulder width.",
+        "Kick yourself up against the wall with your arms straight. Your body should be upside down with the arms and legs fully extended. Keep your whole body as straight as possible. Tip: If doing this for the first time, have a spotter help you. Also, make sure that you keep facing the wall with your head, rather than looking down.",
+        "Slowly lower yourself to the ground as you inhale until your head almost touches the floor. Tip: It is of utmost importance that you come down slow in order to avoid head injury.",
+        "Push yourself back up slowly as you exhale until your elbows are nearly locked.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Handstand_Push-Ups/poster.webp",
+      "detail": "/exercises/Handstand_Push-Ups/detail.webp"
+    },
+    {
+      "id": "Hip_Extension_with_Bands",
+      "name": "Hip Extension with Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "glutes"
+      ],
+      "muscles_secondary": [
+        "legs"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure one end of the band to the lower portion of a post and attach the other to one ankle.",
+        "Facing the attachment point of the band, hold on to the column to stabilize yourself.",
+        "Keeping your head and your chest up, move the resisted leg back as far as you can while keeping the knee straight.",
+        "Return the leg to the starting position."
+      ],
+      "poster": "/exercises/Hip_Extension_with_Bands/poster.webp",
+      "detail": "/exercises/Hip_Extension_with_Bands/detail.webp"
+    },
+    {
+      "id": "Hip_Flexion_with_Band",
+      "name": "Hip Flexion with Band",
+      "equipment": "bands",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Secure one end of the band to the lower portion of a post and attach the other to one ankle.",
+        "Face away from the attachment point of the band.",
+        "Keeping your head and your chest up, raise your knee up to 90 degrees and pause.",
+        "Return the leg to the starting position."
+      ],
+      "poster": "/exercises/Hip_Flexion_with_Band/poster.webp",
+      "detail": "/exercises/Hip_Flexion_with_Band/detail.webp"
+    },
+    {
+      "id": "Hyperextensions_With_No_Hyperextension_Bench",
+      "name": "Hyperextensions With No Hyperextension Bench",
+      "equipment": "none",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "legs"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "With someone holding down your legs, slide yourself down to the edge a flat bench until your hips hang off the end of the bench. Tip: Your entire upper body should be hanging down towards the floor. Also, you will be in the same position as if you were on a hyperextension bench but the range of motion will be shorter due to the height of the flat bench vs. that of the hyperextension bench.",
+        "With your body straight, cross your arms in front of you (my preference) or behind your head. This will be your starting position. Tip: You can also hold a weight plate for extra resistance in front of you under your crossed arms.",
+        "Start bending forward slowly at the waist as far as you can while keeping your back flat. Inhale as you perform this movement. Keep moving forward until you almost touch the floor or you feel a nice stretch on the hamstrings (whichever comes first). Tip: Never round the back as you perform this exercise.",
+        "Slowly raise your torso back to the initial position as you exhale. Tip: Avoid the temptation to arch your back past a straight line. Also, do not swing the torso at any time in order to protect the back from injury.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Hyperextensions_With_No_Hyperextension_Bench/poster.webp",
+      "detail": "/exercises/Hyperextensions_With_No_Hyperextension_Bench/detail.webp"
+    },
+    {
+      "id": "Incline_Push-Up",
+      "name": "Incline Push-Up",
+      "equipment": "none",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Stand facing bench or sturdy elevated platform. Place hands on edge of bench or platform, slightly wider than shoulder width.",
+        "Position forefoot back from bench or platform with arms and body straight. Arms should be perpendicular to body. Keeping body straight, lower chest to edge of box or platform by bending arms.",
+        "Push body up until arms are extended. Repeat."
+      ],
+      "poster": "/exercises/Incline_Push-Up/poster.webp",
+      "detail": "/exercises/Incline_Push-Up/detail.webp"
+    },
+    {
+      "id": "Internal_Rotation_with_Band",
+      "name": "Internal Rotation with Band",
+      "equipment": "bands",
+      "muscles_primary": [
+        "shoulders"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "Choke the band around a post. The band should be at the same height as your elbow. Stand with your right side to the band a couple of feet away.",
+        "Grasp the end of the band with your right hand, and keep your elbow pressed firmly to your side. We recommend you hold a pad or foam roll in place with your elbow to keep it firmly in position.",
+        "With your upper arm in position, your elbow should be flexed to 90 degrees with your hand reaching away from your torso. This will be your starting position.",
+        "Execute the movement by rotating your arm in a forehand motion, keeping your elbow in place.",
+        "Continue as far as you are able, pause, and then return to the starting position."
+      ],
+      "poster": "/exercises/Internal_Rotation_with_Band/poster.webp",
+      "detail": "/exercises/Internal_Rotation_with_Band/detail.webp"
+    },
+    {
+      "id": "Inverted_Row",
+      "name": "Inverted Row",
+      "equipment": "none",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "back"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Position a bar in a rack to about waist height. You can also use a smith machine.",
+        "Take a wider than shoulder width grip on the bar and position yourself hanging underneath the bar. Your body should be straight with your heels on the ground with your arms fully extended. This will be your starting position.",
+        "Begin by flexing the elbow, pulling your chest towards the bar. Retract your shoulder blades as you perform the movement.",
+        "Pause at the top of the motion, and return yourself to the start position.",
+        "Repeat for the desired number of repetitions."
+      ],
+      "poster": "/exercises/Inverted_Row/poster.webp",
+      "detail": "/exercises/Inverted_Row/detail.webp"
+    },
+    {
+      "id": "Kettlebell_Figure_8",
+      "name": "Kettlebell Figure 8",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": null,
+      "instructions": [
+        "Place one kettlebell between your legs and take a wider than shoulder width stance. Bend over by pushing your butt out and keeping your back flat.",
+        "Pick up a kettlebell and pass it to your other hand between your legs. The receiving hand should reach from behind the legs. Go back and forth for several repetitions."
+      ],
+      "poster": "/exercises/Kettlebell_Figure_8/poster.webp",
+      "detail": "/exercises/Kettlebell_Figure_8/detail.webp"
+    },
+    {
+      "id": "Kettlebell_Sumo_High_Pull",
+      "name": "Kettlebell Sumo High Pull",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "legs",
+        "glutes",
+        "legs",
+        "legs",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a kettlebell on the ground between your feet. Position your feet in a wide stance, and grasp the kettlebell with two hands. Set your hips back as far as possible, with your knees bent. Keep your chest and head up. This will be your starting position.",
+        "Begin by extending the hips and knees, simultaneously pulling the kettlebell to your shoulders, raising your elbows as you do so. Reverse the motion to return to the starting position."
+      ],
+      "poster": "/exercises/Kettlebell_Sumo_High_Pull/poster.webp",
+      "detail": "/exercises/Kettlebell_Sumo_High_Pull/detail.webp"
+    },
+    {
+      "id": "Leg-Over_Floor_Press",
+      "name": "Leg-Over Floor Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "shoulders",
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on the floor with one kettlebell in place on your chest, holding it by the handle. Extend leg on working side over leg on non-working side.Your free arm can be extended out to your side for support.",
+        "Press the kettlebll into a locked out position.",
+        "Lower the weight until the elbow touches the ground, keeping the kettlebell above the elbow. Repeat for the desired number of repetitions."
+      ],
+      "poster": "/exercises/Leg-Over_Floor_Press/poster.webp",
+      "detail": "/exercises/Leg-Over_Floor_Press/detail.webp"
+    },
+    {
+      "id": "Monster_Walk",
+      "name": "Monster Walk",
+      "equipment": "bands",
+      "muscles_primary": [
+        "legs"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a band around both ankles and another around both knees. There should be enough tension that they are tight when your feet are shoulder width apart.",
+        "To begin, take short steps forward alternating your left and right foot.",
+        "After several steps, do just the opposite and walk backward to where you started."
+      ],
+      "poster": "/exercises/Monster_Walk/poster.webp",
+      "detail": "/exercises/Monster_Walk/detail.webp"
+    },
+    {
+      "id": "One-Arm_Kettlebell_Floor_Press",
+      "name": "One-Arm Kettlebell Floor Press",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "chest"
+      ],
+      "muscles_secondary": [
+        "arms"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Lie on the floor holding a kettlebell with one hand, with your upper arm supported by the floor. The palm should be facing in.",
+        "Press the kettlebell straight up toward the ceiling, rotating your wrist.",
+        "Lower the kettlebell back to the starting position and repeat."
+      ],
+      "poster": "/exercises/One-Arm_Kettlebell_Floor_Press/poster.webp",
+      "detail": "/exercises/One-Arm_Kettlebell_Floor_Press/detail.webp"
+    },
+    {
+      "id": "One-Arm_Kettlebell_Row",
+      "name": "One-Arm Kettlebell Row",
+      "equipment": "kettlebells",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "arms",
+        "back"
+      ],
+      "category": "strength",
+      "level": "intermediate",
+      "mechanic": "compound",
+      "instructions": [
+        "Place a kettlebell in front of your feet. Bend your knees slightly and then push your butt out as much as possible as you bend over to get in the starting position. Grab the kettlebell and pull it to your stomach, retracting your shoulder blade and flexing the elbow. Keep your back straight. Lower and repeat."
+      ],
+      "poster": "/exercises/One-Arm_Kettlebell_Row/poster.webp",
+      "detail": "/exercises/One-Arm_Kettlebell_Row/detail.webp"
+    },
+    {
+      "id": "Speed_Band_Overhead_Triceps",
+      "name": "Speed Band Overhead Triceps",
+      "equipment": "bands",
+      "muscles_primary": [
+        "arms"
+      ],
+      "muscles_secondary": [],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "isolation",
+      "instructions": [
+        "For this exercise anchor a band to the ground. We used an incline bench and anchored the band to the base, standing over the bench. Alternatively, this could be performed standing on the band.",
+        "To begin, pull the band behind your head, holding it with a pronated grip and your elbows up. This will be your starting position.",
+        "To perform the movement, extend through the elbow to to straighten your arms, ensuring that you keep your upper arm in place.",
+        "Pause, and then return to the starting position."
+      ],
+      "poster": "/exercises/Speed_Band_Overhead_Triceps/poster.webp",
+      "detail": "/exercises/Speed_Band_Overhead_Triceps/detail.webp"
+    },
+    {
+      "id": "Spell_Caster",
+      "name": "Spell Caster",
+      "equipment": "dumbbell",
+      "muscles_primary": [
+        "core"
+      ],
+      "muscles_secondary": [
+        "glutes",
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "Hold a dumbbell in each hand with a pronated grip. Your feet should be wide with your hips and knees extended. This will be your starting position.",
+        "Begin the movement by pulling both of the dumbbells to one side next to your hip, rotating your torso.",
+        "Keeping your arms straight and the dumbbells parallel to the ground, rotate your torso to swing the weights to your opposite side.",
+        "Continue alternating, rotating from one side to the other until the set is complete."
+      ],
+      "poster": "/exercises/Spell_Caster/poster.webp",
+      "detail": "/exercises/Spell_Caster/detail.webp"
+    },
+    {
+      "id": "Upright_Row_-_With_Bands",
+      "name": "Upright Row - With Bands",
+      "equipment": "bands",
+      "muscles_primary": [
+        "back"
+      ],
+      "muscles_secondary": [
+        "shoulders"
+      ],
+      "category": "strength",
+      "level": "beginner",
+      "mechanic": "compound",
+      "instructions": [
+        "To begin, stand on an exercise band so that tension begins at arm's length. Grasp the handles using a pronated (palms facing your thighs) grip that is slightly less than shoulder width. The handles should be resting on top of your thighs. Your arms should be extended with a slight bend at the elbows and your back should be straight. This will be your starting position.",
+        "Use your side shoulders to lift the handles as you exhale. The handles should be close to the body as you move them up. Continue to lift the handles until they nearly touches your chin. Tip: Your elbows should drive the motion. As you lift the handles, your elbows should always be higher than your forearms. Also, keep your torso stationary and pause for a second at the top of the movement.",
+        "Lower the handles back down slowly to the starting position. Inhale as you perform this portion of the movement.",
+        "Repeat for the recommended amount of repetitions."
+      ],
+      "poster": "/exercises/Upright_Row_-_With_Bands/poster.webp",
+      "detail": "/exercises/Upright_Row_-_With_Bands/detail.webp"
+    }
+  ]
+}
