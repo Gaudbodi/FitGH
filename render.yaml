@@ -45,6 +45,22 @@ services:
         sync: false
       - key: CLERK_AUTHORIZED_PARTIES
         sync: false
+      # Phase 4 — Image -> Kcal Core Loop.
+      # ANTHROPIC_API_KEY: Sonnet 4.6 vision API. Paste at deploy time
+      #   via Render dashboard; never committed (sync: false).
+      # LLM_VISION_MODEL: env-pinned per CONTEXT D-VISION-MODEL-PIN.
+      #   Bumping requires updating MODEL_PRICING_PER_1K in
+      #   app/lib/vision.py AND re-running the golden set (Phase 7).
+      # VISION_DAILY_CAP_USD: global circuit-breaker cap; default $5.
+      # COST_ALERT_WEBHOOK_URL: optional Discord/Slack incoming webhook.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: LLM_VISION_MODEL
+        value: "claude-sonnet-4-6"
+      - key: VISION_DAILY_CAP_USD
+        value: "5.0"
+      - key: COST_ALERT_WEBHOOK_URL
+        sync: false
 
   # ---------------------------------------------------------------------------
   # Frontend: Next.js 15 + pnpm + Node 20
