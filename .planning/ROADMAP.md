@@ -18,7 +18,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 - [ ] **Phase 1: Walking Skeleton** - End-to-end Clerk auth + Next.js BFF + Flask + MongoDB Atlas on Render (single platform, push-to-deploy), with one CI gate (pytest + pnpm build). Drops Fly.io, Vercel, Sentry, custom gitleaks CI rules, size-limit gate, and Atlas IP-pinning.
 - [ ] **Phase 2: Onboarding + Profile + Targets** - 3-screen onboarding, Mifflin-St Jeor TDEE, weight log, target on dashboard skeleton, privacy disclosure, GDPR delete-account
 - [ ] **Phase 3: Manual Meal Log + Ghana Table** - 25-dish FAO/INFOODS catalogue, search, multi-component meal schema, daily total, remaining-kcal pill, nightly mongodump
-- [ ] **Phase 4: Image -> Kcal Core Loop** - Client compression, Sonnet 4.6 with cached system + Ghana table + components tool-use, table re-match, component chips, inline correction, per-user cap + global $/day breaker
+- [x] **Phase 4: Image -> Kcal Core Loop** - Client compression, Sonnet 4.6 with cached system + Ghana table + components tool-use, table re-match, component chips, inline correction, per-user cap + global $/day breaker
 - [ ] **Phase 5: Animated Dashboard** - Rive avatar state-machine, animated kcal ring, Recharts weight + weekly-kcal charts, goal-aware home, soft-streak with 1-day grace
 - [ ] **Phase 6: Workout Library + PWA** - 80–120 curated exercises, search + equipment filter, WebP poster -> tap-load WebM, next-pwa + IndexedDB offline cache, attribution
 - [ ] **Phase 7: Launch Hardening** - Lagos WebPageTest, real privacy policy, data export + account-delete flows, health-claim copy audit, Anthropic spend alerts, golden-set re-run, production deploy
@@ -163,18 +163,18 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | LOG-06 | Manual Meal Logging | Phase 3 | Pending |
 | LOG-07 | Manual Meal Logging | Phase 3 | Pending |
 | LOG-08 | Manual Meal Logging | Phase 3 | Pending |
-| VIS-01 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-02 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-03 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-04 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-05 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-06 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-07 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-08 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-09 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-10 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-11 | Food Image → Kcal | Phase 4 | Pending |
-| VIS-12 | Food Image → Kcal | Phase 4 | Pending |
+| VIS-01 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-02 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-03 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-04 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-05 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-06 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-07 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-08 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-09 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-10 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-11 | Food Image → Kcal | Phase 4 | Complete |
+| VIS-12 | Food Image → Kcal | Phase 4 | Complete |
 | DASH-01 | Animated Dashboard | Phase 5 | Pending |
 | DASH-02 | Animated Dashboard | Phase 5 | Pending |
 | DASH-03 | Animated Dashboard | Phase 5 | Pending |
@@ -196,7 +196,7 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | PERF-04 | Performance | Phase 7 | Pending |
 | OBS-01 | Observability | Phase 1 | Pending |
 | OBS-02 | Observability | Phase 1 | Pending |
-| OBS-03 | Observability | Phase 4 | Pending |
+| OBS-03 | Observability | Phase 4 | Complete (env-var webhook in place of Sentry — see REQUIREMENTS.md note) |
 | SEC-01 | Security | Phase 1 | Pending |
 | SEC-02 | Security | Phase 1 | Pending |
 | SEC-03 | Security | Phase 1 | Pending |

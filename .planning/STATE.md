@@ -4,8 +4,8 @@ milestone: v1.0
 milestone_name: milestone
 status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
 stopped_at: Slice 0 + Slice A + Slice B file work complete. 22 backend tests passing. Size-limit reports 133.3 kB on /dashboard vs 180 kB budget. Gitleaks pre-commit gate verified by deliberate-leak smoke test. Awaiting user to complete WS-0.1 (Atlas rotation) and the other 13 dashboard-action checkpoints listed in `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" before the executor can wire MONGODB_URI / Clerk / Fly / Vercel and run the E2E sign-off.
-last_updated: "2026-05-12T00:00:00.000Z"
-last_activity: 2026-05-12 -- Phase 1 rearchitected to Render-only deploy (ROADMAP edited); re-plan pending via /gsd-plan-phase 1 --replan
+last_updated: "2026-05-13T00:00:00.000Z"
+last_activity: 2026-05-13 -- Phase 1 deployed on Render (build green); Phase 2 executed (17 commits, 81 backend tests, all 9 reqs); starting Phase 3
 progress:
   total_phases: 7
   completed_phases: 1
@@ -74,6 +74,10 @@ Decisions are logged in PROJECT.md Key Decisions table and research/SUMMARY.md "
 - [Phase ?]: Phase 1 WS-0.1/C.1/C.2 verified 2026-05-11 — Atlas password rotated to fitgh-app/readWrite@fitgh; /health returns mongo:connected; db.py shim removed (MONGODB_URI mandatory at import)
 - [Phase ?]: WS-0.2 verified 2026-05-11 — Atlas cluster0 tier=M0 (100-connection cap; maxPoolSize=10 sized correctly); Fly.io billing has card on file (egress IP allocation unblocked for WS-G.5)
 - [Roadmap evolution] 2026-05-12: Phase 1 rearchitected (ROADMAP edited; tracked in memory/render-only-rewrite.md). Out: Vercel, Fly.io JNB + static egress IPv4 add-on, Clerk Dev+Prod twin instances, Sentry FE/BE, custom gitleaks CI rules, size-limit 180 KB CI gate. In: both Next.js and Flask deploy as Render web services on `git push main`; Atlas allowlist `0.0.0.0/0` + 32-char password + readWrite@fitgh; Clerk single Production instance. User-facing Phase 1 checkpoints 14 → 3. Follow-up: REQUIREMENTS.md traceability table (SEC-01/02/03, OBS-01/02, PERF-01 deferrals), research/SUMMARY.md Locked Stack Decisions, .planning/phases/01-walking-skeleton/SKELETON.md, 01-PLAN.md replan. Fly.io billing card on file now unused — Fly subscription can be cancelled.
+- [Phase 1] 2026-05-13: Render deploy live. fitgh-api + fitgh-web both auto-deploying on push to main. render.yaml runtime mismatch fixed (98a94c8) + pnpm 10.15.0 packageManager pin (6790772). Clerk test instance auto-allows all origins (no Authorized Origins config needed for test keys).
+- [Phase 2] 2026-05-13: Complete. 17 commits (3fdd61c..30ee8ea). 81 backend tests passing. All 9 reqs (AUTH-04/05, PROF-01..07) covered. /dashboard First Load JS 162 kB.
+- [Phase 3] 2026-05-13: Complete. 17 commits (0591a71..5a0667f). 158 backend tests passing (+77 from Phase 2). All 9 reqs (LOG-01..08, DATA-01) covered. 25-dish Ghana food catalogue seeded, multi-component meals schema (day-1 shape — Phase 4 writes into it), /history 30-day view, nightly mongodump GH Action. /dashboard First Load JS 230 kB (above the 180 kB ideal due to cmdk + slider; flagged for Phase 5/7 data-light pass — size-limit CI gate intentionally absent). Operator follow-ups: run seed_ghana_foods.py against prod Atlas; createIndex on meals.user_id+logged_at; provision read-only Atlas user + add MONGODB_URI_BACKUP GH Actions secret.
+- [Phase 4] 2026-05-13: Complete. 12 commits (b8db18e..88d2258). 252 backend tests passing (+94 from Phase 3). All 13 reqs (VIS-01..12, OBS-03) covered. Wedge feature: POST /meals/scan calls Claude Sonnet 4.6 via Anthropic SDK with prompt caching, per-user 8/day cap, global $/day breaker, env-var cost-alert webhook (Sentry replacement). No server-side image retention. ScanSheet + ScanResultChips + SnapMealCta + ServicePausedBanner on FE; ScanSheet lazy-loaded so /dashboard First Load JS unchanged at 231 kB (+1 kB for dynamic loader). respx mocks the Anthropic SDK in CI — zero real API calls. Operator follow-ups: provision ANTHROPIC_API_KEY in Render fitgh-api Environment + backend/.env.local; run `db.vision_usage.createIndex({user_id:1, date:1}, {unique:true})` + `db.user_corrections.createIndex({user_id:1, corrected_at:-1})` against prod Atlas; optionally set COST_ALERT_WEBHOOK_URL.
 
 ### Pending Todos
 

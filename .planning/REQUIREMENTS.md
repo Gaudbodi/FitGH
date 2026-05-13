@@ -37,18 +37,18 @@
 
 ### Food Image → Kcal (Core Loop)
 
-- [ ] **VIS-01**: User can capture or upload a meal photo from the dashboard
-- [ ] **VIS-02**: Image is compressed client-side (max 1024 px long edge, ≤0.5 MB, JPEG q=0.85) before upload
-- [ ] **VIS-03**: Backend identifies each visible component on the plate (multi-component output, not single dish)
-- [ ] **VIS-04**: Backend returns kcal range (low/high) per component + total with confidence band
-- [ ] **VIS-05**: Backend re-matches identified component names to the `foods` catalogue and uses the table's `kcal_per_100g × portion_g_locale` to recompute (table wins over LLM kcal)
-- [ ] **VIS-06**: User sees components as tap-to-edit chips with portion sliders before saving
-- [ ] **VIS-07**: User can correct dish name (autocomplete over the Ghana catalogue) and portion before confirming
-- [ ] **VIS-08**: Corrections are persisted to `user_corrections` and bias defaults on subsequent scans
-- [ ] **VIS-09**: Per-user vision-call quota enforced (default 8/day) with clear messaging when exhausted
-- [ ] **VIS-10**: Global daily LLM cost circuit breaker; users see a friendly fallback to manual entry if hit
-- [ ] **VIS-11**: Meal image bytes are NOT retained server-side after the vision call (privacy + cost)
-- [ ] **VIS-12**: Confirmed meal is persisted via the same multi-component schema as manual entries
+- [x] **VIS-01**: User can capture or upload a meal photo from the dashboard
+- [x] **VIS-02**: Image is compressed client-side (max 1024 px long edge, ≤0.5 MB, JPEG q=0.85) before upload
+- [x] **VIS-03**: Backend identifies each visible component on the plate (multi-component output, not single dish)
+- [x] **VIS-04**: Backend returns kcal range (low/high) per component + total with confidence band
+- [x] **VIS-05**: Backend re-matches identified component names to the `foods` catalogue and uses the table's `kcal_per_100g × portion_g_locale` to recompute (table wins over LLM kcal)
+- [x] **VIS-06**: User sees components as tap-to-edit chips with portion sliders before saving
+- [x] **VIS-07**: User can correct dish name (autocomplete over the Ghana catalogue) and portion before confirming
+- [x] **VIS-08**: Corrections are persisted to `user_corrections` and bias defaults on subsequent scans
+- [x] **VIS-09**: Per-user vision-call quota enforced (default 8/day) with clear messaging when exhausted
+- [x] **VIS-10**: Global daily LLM cost circuit breaker; users see a friendly fallback to manual entry if hit
+- [x] **VIS-11**: Meal image bytes are NOT retained server-side after the vision call (privacy + cost)
+- [x] **VIS-12**: Confirmed meal is persisted via the same multi-component schema as manual entries
 
 ### Animated Dashboard
 
@@ -79,7 +79,7 @@
 - [ ] **PERF-04**: Real Ghana p75 TTFB measured from Lagos via WebPageTest before launch; gate launch on ≤ 2 s
 - [ ] **OBS-01**: Sentry captures frontend + backend errors with user privacy (no PII, no image data, no kcal totals in error context) — *Deferred 2026-05-12: Sentry init no-ops when SENTRY_DSN_BACKEND is unset; scrubber contract enforced by tests since commit 1 so re-enabling is one env-var away.*
 - [ ] **OBS-02**: Vercel Analytics + Speed Insights track real-user perf on Vercel free tier — *Dropped 2026-05-12: no Vercel in the Render-only rewrite. If Render adds an analytics product worth integrating, Phase 6 or 7 picks it up.*
-- [ ] **OBS-03**: Sentry alert at $/DAU/day > $0.05 on the LLM cost metric
+- [x] **OBS-03**: Sentry alert at $/DAU/day > $0.05 on the LLM cost metric *(Phase 4: implemented as env-var webhook — Sentry dropped 2026-05-12 in the Render-only rewrite. POSTs Discord/Slack-compatible `{content: "..."}` to `COST_ALERT_WEBHOOK_URL`; falls back to WARN-log if unset. Single-fire latch via `system_state.vision_budget.alert_fired`.)*
 - [ ] **SEC-01**: All secrets in `.env.local` / Render env vars; `.env*` gitignored; `gitleaks` pre-commit hook in repo from Phase 1 — *Deferred 2026-05-12: custom gitleaks CI rules dropped (local pre-commit hook with custom MongoDB / Clerk / Sentry rules remains in force).*
 - [ ] **SEC-02**: Exposed MongoDB password rotated before Phase 1 deploy; least-privilege Atlas DB user (no admin) — *Deferred 2026-05-12: `fitgh-app` user with 32-char password + scoped readWrite@fitgh role retained; Atlas allowlist relaxed to `0.0.0.0/0` because Render Free/Starter egress IPs aren't pinnable. Defense in depth = password + role + TLS-only.*
 - [ ] **SEC-03**: Flask CORS configured with explicit origin allowlist (no `*` + credentials) — *Deferred 2026-05-12: BFF same-origin posture (browser only talks to Next.js BFF; BFF -> Flask is Render-internal) moots the cross-origin browser path. Flask-CORS wiring kept; allowlist may be empty in v1.*
@@ -175,18 +175,18 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | LOG-06 | Phase 3 | Complete |
 | LOG-07 | Phase 3 | Complete |
 | LOG-08 | Phase 3 | Complete |
-| VIS-01 | Phase 4 | Pending |
-| VIS-02 | Phase 4 | Pending |
-| VIS-03 | Phase 4 | Pending |
-| VIS-04 | Phase 4 | Pending |
-| VIS-05 | Phase 4 | Pending |
-| VIS-06 | Phase 4 | Pending |
-| VIS-07 | Phase 4 | Pending |
-| VIS-08 | Phase 4 | Pending |
-| VIS-09 | Phase 4 | Pending |
-| VIS-10 | Phase 4 | Pending |
-| VIS-11 | Phase 4 | Pending |
-| VIS-12 | Phase 4 | Pending |
+| VIS-01 | Phase 4 | Complete |
+| VIS-02 | Phase 4 | Complete |
+| VIS-03 | Phase 4 | Complete |
+| VIS-04 | Phase 4 | Complete |
+| VIS-05 | Phase 4 | Complete |
+| VIS-06 | Phase 4 | Complete |
+| VIS-07 | Phase 4 | Complete |
+| VIS-08 | Phase 4 | Complete |
+| VIS-09 | Phase 4 | Complete |
+| VIS-10 | Phase 4 | Complete |
+| VIS-11 | Phase 4 | Complete |
+| VIS-12 | Phase 4 | Complete |
 | DASH-01 | Phase 5 | Pending |
 | DASH-02 | Phase 5 | Pending |
 | DASH-03 | Phase 5 | Pending |
@@ -208,7 +208,7 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | PERF-04 | Phase 7 | Pending |
 | OBS-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | OBS-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
-| OBS-03 | Phase 4 | Pending |
+| OBS-03 | Phase 4 | Complete (env-var webhook in place of Sentry; see requirement note) |
 | SEC-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | SEC-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | SEC-03 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
@@ -228,4 +228,4 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 
 ---
 *Requirements defined: 2026-05-11*
-*Last updated: 2026-05-13 — Phase 3 (Manual Meal Log + Ghana Table) complete; LOG-01..08 + DATA-01 flipped to Complete.*
+*Last updated: 2026-05-13 — Phase 4 (Image → Kcal Core Loop) complete; VIS-01..12 + OBS-03 flipped to Complete.*
