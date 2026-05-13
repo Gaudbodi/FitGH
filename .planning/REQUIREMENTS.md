@@ -26,14 +26,14 @@
 
 ### Manual Meal Logging
 
-- [ ] **LOG-01**: User can search the Ghana food catalogue (25 dishes v1) by name or alias (jollof, banku, waakye, etc.)
-- [ ] **LOG-02**: User can log a meal manually as one OR multiple components (multi-component schema from day 1)
-- [ ] **LOG-03**: User can set portion per component using a slider with culturally meaningful defaults ("1 ball of banku ≈ 200 g")
-- [ ] **LOG-04**: System computes total kcal + total protein for a logged meal
-- [ ] **LOG-05**: User can view today's meals as a list with running daily total
-- [ ] **LOG-06**: Dashboard shows "remaining kcal" pill (target − consumed)
-- [ ] **LOG-07**: User can edit or delete a logged meal
-- [ ] **LOG-08**: User can view history of meals by day (last 30 days minimum)
+- [x] **LOG-01**: User can search the Ghana food catalogue (25 dishes v1) by name or alias (jollof, banku, waakye, etc.)
+- [x] **LOG-02**: User can log a meal manually as one OR multiple components (multi-component schema from day 1)
+- [x] **LOG-03**: User can set portion per component using a slider with culturally meaningful defaults ("1 ball of banku ≈ 200 g")
+- [x] **LOG-04**: System computes total kcal + total protein for a logged meal
+- [x] **LOG-05**: User can view today's meals as a list with running daily total
+- [x] **LOG-06**: Dashboard shows "remaining kcal" pill (target − consumed)
+- [x] **LOG-07**: User can edit or delete a logged meal
+- [x] **LOG-08**: User can view history of meals by day (last 30 days minimum)
 
 ### Food Image → Kcal (Core Loop)
 
@@ -84,7 +84,7 @@
 - [ ] **SEC-02**: Exposed MongoDB password rotated before Phase 1 deploy; least-privilege Atlas DB user (no admin) — *Deferred 2026-05-12: `fitgh-app` user with 32-char password + scoped readWrite@fitgh role retained; Atlas allowlist relaxed to `0.0.0.0/0` because Render Free/Starter egress IPs aren't pinnable. Defense in depth = password + role + TLS-only.*
 - [ ] **SEC-03**: Flask CORS configured with explicit origin allowlist (no `*` + credentials) — *Deferred 2026-05-12: BFF same-origin posture (browser only talks to Next.js BFF; BFF -> Flask is Render-internal) moots the cross-origin browser path. Flask-CORS wiring kept; allowlist may be empty in v1.*
 - [ ] **SEC-04**: Flask uses a singleton `MongoClient` with `maxPoolSize=10` to respect M0 connection limits
-- [ ] **DATA-01**: Daily `mongodump` to Cloudflare R2 / similar; Atlas M0 has no native backups
+- [x] **DATA-01**: Daily `mongodump` to Cloudflare R2 / similar; Atlas M0 has no native backups *(Phase 3: GH Actions nightly cron + actions-artifact storage with 90-day retention; R2 deferred to Phase 7 per CONTEXT.md DATA-01 simplification.)*
 - [ ] **LEGAL-01**: Privacy policy live at launch, naming LLM-vision provider as a sub-processor
 - [ ] **LEGAL-02**: User can export all their data on request (account → data export endpoint)
 - [ ] **LEGAL-03**: Health-claim language audit: app is "fitness tracking," not "medical advice"; copy reviewed pre-launch
@@ -167,14 +167,14 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | PROF-05 | Phase 2 | Complete |
 | PROF-06 | Phase 2 | Complete |
 | PROF-07 | Phase 2 | Complete |
-| LOG-01 | Phase 3 | Pending |
-| LOG-02 | Phase 3 | Pending |
-| LOG-03 | Phase 3 | Pending |
-| LOG-04 | Phase 3 | Pending |
-| LOG-05 | Phase 3 | Pending |
-| LOG-06 | Phase 3 | Pending |
-| LOG-07 | Phase 3 | Pending |
-| LOG-08 | Phase 3 | Pending |
+| LOG-01 | Phase 3 | Complete |
+| LOG-02 | Phase 3 | Complete |
+| LOG-03 | Phase 3 | Complete |
+| LOG-04 | Phase 3 | Complete |
+| LOG-05 | Phase 3 | Complete |
+| LOG-06 | Phase 3 | Complete |
+| LOG-07 | Phase 3 | Complete |
+| LOG-08 | Phase 3 | Complete |
 | VIS-01 | Phase 4 | Pending |
 | VIS-02 | Phase 4 | Pending |
 | VIS-03 | Phase 4 | Pending |
@@ -213,7 +213,7 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | SEC-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | SEC-03 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | SEC-04 | Phase 1 | Phase 1 closing on Render deploy |
-| DATA-01 | Phase 3 | Pending |
+| DATA-01 | Phase 3 | Complete |
 | LEGAL-01 | Phase 7 | Pending |
 | LEGAL-02 | Phase 7 | Pending |
 | LEGAL-03 | Phase 7 | Pending |
@@ -228,4 +228,4 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 
 ---
 *Requirements defined: 2026-05-11*
-*Last updated: 2026-05-11 — traceability table populated by gsd-roadmapper.*
+*Last updated: 2026-05-13 — Phase 3 (Manual Meal Log + Ghana Table) complete; LOG-01..08 + DATA-01 flipped to Complete.*
