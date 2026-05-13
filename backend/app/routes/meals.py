@@ -290,3 +290,97 @@ def get_meals():
     ).sort("logged_at", -1)
     docs = list(cursor)
     return jsonify({"days": _group_by_local_date(docs, tz)}), 200
+
+
+# ---------------------------------------------------------------------------
+# PATCH /meals/<id>
+# ---------------------------------------------------------------------------
+
+
+def _parse_meal_id(raw: str) -> ObjectId | None:
+    try:
+        return ObjectId(raw)
+    except (InvalidId, TypeError):
+        return None
+
+
+@bp.patch("/meals/<id>")
+@require_auth
+def patch_meal(id):  # noqa: A002
+    """Replace meal fields. PATCH semantics:
+
+    - When `components` is supplied, the array is REPLACED ATOMICALLY
+      (D-PATCH-REPLACES-COMPONENTS / planner-flagged risk #2 — the FE always
+      re-sends the full edited list; a partial PATCH with one component
+      would nuke the rest, which is the simpler / less-bug-prone contract).
+    - When `logged_at` is supplied, the backdate validator runs (T-03-04).
+    - Cross-user ownership check returns 404 (T-03-03), never 403, to avoid
+      leaking existence.
+    """
+    clerk_id = g.clerk_user_id
+    oid = _parse_meal_id(id)
+    if oid is None:
+        return jsonify({"error": "invalid_meal_id"}), 422
+
+    existing = db_mod.meals.find_one({"_id": oid, "user_id": clerk_id})
+    if existing is None:
+        return jsonify({"error": "meal_not_found"}), 404
+
+    try:
+        payload = MealUpdate.model_validate_json(request.data)
+    except ValidationError as e:
+        return jsonify({"error": "validation_error", "details": _safe_errors(e)}), 422
+
+    set_fields: dict = {}
+
+    if payload.logged_at is not None:
+        try:
+            set_fields["logged_at"] = _validate_logged_at(payload.logged_at)
+        except ValueError as ve:
+            return jsonify({"error": str(ve)}), 422
+
+    if payload.components is not None:
+        try:
+            resolved = [_resolve_component(cc) for cc in payload.components]
+        except _UnknownFoodIdError as ex:
+            return (
+                jsonify(
+                    {
+                        "error": "unknown_food_id",
+                        "details": {"food_id": ex.food_id},
+                    }
+                ),
+                422,
+            )
+        total_kcal, total_protein = recompute_meal_totals(resolved)
+        set_fields["components"] = resolved
+        set_fields["total_kcal"] = total_kcal
+        set_fields["total_protein_g"] = total_protein
+
+    set_fields["updated_at"] = datetime.now(UTC)
+    db_mod.meals.update_one(
+        {"_id": oid, "user_id": clerk_id}, {"$set": set_fields}
+    )
+    refreshed = db_mod.meals.find_one({"_id": oid, "user_id": clerk_id})
+    return jsonify(_meal_to_json(refreshed)), 200
+
+
+# ---------------------------------------------------------------------------
+# DELETE /meals/<id>
+# ---------------------------------------------------------------------------
+
+
+@bp.delete("/meals/<id>")
+@require_auth
+def delete_meal(id):  # noqa: A002
+    clerk_id = g.clerk_user_id
+    oid = _parse_meal_id(id)
+    if oid is None:
+        return jsonify({"error": "invalid_meal_id"}), 422
+
+    existing = db_mod.meals.find_one({"_id": oid, "user_id": clerk_id})
+    if existing is None:
+        return jsonify({"error": "meal_not_found"}), 404
+
+    db_mod.meals.delete_one({"_id": oid, "user_id": clerk_id})
+    return jsonify({"ok": True, "deleted_id": id}), 200

@@ -589,3 +589,172 @@ def test_get_meals_days_newest_first(
     out = r.get_json()
     dates = [d["date"] for d in out["days"]]
     assert dates == sorted(dates, reverse=True)
+
+
+# ===========================================================================
+# PATCH /meals/<id> and DELETE /meals/<id> — P3-B.4
+# ===========================================================================
+
+
+def _post_seed_meal(client, mongo_collections, *, user_id: str) -> str:
+    """Helper: POST a seed meal and return its id."""
+    _seed_foods(mongo_collections)
+    body = {"components": [{"food_id": "gh-jollof-rice", "portion_g": 350}]}
+    r = client.post("/meals", data=json.dumps(body), headers=_hdrs())
+    assert r.status_code == 201, r.get_data(as_text=True)
+    return r.get_json()["id"]
+
+
+def test_patch_meal_components_replaces_array_and_recomputes_totals(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    # Replace jollof with banku + tilapia.
+    body = {
+        "components": [
+            {"food_id": "gh-banku", "portion_g": 200},
+            {"food_id": "gh-tilapia-grilled", "portion_g": 250},
+        ]
+    }
+    r = client.patch(
+        f"/meals/{meal_id}", data=json.dumps(body), headers=_hdrs()
+    )
+    assert r.status_code == 200, r.get_data(as_text=True)
+    out = r.get_json()
+    assert len(out["components"]) == 2
+    # 145*200/100=290; 130*250/100=325; sum=615
+    assert out["total_kcal"] == 290 + 325
+
+
+def test_patch_meal_logged_at_only_updates_timestamp_keeps_components(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    new_ts = (datetime.now(UTC) - timedelta(hours=3)).isoformat()
+    r = client.patch(
+        f"/meals/{meal_id}",
+        data=json.dumps({"logged_at": new_ts}),
+        headers=_hdrs(),
+    )
+    assert r.status_code == 200
+    out = r.get_json()
+    assert len(out["components"]) == 1  # original component preserved
+
+
+def test_patch_meal_rejects_unknown_field_422(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    r = client.patch(
+        f"/meals/{meal_id}",
+        data=json.dumps({"total_kcal": 99999}),
+        headers=_hdrs(),
+    )
+    assert r.status_code == 422
+
+
+def test_patch_meal_other_user_returns_404_not_403(
+    client, mongo_collections, monkeypatch
+):
+    """T-03-03: cross-user PATCH must return 404 to avoid leaking existence."""
+    _seed_profile(mongo_collections, "user_a")
+    _seed_profile(mongo_collections, "user_b")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    # Now switch to user_b and try to PATCH user_a's meal.
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_b")
+    r = client.patch(
+        f"/meals/{meal_id}",
+        data=json.dumps({"components": [{"food_id": "gh-banku", "portion_g": 200}]}),
+        headers=_hdrs(),
+    )
+    assert r.status_code == 404
+
+
+def test_patch_meal_invalid_id_returns_422(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    r = client.patch(
+        "/meals/not-an-objectid",
+        data=json.dumps({"components": [{"food_id": "gh-jollof-rice", "portion_g": 350}]}),
+        headers=_hdrs(),
+    )
+    assert r.status_code == 422
+
+
+def test_patch_meal_backdate_violation_422(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    too_old = (datetime.now(UTC) - timedelta(days=8)).isoformat()
+    r = client.patch(
+        f"/meals/{meal_id}",
+        data=json.dumps({"logged_at": too_old}),
+        headers=_hdrs(),
+    )
+    assert r.status_code == 422
+
+
+def test_delete_meal_removes_doc(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    r = client.delete(f"/meals/{meal_id}", headers={"Authorization": "Bearer stub"})
+    assert r.status_code == 200
+    out = r.get_json()
+    assert out["ok"] is True
+    assert out["deleted_id"] == meal_id
+    assert mongo_collections.meals.count_documents({}) == 0
+
+
+def test_delete_meal_other_user_returns_404(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _seed_profile(mongo_collections, "user_b")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_b")
+    r = client.delete(f"/meals/{meal_id}", headers={"Authorization": "Bearer stub"})
+    assert r.status_code == 404
+
+
+def test_delete_meal_idempotent_second_call_404(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    meal_id = _post_seed_meal(client, mongo_collections, user_id="user_a")
+    client.delete(f"/meals/{meal_id}", headers={"Authorization": "Bearer stub"})
+    r2 = client.delete(f"/meals/{meal_id}", headers={"Authorization": "Bearer stub"})
+    assert r2.status_code == 404
+
+
+def test_delete_meal_invalid_id_422(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_a")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_a")
+    r = client.delete(
+        "/meals/not-an-objectid", headers={"Authorization": "Bearer stub"}
+    )
+    assert r.status_code == 422
