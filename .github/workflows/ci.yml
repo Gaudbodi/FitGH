@@ -1,0 +1,81 @@
+# FitGH CI — Phase 1 Walking Skeleton (Render-only rewrite 2026-05-12).
+#
+# One workflow, two parallel jobs. Replaces backend.yml + frontend.yml + gitleaks.yml.
+# Render's autoDeploy:true watches main, so the CI here exists to fail-fast on PRs
+# and on pushes BEFORE Render attempts a deploy. Render itself re-runs the build
+# inside its container; CI is the cheap pre-flight gate.
+#
+# Local gitleaks pre-commit (.pre-commit-config.yaml + .gitleaks.toml) is retained
+# as a developer guardrail; the CI gitleaks job was dropped in the 2026-05-12 rewrite.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: backend (pytest + ruff)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Ruff lint
+        run: ruff check .
+
+      - name: Pytest
+        run: pytest -x --cov=app --cov-report=term-missing
+
+  frontend:
+    name: frontend (pnpm build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          # .nvmrc lives at repo root, not under frontend/.
+          node-version-file: ./.nvmrc
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint (next lint)
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm tsc --noEmit
+
+      - name: Build
+        run: pnpm build
