@@ -40,8 +40,11 @@ export function WorkoutsGrid({ entries }: Props) {
         </p>
       ) : (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 p-4">
-          {filtered.map((entry) => (
-            <ExerciseCard key={entry.id} entry={entry} />
+          {filtered.map((entry, i) => (
+            // First 4 cards eager-load with fetchPriority=high (P6-E.1
+            // Rule 1 fix — Lighthouse flagged the LCP poster as
+            // lazy-loaded).
+            <ExerciseCard key={entry.id} entry={entry} priority={i < 4} />
           ))}
         </div>
       )}
