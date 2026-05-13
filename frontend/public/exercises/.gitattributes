@@ -1,0 +1,11 @@
+# Phase 6 (Workout Library + PWA): tell Git to treat the ingest output
+# correctly across platforms.
+#
+# - WebPs are binary; Git should not attempt textual diff/merge.
+# - manifest.json + precache-list.json must stay LF-normalized so the
+#   ingest's deterministic output is byte-identical on Linux/macOS/Windows
+#   (the operator may regenerate from any platform).
+
+*.webp binary
+manifest.json text eol=lf
+precache-list.json text eol=lf
