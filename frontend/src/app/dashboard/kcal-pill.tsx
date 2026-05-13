@@ -1,8 +1,10 @@
-// KcalPill — Phase 3 Plan 03 (P3-D.1).
+// KcalPill — Phase 3 Plan 03 (P3-D.1); refactored Phase 5 (P5-D.1).
 //
-// SERVER component. Renders a static pill (no client JS, no animation —
-// D-NO-ANIMATION-PHASE-3; animated kcal ring is Phase 5).
+// SERVER component. Renders the static pill (no client JS). The visual
+// kcal RING is the new Phase 5 animated companion (KcalRing); the pill
+// remains as the textual remaining-kcal callout BELOW the ring.
 
+import { kcalColorBand, kcalColorClasses } from "@/lib/kcal-color";
 import { cn } from "@/lib/utils";
 
 interface KcalPillProps {
@@ -11,25 +13,21 @@ interface KcalPillProps {
 }
 
 export function KcalPill({ totalKcal, targetKcal }: KcalPillProps) {
+  const band = kcalColorBand(totalKcal, targetKcal);
+  const { bg, text } = kcalColorClasses(band);
+
   const remaining = targetKcal - totalKcal;
-  const isOver = totalKcal > targetKcal;
-  const isAmber = !isOver && totalKcal > targetKcal * 0.9;
-
-  const bg = isOver
-    ? "bg-red-100 text-red-900"
-    : isAmber
-      ? "bg-amber-100 text-amber-900"
-      : "bg-emerald-100 text-emerald-900";
-
-  const remainingLabel = remaining >= 0
-    ? `${remaining} remaining`
-    : `over by ${Math.abs(remaining)} kcal`;
+  const remainingLabel =
+    remaining >= 0
+      ? `${remaining} remaining`
+      : `over by ${Math.abs(remaining)} kcal`;
 
   return (
     <div
       className={cn(
         "flex items-center justify-between gap-3 rounded-full px-4 py-2 text-sm font-medium tabular-nums",
         bg,
+        text,
       )}
     >
       <span>
