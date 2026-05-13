@@ -6,6 +6,7 @@
 
 import Link from "next/link";
 import { DeleteAccountButton } from "./delete-account-button";
+import DownloadDataButton from "./download-data-button";
 
 export const dynamic = "force-dynamic";
 
@@ -25,13 +26,14 @@ export default function SettingsPage() {
         <p className="text-sm text-muted-foreground">
           Review how we handle your data, or export a copy for your records.
         </p>
-        <div className="flex flex-col gap-2 text-sm">
+        <div className="flex flex-col gap-3 text-sm">
           <Link
             href="/privacy"
             className="underline-offset-4 hover:underline"
           >
             Privacy policy
           </Link>
+          <DownloadDataButton />
         </div>
       </section>
 
