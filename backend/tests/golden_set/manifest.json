@@ -1,0 +1,121 @@
+[
+  {
+    "id": "01-jollof-with-chicken",
+    "photo": "photos/01-jollof-with-chicken.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Jollof rice", "kcal_low": 500, "kcal_high": 700},
+      {"name": "Grilled chicken thigh", "kcal_low": 180, "kcal_high": 280}
+    ],
+    "expected_total_kcal_low": 680,
+    "expected_total_kcal_high": 980,
+    "notes": "Classic Sunday plate. Wide kcal band accounts for portion variability."
+  },
+  {
+    "id": "02-banku-tilapia-shito",
+    "photo": "photos/02-banku-tilapia-shito.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Banku", "kcal_low": 280, "kcal_high": 360},
+      {"name": "Grilled tilapia", "kcal_low": 200, "kcal_high": 320},
+      {"name": "Shito (Ghanaian hot pepper sauce)", "kcal_low": 40, "kcal_high": 80}
+    ],
+    "expected_total_kcal_low": 520,
+    "expected_total_kcal_high": 760,
+    "notes": "Banku + tilapia + shito — common chop-bar order."
+  },
+  {
+    "id": "03-waakye",
+    "photo": "photos/03-waakye.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Waakye (rice and beans)", "kcal_low": 420, "kcal_high": 580}
+    ],
+    "expected_total_kcal_low": 420,
+    "expected_total_kcal_high": 580,
+    "notes": "Single-component dish (rice + beans cooked together)."
+  },
+  {
+    "id": "04-fufu-light-soup",
+    "photo": "photos/04-fufu-light-soup.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Fufu (cassava and plantain)", "kcal_low": 350, "kcal_high": 470},
+      {"name": "Light soup", "kcal_low": 120, "kcal_high": 220}
+    ],
+    "expected_total_kcal_low": 470,
+    "expected_total_kcal_high": 690,
+    "notes": "Soup-and-swallow staple."
+  },
+  {
+    "id": "05-kelewele",
+    "photo": "photos/05-kelewele.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Kelewele (spicy fried plantain)", "kcal_low": 350, "kcal_high": 500}
+    ],
+    "expected_total_kcal_low": 350,
+    "expected_total_kcal_high": 500,
+    "notes": "Snack portion ~150 g."
+  },
+  {
+    "id": "06-red-red",
+    "photo": "photos/06-red-red.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Red-red (beans and plantain)", "kcal_low": 450, "kcal_high": 650}
+    ],
+    "expected_total_kcal_low": 450,
+    "expected_total_kcal_high": 650,
+    "notes": "Bean stew + fried plantain — composite entry in catalogue."
+  },
+  {
+    "id": "07-kontomire-stew",
+    "photo": "photos/07-kontomire-stew.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Kontomire stew", "kcal_low": 280, "kcal_high": 420},
+      {"name": "Boiled plantain", "kcal_low": 200, "kcal_high": 320}
+    ],
+    "expected_total_kcal_low": 480,
+    "expected_total_kcal_high": 740,
+    "notes": "Kontomire (cocoyam leaf) stew with plantain side."
+  },
+  {
+    "id": "08-omotuo-groundnut-soup",
+    "photo": "photos/08-omotuo-groundnut-soup.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Fufu (cassava and plantain)", "kcal_low": 350, "kcal_high": 470},
+      {"name": "Groundnut soup", "kcal_low": 200, "kcal_high": 360}
+    ],
+    "expected_total_kcal_low": 550,
+    "expected_total_kcal_high": 830,
+    "notes": "Omotuo (rice balls) substituted with Fufu in the v1 catalogue — same energy profile."
+  },
+  {
+    "id": "09-tuo-zaafi",
+    "photo": "photos/09-tuo-zaafi.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Tuo zaafi", "kcal_low": 380, "kcal_high": 520},
+      {"name": "Groundnut soup", "kcal_low": 200, "kcal_high": 360}
+    ],
+    "expected_total_kcal_low": 580,
+    "expected_total_kcal_high": 880,
+    "notes": "Northern Ghana staple — TZ with groundnut soup."
+  },
+  {
+    "id": "10-kenkey-fried-fish",
+    "photo": "photos/10-kenkey-fried-fish.jpg",
+    "source": "placeholder",
+    "expected_components": [
+      {"name": "Ga kenkey", "kcal_low": 320, "kcal_high": 480},
+      {"name": "Grilled tilapia", "kcal_low": 200, "kcal_high": 320},
+      {"name": "Shito (Ghanaian hot pepper sauce)", "kcal_low": 40, "kcal_high": 80}
+    ],
+    "expected_total_kcal_low": 560,
+    "expected_total_kcal_high": 880,
+    "notes": "Ga kenkey + tilapia + shito — beach-side classic."
+  }
+]
