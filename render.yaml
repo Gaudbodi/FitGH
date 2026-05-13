@@ -1,0 +1,79 @@
+# Render Blueprint — FitGH Phase 1 Walking Skeleton (Render-only rewrite 2026-05-12).
+#
+# Two web services from one repo, both auto-deploying on push to `main`:
+#   - fitgh-api : Python (Flask 3.1.3 + gunicorn) on Render Starter ($7/mo, no cold starts)
+#                 — locked in now because Phase 4 (LLM vision) cannot tolerate Render Free's
+#                 30-60 s cold start on the meal-snap loop.
+#   - fitgh-web : Node 20 (Next.js 15.2.4 / React 19 / Tailwind v4) on Render Free
+#                 — acceptable for Phase 1; revisit in Phase 7 if Ghana p75 latency demands it.
+#
+# All secrets are declared `sync: false` so Render prompts the user to paste them at
+# Blueprint provision time (never committed to the repo).
+#
+# References:
+#   - https://render.com/docs/blueprint-spec
+#   - memory/render-only-rewrite.md
+
+services:
+  # ---------------------------------------------------------------------------
+  # Backend: Flask 3.1.3 + gunicorn + Python 3.12 buildpack
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: fitgh-api
+    rootDir: backend
+    env: python
+    runtime: python-3.12
+    plan: starter
+    region: oregon
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /health
+    buildCommand: pip install -r requirements.txt
+    # gunicorn config:
+    #   --workers 2 --threads 4 : 8 concurrent requests; safe under Atlas M0 100-conn cap
+    #                             paired with PyMongo maxPoolSize=10 per process.
+    #   --timeout 60            : Phase 4 vision LLM calls can take 5-15 s; 60 s gives slack.
+    #   --bind 0.0.0.0:$PORT    : Render injects $PORT at start.
+    startCommand: gunicorn 'app:create_app()' --workers 2 --threads 4 --timeout 60 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: FLASK_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      - key: CLERK_AUTHORIZED_PARTIES
+        sync: false
+
+  # ---------------------------------------------------------------------------
+  # Frontend: Next.js 15 + pnpm + Node 20
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: fitgh-web
+    rootDir: frontend
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    # corepack activates the pinned pnpm 10 from package.json so the build host
+    # matches local dev exactly. --frozen-lockfile blocks lockfile drift in CI.
+    buildCommand: corepack enable && corepack prepare pnpm@10 --activate && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      # The fitgh-api URL is back-propagated from the API service once provisioned.
+      # `fromService` makes Render interpolate the host at deploy time so we don't
+      # have to manually paste it on every redeploy.
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: fitgh-api
+          type: web
+          property: host
