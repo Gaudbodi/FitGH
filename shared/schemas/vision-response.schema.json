@@ -1,0 +1,74 @@
+{
+  "$defs": {
+    "VisionComponentRaw": {
+      "additionalProperties": false,
+      "description": "One food component as reported by Claude Sonnet 4.6's tool-use.\n\nPre table re-match \u2014 `name` is whatever the LLM wrote (possibly\ninformal). `kcal_*` are advisory ranges; the persisted `kcal_point` is\nserver-computed from the Ghana table (D-TABLE-WINS).\n\n`extra=\"forbid\"` so the LLM cannot smuggle extra fields the parser\nwould otherwise pass through to the persisted Component (T-04-07).",
+      "properties": {
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kcal_low": {
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Kcal Low",
+          "type": "integer"
+        },
+        "kcal_high": {
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Kcal High",
+          "type": "integer"
+        },
+        "kcal_point": {
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Kcal Point",
+          "type": "integer"
+        },
+        "portion_g_estimate": {
+          "maximum": 800,
+          "minimum": 10,
+          "title": "Portion G Estimate",
+          "type": "integer"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "kcal_low",
+        "kcal_high",
+        "kcal_point",
+        "portion_g_estimate",
+        "confidence"
+      ],
+      "title": "VisionComponentRaw",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Wrapper for the LLM tool-use payload: a list of components.\n\nMatches the input_schema of ANTHROPIC_TOOL_SCHEMA exactly so\nPydantic and Anthropic share the same contract.",
+  "properties": {
+    "components": {
+      "items": {
+        "$ref": "#/$defs/VisionComponentRaw"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Components",
+      "type": "array"
+    }
+  },
+  "required": [
+    "components"
+  ],
+  "title": "VisionResponse",
+  "type": "object"
+}

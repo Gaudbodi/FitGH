@@ -37,6 +37,14 @@ def _set_env(monkeypatch: pytest.MonkeyPatch) -> None:
     # use the `mongo_users` fixture to swap in mongomock.
     monkeypatch.setenv("MONGODB_URI", _FAKE_MONGODB_URI)
     monkeypatch.delenv("SENTRY_DSN_BACKEND", raising=False)
+    # Phase 4 — vision env stubs. The Anthropic API is mocked via respx in
+    # tests/test_scan_route.py, so the key value is irrelevant beyond being
+    # non-empty. The high VISION_DAILY_CAP_USD keeps most tests from
+    # tripping the breaker; tests that need to trip it set their own value.
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-test-stub-xxxxxxxxxxxxxxxx")
+    monkeypatch.setenv("LLM_VISION_MODEL", "claude-sonnet-4-6")
+    monkeypatch.setenv("VISION_DAILY_CAP_USD", "100.0")
+    monkeypatch.delenv("COST_ALERT_WEBHOOK_URL", raising=False)
     # Reset the lazy-init globals in middleware.auth so each test starts clean.
     import app.middleware.auth as auth_mod
 
@@ -94,6 +102,9 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     fake_weight_logs = fake_db["weight_logs"]
     fake_ghana_foods = fake_db["ghana_foods"]
     fake_meals = fake_db["meals"]
+    fake_vision_usage = fake_db["vision_usage"]
+    fake_system_state = fake_db["system_state"]
+    fake_user_corrections = fake_db["user_corrections"]
 
     import app.db as db_mod
     import app.routes.me as me_route
@@ -105,6 +116,9 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     monkeypatch.setattr(db_mod, "weight_logs", fake_weight_logs, raising=False)
     monkeypatch.setattr(db_mod, "ghana_foods", fake_ghana_foods, raising=False)
     monkeypatch.setattr(db_mod, "meals", fake_meals, raising=False)
+    monkeypatch.setattr(db_mod, "vision_usage", fake_vision_usage, raising=False)
+    monkeypatch.setattr(db_mod, "system_state", fake_system_state, raising=False)
+    monkeypatch.setattr(db_mod, "user_corrections", fake_user_corrections, raising=False)
     # Patch the names the existing route modules already bound at import.
     monkeypatch.setattr(me_route, "users", fake_users, raising=False)
 
@@ -130,6 +144,21 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
         monkeypatch.setattr(meals_mod, "meals", fake_meals, raising=False)
         monkeypatch.setattr(meals_mod, "ghana_foods", fake_ghana_foods, raising=False)
         monkeypatch.setattr(meals_mod, "profiles", fake_profiles, raising=False)
+    # Phase 4 — patch scan + corrections route modules if loaded.
+    if "app.routes.scan" in sys.modules:
+        scan_mod = sys.modules["app.routes.scan"]
+        monkeypatch.setattr(scan_mod, "vision_usage", fake_vision_usage, raising=False)
+        monkeypatch.setattr(scan_mod, "system_state", fake_system_state, raising=False)
+        monkeypatch.setattr(
+            scan_mod, "user_corrections", fake_user_corrections, raising=False
+        )
+        monkeypatch.setattr(scan_mod, "ghana_foods", fake_ghana_foods, raising=False)
+        monkeypatch.setattr(scan_mod, "meals", fake_meals, raising=False)
+    if "app.routes.corrections" in sys.modules:
+        corr_mod = sys.modules["app.routes.corrections"]
+        monkeypatch.setattr(
+            corr_mod, "user_corrections", fake_user_corrections, raising=False
+        )
 
     yield SimpleNamespace(
         users=fake_users,
@@ -137,6 +166,9 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
         weight_logs=fake_weight_logs,
         ghana_foods=fake_ghana_foods,
         meals=fake_meals,
+        vision_usage=fake_vision_usage,
+        system_state=fake_system_state,
+        user_corrections=fake_user_corrections,
     )
 
 

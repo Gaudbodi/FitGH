@@ -35,10 +35,21 @@ from app.models.profile import (
     ProfileUpdate,
     Sex,
 )
+from app.models.vision import (
+    ANTHROPIC_TOOL_SCHEMA,
+    AiMetadata,
+    SystemStateDoc,
+    UserCorrectionDoc,
+    VisionComponentRaw,
+    VisionResponse,
+    VisionUsageDoc,
+)
 from app.models.weight_log import WeightLog, WeightLogCreate
 
 __all__ = [
+    "ANTHROPIC_TOOL_SCHEMA",
     "ActivityLevelType",
+    "AiMetadata",
     "Category",
     "Component",
     "ComponentCreate",
@@ -57,6 +68,11 @@ __all__ = [
     "ProfileUpdate",
     "Sex",
     "SourceConfidence",
+    "SystemStateDoc",
+    "UserCorrectionDoc",
+    "VisionComponentRaw",
+    "VisionResponse",
+    "VisionUsageDoc",
     "WeightLog",
     "WeightLogCreate",
 ]

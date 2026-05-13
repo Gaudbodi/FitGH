@@ -61,3 +61,19 @@ weight_logs: Collection = db["weight_logs"]
 #   db.meals.createIndex({user_id: 1, logged_at: -1})              # mongosh
 ghana_foods: Collection = db["ghana_foods"]
 meals: Collection = db["meals"]
+
+# Phase 4 — Image -> Kcal Core Loop (P4-A.1).
+# Three new collections support the wedge feature:
+#   vision_usage        — per-(user_id, date) scan counter (8/day cap).
+#   system_state        — singleton {_id: "vision_budget"} for the global
+#                         $/day circuit breaker + cost-alert latch.
+#   user_corrections    — per-edit log used to bias the next scan's system
+#                         prompt with the user's last 20 corrections.
+#
+# Operator-side indexes (Phase 1 invariant — no `create_index` on module load):
+#   db.vision_usage.createIndex({user_id: 1, date: 1}, {unique: true})
+#   db.user_corrections.createIndex({user_id: 1, corrected_at: -1})
+#   (system_state has no index — `_id` is the natural key.)
+vision_usage: Collection = db["vision_usage"]
+system_state: Collection = db["system_state"]
+user_corrections: Collection = db["user_corrections"]
