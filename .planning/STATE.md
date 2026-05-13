@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
-stopped_at: Slice 0 + Slice A + Slice B file work complete. 22 backend tests passing. Size-limit reports 133.3 kB on /dashboard vs 180 kB budget. Gitleaks pre-commit gate verified by deliberate-leak smoke test. Awaiting user to complete WS-0.1 (Atlas rotation) and the other 13 dashboard-action checkpoints listed in `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" before the executor can wire MONGODB_URI / Clerk / Fly / Vercel and run the E2E sign-off.
-last_updated: "2026-05-13T00:00:00.000Z"
-last_activity: 2026-05-13 -- Phase 1 deployed on Render (build green); Phase 2 executed (17 commits, 81 backend tests, all 9 reqs); starting Phase 3
+status: Phase 5 (Animated Dashboard) complete. 11 commits, 12 tasks, 7 requirements (DASH-01..07) flipped to Complete. Backend tests 252 -> 292. Frontend vitest 0 -> 77. /dashboard First Load JS = 234 kB (target ≤ 260 kB).
+stopped_at: 2026-05-13 -- Phase 5 SUMMARY + REQUIREMENTS + ROADMAP flips committed. Ready to advance to Phase 6 (Workout Library + PWA).
+last_updated: "2026-05-13T13:30:00.000Z"
+last_activity: 2026-05-13 -- Phase 5 executed (11 commits, 40 new backend tests, 77 new frontend tests, all 7 DASH reqs); static SVG avatar (Rive deferred to v1.1) + animated kcal ring + Recharts charts + soft-streak + reduced-motion auto-disable.
 progress:
   total_phases: 7
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 100
+  completed_phases: 5
+  total_plans: 5
+  completed_plans: 5
+  percent: 71
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Snap a meal, see kcal in seconds, know whether you're hitting your daily target — with food the user actually eats.
-**Current focus:** Phase 01 — Walking Skeleton (PARTIAL — autonomous file work done; awaiting user dashboard work to resume).
+**Current focus:** Phase 05 (Animated Dashboard) complete. Next up: Phase 06 (Workout Library + PWA).
 
 ## Current Position
 
-Phase: 01 (Walking Skeleton) — PARTIAL (file-side scaffold done; SaaS-account checkpoints pending)
-Plan: 1 of 1
-Status: Awaiting user dashboard work (Atlas / Clerk / Fly.io / Vercel / Sentry / GitHub remote) before resuming Slices C-J
-Last activity: 2026-05-12 -- Phase 1 rearchitected to Render-only deploy (ROADMAP edited); re-plan pending via /gsd-plan-phase 1 --replan
+Phase: 05 (Animated Dashboard) — Complete
+Plan: 1 of 1 (05-PLAN.md → 05-SUMMARY.md)
+Status: All 7 DASH requirements (DASH-01..07) Complete. Dashboard now ships static SVG avatar, animated kcal ring, Recharts weight + weekly-kcal charts, goal-aware copy, soft-streak with 1-day grace, and reduced-motion auto-disable.
+Last activity: 2026-05-13 -- Phase 5 SUMMARY + REQUIREMENTS + ROADMAP flips committed.
 
-Progress: [█░░░░░░░░░] 5%   (14 of 30 tasks done; remaining 16 are user-gated checkpoints + follow-on code)
+Progress: [█████░░░░░] 71% phases (5 of 7); 100% within Phase 5 plan (12 of 12 tasks)
 
 ## Performance Metrics
 
@@ -78,6 +78,7 @@ Decisions are logged in PROJECT.md Key Decisions table and research/SUMMARY.md "
 - [Phase 2] 2026-05-13: Complete. 17 commits (3fdd61c..30ee8ea). 81 backend tests passing. All 9 reqs (AUTH-04/05, PROF-01..07) covered. /dashboard First Load JS 162 kB.
 - [Phase 3] 2026-05-13: Complete. 17 commits (0591a71..5a0667f). 158 backend tests passing (+77 from Phase 2). All 9 reqs (LOG-01..08, DATA-01) covered. 25-dish Ghana food catalogue seeded, multi-component meals schema (day-1 shape — Phase 4 writes into it), /history 30-day view, nightly mongodump GH Action. /dashboard First Load JS 230 kB (above the 180 kB ideal due to cmdk + slider; flagged for Phase 5/7 data-light pass — size-limit CI gate intentionally absent). Operator follow-ups: run seed_ghana_foods.py against prod Atlas; createIndex on meals.user_id+logged_at; provision read-only Atlas user + add MONGODB_URI_BACKUP GH Actions secret.
 - [Phase 4] 2026-05-13: Complete. 12 commits (b8db18e..88d2258). 252 backend tests passing (+94 from Phase 3). All 13 reqs (VIS-01..12, OBS-03) covered. Wedge feature: POST /meals/scan calls Claude Sonnet 4.6 via Anthropic SDK with prompt caching, per-user 8/day cap, global $/day breaker, env-var cost-alert webhook (Sentry replacement). No server-side image retention. ScanSheet + ScanResultChips + SnapMealCta + ServicePausedBanner on FE; ScanSheet lazy-loaded so /dashboard First Load JS unchanged at 231 kB (+1 kB for dynamic loader). respx mocks the Anthropic SDK in CI — zero real API calls. Operator follow-ups: provision ANTHROPIC_API_KEY in Render fitgh-api Environment + backend/.env.local; run `db.vision_usage.createIndex({user_id:1, date:1}, {unique:true})` + `db.user_corrections.createIndex({user_id:1, corrected_at:-1})` against prod Atlas; optionally set COST_ALERT_WEBHOOK_URL.
+- [Phase 5] 2026-05-13: Complete. 11 commits (46c9a15..f9e6325). 292 backend tests passing (+40 from Phase 4). 77 frontend vitest passing (first frontend test runner in the project; vitest + @testing-library/react + jsdom infra landed in P5-B.2). All 7 reqs (DASH-01..07) Complete. Static SVG avatar sprite with 20 states (Rive deferred to v1.1 per CONTEXT.md D-AVATAR-STATIC-SVG), animated kcal ring (stroke-dashoffset 600ms transition), Recharts WeightChart 30/90 + WeeklyKcalChart 7-day backfill, goal-aware copy module, soft-streak with 1-day grace (compute_streak pure helper + state machine), MotionDetector + [data-motion='disabled'] global CSS rule. /dashboard First Load JS 231 -> 234 kB (under 260 kB Phase 5 target). Recharts in a separate ~30 kB gzipped dynamic chunk via next/dynamic(ssr:false) in a ChartsIsland 'use client' wrapper (Next 15 forbids ssr:false in Server Components). Planner deviations carried: weight logs ALSO count as streak events (CONTEXT.md said meal-only — cheapest correct behavior; reversible); backdated meals do NOT rewrite streak history (T-05-07 — compute_streak uses server-now in user-tz, not meal.logged_at). T-05-03 race acceptance documented in compute_streak docstring. No new Atlas indexes needed (streak fields piggyback on existing clerk_id-keyed profile queries). Operator follow-ups: smoke-test slow-connection branch via DevTools console (Object.defineProperty(navigator.connection,'effectiveType',{value:'2g'}); navigator.connection.dispatchEvent(new Event('change'))) — DevTools Network throttling alone does NOT change effectiveType.
 
 ### Pending Todos
 
@@ -118,6 +119,6 @@ Items acknowledged and carried forward:
 
 ## Session Continuity
 
-Last session: 2026-05-11
-Stopped at: Slice 0 + Slice A + Slice B file work complete. 22 backend tests passing. Size-limit reports 133.3 kB on /dashboard vs 180 kB budget. Gitleaks pre-commit gate verified by deliberate-leak smoke test. Awaiting user to complete WS-0.1 (Atlas rotation) and the other 13 dashboard-action checkpoints listed in `.planning/phases/01-walking-skeleton/01-SUMMARY.md` "User Setup Required" before the executor can wire MONGODB_URI / Clerk / Fly / Vercel and run the E2E sign-off.
-Resume file: `.planning/phases/01-walking-skeleton/01-SUMMARY.md` — has the full checkpoint queue with exact dashboard steps.
+Last session: 2026-05-13
+Stopped at: Phase 5 (Animated Dashboard) complete — 11 commits (46c9a15..f9e6325), 292 backend tests, 77 frontend vitest, /dashboard First Load JS = 234 kB. DASH-01..07 all Complete. Ready to advance to Phase 6 (Workout Library + PWA).
+Resume file: `.planning/phases/05-animated-dashboard/05-SUMMARY.md` — full inventory of files/commits/operator follow-ups for the dashboard work.

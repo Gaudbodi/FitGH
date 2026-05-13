@@ -52,13 +52,13 @@
 
 ### Animated Dashboard
 
-- [ ] **DASH-01**: Dashboard shows a Rive-animated avatar whose state reflects sex, BMI band, and goal direction
-- [ ] **DASH-02**: Dashboard shows an animated kcal ring (consumed vs target)
-- [ ] **DASH-03**: Dashboard shows an animated weight-over-time chart (Recharts) for last 30/90 days
-- [ ] **DASH-04**: Dashboard shows a weekly kcal-vs-target chart
-- [ ] **DASH-05**: Dashboard adapts copy and CTA to the user's goal (e.g. "X kcal under target" for cut, "X g protein remaining" for bulk)
-- [ ] **DASH-06**: Streak counter with a 1-day soft-grace mechanic (one missed day doesn't reset)
-- [ ] **DASH-07**: Rive runtime + JSON are lazy-loaded; `prefers-reduced-motion` disables animations; auto-disable on slow connections (`navigator.connection.effectiveType` = `2g`/`3g`)
+- [x] **DASH-01**: Dashboard shows a Rive-animated avatar whose state reflects sex, BMI band, and goal direction *(static SVG sprite per CONTEXT.md D-AVATAR-STATIC-SVG; Rive deferred to v1.1)*
+- [x] **DASH-02**: Dashboard shows an animated kcal ring (consumed vs target)
+- [x] **DASH-03**: Dashboard shows an animated weight-over-time chart (Recharts) for last 30/90 days
+- [x] **DASH-04**: Dashboard shows a weekly kcal-vs-target chart
+- [x] **DASH-05**: Dashboard adapts copy and CTA to the user's goal (e.g. "X kcal under target" for cut, "X g protein remaining" for bulk)
+- [x] **DASH-06**: Streak counter with a 1-day soft-grace mechanic (one missed day doesn't reset)
+- [x] **DASH-07**: Rive runtime + JSON are lazy-loaded; `prefers-reduced-motion` disables animations; auto-disable on slow connections (`navigator.connection.effectiveType` = `2g`/`3g`) *(Rive runtime check N/A — no Rive in v1; Recharts verified dynamic-imported via pnpm build; reduced-motion + slow-connection auto-disable via [data-motion='disabled'] global CSS rule)*
 
 ### Workout Library
 
@@ -187,13 +187,13 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | VIS-10 | Phase 4 | Complete |
 | VIS-11 | Phase 4 | Complete |
 | VIS-12 | Phase 4 | Complete |
-| DASH-01 | Phase 5 | Pending |
-| DASH-02 | Phase 5 | Pending |
-| DASH-03 | Phase 5 | Pending |
-| DASH-04 | Phase 5 | Pending |
-| DASH-05 | Phase 5 | Pending |
-| DASH-06 | Phase 5 | Pending |
-| DASH-07 | Phase 5 | Pending |
+| DASH-01 | Phase 5 | Complete (2026-05-13) — static SVG sprite per CONTEXT.md D-AVATAR-STATIC-SVG; Rive deferred to v1.1 |
+| DASH-02 | Phase 5 | Complete (2026-05-13) |
+| DASH-03 | Phase 5 | Complete (2026-05-13) |
+| DASH-04 | Phase 5 | Complete (2026-05-13) |
+| DASH-05 | Phase 5 | Complete (2026-05-13) |
+| DASH-06 | Phase 5 | Complete (2026-05-13) — soft-streak with 1-day grace; weight logs ALSO count as streak events (planner deviation beyond CONTEXT.md meal-only) |
+| DASH-07 | Phase 5 | Complete (2026-05-13) — Rive runtime check N/A (no Rive in v1); Recharts in dynamic chunk; /dashboard First Load JS = 234 kB (target ≤ 260 kB) |
 | WORK-01 | Phase 6 | Pending |
 | WORK-02 | Phase 6 | Pending |
 | WORK-03 | Phase 6 | Pending |

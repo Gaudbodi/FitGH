@@ -19,7 +19,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 - [ ] **Phase 2: Onboarding + Profile + Targets** - 3-screen onboarding, Mifflin-St Jeor TDEE, weight log, target on dashboard skeleton, privacy disclosure, GDPR delete-account
 - [ ] **Phase 3: Manual Meal Log + Ghana Table** - 25-dish FAO/INFOODS catalogue, search, multi-component meal schema, daily total, remaining-kcal pill, nightly mongodump
 - [x] **Phase 4: Image -> Kcal Core Loop** - Client compression, Sonnet 4.6 with cached system + Ghana table + components tool-use, table re-match, component chips, inline correction, per-user cap + global $/day breaker
-- [ ] **Phase 5: Animated Dashboard** - Rive avatar state-machine, animated kcal ring, Recharts weight + weekly-kcal charts, goal-aware home, soft-streak with 1-day grace
+- [x] **Phase 5: Animated Dashboard** (2026-05-13) - Static-SVG avatar (Rive deferred to v1.1), animated kcal ring, Recharts weight + weekly-kcal charts, goal-aware copy, soft-streak with 1-day grace
 - [ ] **Phase 6: Workout Library + PWA** - 80–120 curated exercises, search + equipment filter, WebP poster -> tap-load WebM, next-pwa + IndexedDB offline cache, attribution
 - [ ] **Phase 7: Launch Hardening** - Lagos WebPageTest, real privacy policy, data export + account-delete flows, health-claim copy audit, Anthropic spend alerts, golden-set re-run, production deploy
 
@@ -132,7 +132,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 | 2. Onboarding + Profile + Targets | 0/TBD | Not started | - |
 | 3. Manual Meal Log + Ghana Table | 0/TBD | Not started | - |
 | 4. Image -> Kcal Core Loop | 0/TBD | Not started | - |
-| 5. Animated Dashboard | 0/TBD | Not started | - |
+| 5. Animated Dashboard | 1/1 | Complete | 2026-05-13 |
 | 6. Workout Library + PWA | 0/TBD | Not started | - |
 | 7. Launch Hardening | 0/TBD | Not started | - |
 
@@ -175,13 +175,13 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | VIS-10 | Food Image → Kcal | Phase 4 | Complete |
 | VIS-11 | Food Image → Kcal | Phase 4 | Complete |
 | VIS-12 | Food Image → Kcal | Phase 4 | Complete |
-| DASH-01 | Animated Dashboard | Phase 5 | Pending |
-| DASH-02 | Animated Dashboard | Phase 5 | Pending |
-| DASH-03 | Animated Dashboard | Phase 5 | Pending |
-| DASH-04 | Animated Dashboard | Phase 5 | Pending |
-| DASH-05 | Animated Dashboard | Phase 5 | Pending |
-| DASH-06 | Animated Dashboard | Phase 5 | Pending |
-| DASH-07 | Animated Dashboard | Phase 5 | Pending |
+| DASH-01 | Animated Dashboard | Phase 5 | Complete |
+| DASH-02 | Animated Dashboard | Phase 5 | Complete |
+| DASH-03 | Animated Dashboard | Phase 5 | Complete |
+| DASH-04 | Animated Dashboard | Phase 5 | Complete |
+| DASH-05 | Animated Dashboard | Phase 5 | Complete |
+| DASH-06 | Animated Dashboard | Phase 5 | Complete |
+| DASH-07 | Animated Dashboard | Phase 5 | Complete |
 | WORK-01 | Workout Library | Phase 6 | Pending |
 | WORK-02 | Workout Library | Phase 6 | Pending |
 | WORK-03 | Workout Library | Phase 6 | Pending |
