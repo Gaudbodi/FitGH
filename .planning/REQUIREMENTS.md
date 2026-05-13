@@ -10,19 +10,19 @@
 - [ ] **AUTH-01**: User can sign up with email + password OR Google OAuth via Clerk
 - [ ] **AUTH-02**: User session persists across browser refresh (Clerk httpOnly session cookie)
 - [ ] **AUTH-03**: User can sign out from any page
-- [ ] **AUTH-04**: User can delete their account, cascading deletion of all FitGH data (GDPR)
-- [ ] **AUTH-05**: Privacy disclosure shown at sign-up; food images sent to LLM provider is named in policy
+- [x] **AUTH-04**: User can delete their account, cascading deletion of all FitGH data (GDPR)
+- [x] **AUTH-05**: Privacy disclosure shown at sign-up; food images sent to LLM provider is named in policy
 - [ ] **AUTH-06**: Clerk session JWT verified networkless by Flask on every protected request
 
 ### Profile & Targets
 
-- [ ] **PROF-01**: User can complete a ≤3-screen onboarding capturing name, sex, height (cm), weight (kg), age, timezone, locale (Ghana / diaspora), activity level
-- [ ] **PROF-02**: User can select primary goal: weight loss OR muscle gain (one only; switchable later)
-- [ ] **PROF-03**: System computes BMR via Mifflin-St Jeor and TDEE via activity factor
-- [ ] **PROF-04**: System computes daily kcal target (TDEE − deficit for weight loss; TDEE + surplus for muscle gain) with hard floor (1200 kcal female / 1500 kcal male) + disclaimer
-- [ ] **PROF-05**: System computes daily protein target (1.6 g/kg bodyweight) for muscle-gain users
-- [ ] **PROF-06**: User can edit profile fields after onboarding; targets recompute on save
-- [ ] **PROF-07**: User can log a weight entry; weight history persisted
+- [x] **PROF-01**: User can complete a ≤3-screen onboarding capturing name, sex, height (cm), weight (kg), age, timezone, locale (Ghana / diaspora), activity level
+- [x] **PROF-02**: User can select primary goal: weight loss OR muscle gain (one only; switchable later)
+- [x] **PROF-03**: System computes BMR via Mifflin-St Jeor and TDEE via activity factor
+- [x] **PROF-04**: System computes daily kcal target (TDEE − deficit for weight loss; TDEE + surplus for muscle gain) with hard floor (1200 kcal female / 1500 kcal male) + disclaimer
+- [x] **PROF-05**: System computes daily protein target (1.6 g/kg bodyweight) for muscle-gain users
+- [x] **PROF-06**: User can edit profile fields after onboarding; targets recompute on save
+- [x] **PROF-07**: User can log a weight entry; weight history persisted
 
 ### Manual Meal Logging
 
@@ -157,16 +157,16 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | AUTH-01 | Phase 1 | Phase 1 closing on Render deploy |
 | AUTH-02 | Phase 1 | Phase 1 closing on Render deploy |
 | AUTH-03 | Phase 1 | Phase 1 closing on Render deploy |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 2 | Complete |
 | AUTH-06 | Phase 1 | Phase 1 closing on Render deploy |
-| PROF-01 | Phase 2 | Pending |
-| PROF-02 | Phase 2 | Pending |
-| PROF-03 | Phase 2 | Pending |
-| PROF-04 | Phase 2 | Pending |
-| PROF-05 | Phase 2 | Pending |
-| PROF-06 | Phase 2 | Pending |
-| PROF-07 | Phase 2 | Pending |
+| PROF-01 | Phase 2 | Complete |
+| PROF-02 | Phase 2 | Complete |
+| PROF-03 | Phase 2 | Complete |
+| PROF-04 | Phase 2 | Complete |
+| PROF-05 | Phase 2 | Complete |
+| PROF-06 | Phase 2 | Complete |
+| PROF-07 | Phase 2 | Complete |
 | LOG-01 | Phase 3 | Pending |
 | LOG-02 | Phase 3 | Pending |
 | LOG-03 | Phase 3 | Pending |
