@@ -1,0 +1,74 @@
+name: nightly-backup
+
+# Phase 3 Plan 03 — Task P3-F.1 (DATA-01).
+#
+# Runs mongodump against the MONGODB_URI_BACKUP secret nightly at 02:00
+# UTC and uploads the gzipped archive as a 90-day GH Actions artifact.
+# Per CONTEXT.md DATA-01: GH Actions artifact storage is the v1 backup
+# target — Cloudflare R2 is a Phase 7 / v2 follow-up.
+#
+# Operator follow-ups (one-time, after this workflow lands):
+#   1. Provision a READ-ONLY Atlas user for backups (defence in depth —
+#      a leaked backup secret can only mongodump, not write).
+#   2. In GH repo Settings -> Secrets and variables -> Actions, add
+#      MONGODB_URI_BACKUP = the read-only connection string.
+#   3. Trigger one workflow_dispatch run to verify end-to-end against
+#      production Atlas; confirm artifact downloads and `tar -tzf` lists
+#      fitgh.{users,profiles,weight_logs,meals,ghana_foods} collections.
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Install MongoDB Database Tools (pinned 100.10.0)
+        # D-TOOLS-PIN: explicit version so a silent upstream change does
+        # not break the workflow. Bumping is a deliberate follow-up.
+        run: |
+          set -euo pipefail
+          wget -q https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.10.0.deb
+          sudo dpkg -i mongodb-database-tools-ubuntu2204-x86_64-100.10.0.deb
+          mongodump --version
+
+      - name: Compute archive name
+        id: name
+        run: |
+          set -euo pipefail
+          NAME="fitgh-backup-$(date -u +'%Y%m%d-%H%M%S').gz"
+          echo "ARCHIVE=${NAME}" >> "${GITHUB_ENV}"
+          echo "archive=${NAME}" >> "${GITHUB_OUTPUT}"
+
+      - name: mongodump (do NOT echo URI — T-03-09 defence in depth)
+        # MONGODB_URI_BACKUP is a separate secret from the runtime
+        # MONGODB_URI per D-SEPARATE-BACKUP-SECRET. GH Actions scrubs
+        # secret values from logs; the explicit no-echo / no --verbose
+        # below is defence in depth.
+        env:
+          MONGODB_URI_BACKUP: ${{ secrets.MONGODB_URI_BACKUP }}
+        run: |
+          set -euo pipefail
+          mongodump --uri="${MONGODB_URI_BACKUP}" --gzip --archive="${ARCHIVE}"
+          ls -lh "${ARCHIVE}"
+
+      - name: Upload artifact (90-day retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.name.outputs.archive }}
+          path: ${{ env.ARCHIVE }}
+          retention-days: 90
+          if-no-files-found: error
+          # Already gzipped via mongodump --gzip; re-compressing on upload
+          # wastes runner CPU.
+          compression-level: 0
