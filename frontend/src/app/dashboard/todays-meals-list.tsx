@@ -45,7 +45,7 @@ export function TodaysMealsList({ meals, onEdit }: TodaysMealsListProps) {
     try {
       const res = await fetch(`/api/meals/${meal.id}`, { method: "DELETE" });
       if (res.status === 404) {
-        toast.error("This meal was already removed.");
+        toast.info("This meal was already removed.");
       } else if (!res.ok) {
         toast.error(`Delete failed (${res.status}).`);
       } else {
