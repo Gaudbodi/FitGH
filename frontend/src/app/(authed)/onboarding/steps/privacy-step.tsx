@@ -66,6 +66,14 @@ export function PrivacyStep({ control, setValue }: PrivacyStepProps) {
         </p>
       </div>
 
+      {/* Phase 7 LEGAL-03 — standard health-claim disclaimer on the
+          onboarding consent screen. The same string lives in the global
+          footer (root layout) so it's visible from every page. */}
+      <p className="rounded-md border border-dashed bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+        FitGH is a fitness tracking tool, not medical advice. Consult a
+        qualified clinician for health decisions.
+      </p>
+
       <Controller
         control={control}
         name="privacy_consent"
