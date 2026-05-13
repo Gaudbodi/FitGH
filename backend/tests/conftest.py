@@ -75,17 +75,23 @@ def client(app):
 
 
 @pytest.fixture
-def mongo_users(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
-    """Replace app.db.users with a mongomock collection.
+def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
+    """Replace app.db.{users,profiles,weight_logs} with mongomock collections.
 
-    Must be requested BEFORE the `client` fixture in tests that need DB writes
-    (pytest resolves in argument order). The fixture patches BOTH the source
-    module (app.db) AND the route modules that imported `users` at import time
-    (Python copies the reference into the route's module namespace).
+    Returns a SimpleNamespace with `.users`, `.profiles`, `.weight_logs`
+    attributes. Must be requested BEFORE the `client` fixture in tests that
+    need DB writes (pytest resolves in argument order). The fixture patches
+    BOTH the source module (app.db) AND each route module that imported the
+    names at import time (Python copies references into module namespaces;
+    Phase 1 deviation #X — both bindings must be patched).
     """
+    from types import SimpleNamespace
+
     fake_client = mongomock.MongoClient()
     fake_db = fake_client["fitgh"]
     fake_users = fake_db["users"]
+    fake_profiles = fake_db["profiles"]
+    fake_weight_logs = fake_db["weight_logs"]
 
     import app.db as db_mod
     import app.routes.me as me_route
@@ -93,9 +99,35 @@ def mongo_users(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     monkeypatch.setattr(db_mod, "client", fake_client, raising=False)
     monkeypatch.setattr(db_mod, "db", fake_db, raising=False)
     monkeypatch.setattr(db_mod, "users", fake_users, raising=False)
-    # Patch the name the route module already bound at import time.
-    # (The webhook route was deleted in WS-E.1; sync-on-demand inside /me
-    # replaces the user.created upsert path.)
+    monkeypatch.setattr(db_mod, "profiles", fake_profiles, raising=False)
+    monkeypatch.setattr(db_mod, "weight_logs", fake_weight_logs, raising=False)
+    # Patch the names the existing route modules already bound at import.
     monkeypatch.setattr(me_route, "users", fake_users, raising=False)
 
-    yield fake_users
+    # Profile / weights routes import lazily inside create_app (Phase 1
+    # pattern of blueprints inside the factory), so they pick up the patched
+    # names when the app fixture re-imports them. But once imported we ALSO
+    # need to patch their module-bound references — do that opportunistically
+    # if the modules have been loaded.
+    import sys
+    if "app.routes.profile" in sys.modules:
+        prof_mod = sys.modules["app.routes.profile"]
+        monkeypatch.setattr(prof_mod, "profiles", fake_profiles, raising=False)
+        monkeypatch.setattr(prof_mod, "weight_logs", fake_weight_logs, raising=False)
+    if "app.routes.weights" in sys.modules:
+        wt_mod = sys.modules["app.routes.weights"]
+        monkeypatch.setattr(wt_mod, "weight_logs", fake_weight_logs, raising=False)
+        monkeypatch.setattr(wt_mod, "profiles", fake_profiles, raising=False)
+
+    yield SimpleNamespace(
+        users=fake_users,
+        profiles=fake_profiles,
+        weight_logs=fake_weight_logs,
+    )
+
+
+# Back-compat alias so the existing test_me.py keeps working unchanged.
+@pytest.fixture
+def mongo_users(mongo_collections) -> Iterator[Any]:
+    """Legacy alias returning just the users collection."""
+    yield mongo_collections.users

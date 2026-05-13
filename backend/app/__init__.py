@@ -56,7 +56,7 @@ def create_app(config: Config | None = None) -> Flask:
         resources={r"/*": {"origins": cfg.CORS_ALLOWED_ORIGINS}},
         supports_credentials=False,
         allow_headers=["Content-Type", "Authorization"],
-        methods=["GET", "POST", "OPTIONS"],
+        methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     )
 
     # 3) Register blueprints. Imported here (not at module top) so that import-
@@ -68,8 +68,19 @@ def create_app(config: Config | None = None) -> Flask:
     # sync-on-demand inside /me (see app/routes/me.py).
     from app.routes.health import bp as health_bp
     from app.routes.me import bp as me_bp
+    from app.routes.profile import bp as profile_bp
 
     app.register_blueprint(health_bp)
     app.register_blueprint(me_bp)
+    app.register_blueprint(profile_bp)
+
+    # Phase 2 — /weights blueprint (registered here, route module created in
+    # Task P2-A.4). Import is conditional on the module existing so the
+    # factory stays import-safe during interleaved development.
+    try:
+        from app.routes.weights import bp as weights_bp
+        app.register_blueprint(weights_bp)
+    except ImportError:
+        pass
 
     return app
