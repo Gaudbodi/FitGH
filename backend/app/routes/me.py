@@ -23,8 +23,11 @@ AUTH-06 + SC-1 (ROADMAP Phase 1 — `/dashboard` shows their email).
 from __future__ import annotations
 
 import logging
+import os
 from datetime import UTC, datetime
+from typing import Any
 
+from bson import ObjectId
 from flask import Blueprint, g, jsonify
 
 from app import db as db_mod
@@ -34,6 +37,26 @@ from app.middleware.auth import require_auth
 bp = Blueprint("me", __name__)
 
 _log = logging.getLogger(__name__)
+
+
+def _serialize(doc: Any) -> Any:
+    """Recursively convert ObjectId/datetime into JSON-safe types.
+
+    Used by GET /me/export (P7-C.1). ObjectId becomes its hex string;
+    datetime becomes ISO-8601. Other values pass through unchanged. Handles
+    nested dicts and lists (meals.components is the load-bearing case).
+    """
+    if doc is None:
+        return None
+    if isinstance(doc, ObjectId):
+        return str(doc)
+    if isinstance(doc, datetime):
+        return doc.isoformat()
+    if isinstance(doc, dict):
+        return {k: _serialize(v) for k, v in doc.items()}
+    if isinstance(doc, list):
+        return [_serialize(v) for v in doc]
+    return doc
 
 
 def _fetch_email_from_clerk(clerk_user_id: str) -> str | None:
@@ -169,3 +192,66 @@ def delete_me():
             "clerk": True,
         },
     }), 200
+
+
+@bp.get("/me/export")
+@require_auth
+def get_me_export():
+    """Stream a JSON archive of the signed-in user's FitGH data.
+
+    Phase 7 P7-C.1 (LEGAL-02).
+
+    Trust anchor: clerk_id is read ONLY from g.clerk_user_id (set by
+    @require_auth from the verified Clerk JWT). NEVER from the request
+    body, query string, or headers. The cross-user isolation test
+    (test_export_cross_user_isolation) verifies this — it mitigates
+    T-07-01.
+
+    Response shape:
+      {
+        "_export_metadata": {
+          "export_date": "<ISO-8601 UTC>",
+          "app_version": "<git short SHA from FITGH_GIT_SHA env, else 'unknown'>",
+          "schema_version": 1
+        },
+        "user": {<users.find_one>} | null,
+        "profile": {<profiles.find_one>} | null,
+        "weight_logs": [<weight_logs.find sorted by logged_at desc>],
+        "meals": [<meals.find sorted by logged_at desc>],
+        "user_corrections": [<user_corrections.find sorted by corrected_at desc>],
+        "vision_usage": [<vision_usage.find (counts only — no images)>]
+      }
+
+    No pagination — CONTEXT.md notes even power-users hit ≤ 10 MB.
+    """
+    clerk_id = g.clerk_user_id
+
+    user_doc = db_mod.users.find_one({"clerk_id": clerk_id})
+    profile_doc = db_mod.profiles.find_one({"clerk_id": clerk_id})
+    weight_logs_docs = list(
+        db_mod.weight_logs.find({"user_id": clerk_id}).sort("logged_at", -1)
+    )
+    meals_docs = list(
+        db_mod.meals.find({"user_id": clerk_id}).sort("logged_at", -1)
+    )
+    user_corrections_docs = list(
+        db_mod.user_corrections.find({"user_id": clerk_id}).sort(
+            "corrected_at", -1
+        )
+    )
+    vision_usage_docs = list(db_mod.vision_usage.find({"user_id": clerk_id}))
+
+    payload = {
+        "_export_metadata": {
+            "export_date": datetime.now(UTC).isoformat(),
+            "app_version": os.environ.get("FITGH_GIT_SHA", "unknown"),
+            "schema_version": 1,
+        },
+        "user": _serialize(user_doc),
+        "profile": _serialize(profile_doc),
+        "weight_logs": [_serialize(d) for d in weight_logs_docs],
+        "meals": [_serialize(d) for d in meals_docs],
+        "user_corrections": [_serialize(d) for d in user_corrections_docs],
+        "vision_usage": [_serialize(d) for d in vision_usage_docs],
+    }
+    return jsonify(payload)
