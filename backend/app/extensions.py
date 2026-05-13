@@ -87,7 +87,13 @@ def scrub(event: dict[str, Any], hint: Mapping[str, Any]) -> dict[str, Any] | No
 def init_sentry(cfg: Config) -> None:
     """Initialize Sentry SDK with FitGH's scrubber + integrations.
 
-    No-op if SENTRY_DSN_BACKEND is empty (e.g. in tests).
+    OBS-01 disposition (2026-05-12 rewrite): Sentry is OPTIONAL in Phase 1.
+    The Render-only architecture defers backend observability until a real
+    bug surfaces; the scrubber code in `scrub()` above stays in place and
+    its contract is enforced by test_sentry_scrubber.py, so re-enabling
+    Sentry is exactly one env-var (SENTRY_DSN_BACKEND) away.
+
+    No-op if SENTRY_DSN_BACKEND is empty (the default in Phase 1).
     """
     if not cfg.SENTRY_DSN_BACKEND:
         return
