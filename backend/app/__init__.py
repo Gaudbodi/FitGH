@@ -83,4 +83,18 @@ def create_app(config: Config | None = None) -> Flask:
     except ImportError:
         pass
 
+    # Phase 3 — /foods (P3-B.1) and /meals (P3-B.2..P3-B.4) blueprints.
+    # Imports are conditional during interleaved development; once both
+    # modules land, every Render redeploy boots with them.
+    try:
+        from app.routes.foods import bp as foods_bp
+        app.register_blueprint(foods_bp)
+    except ImportError:
+        pass
+    try:
+        from app.routes.meals import bp as meals_bp
+        app.register_blueprint(meals_bp)
+    except ImportError:
+        pass
+
     return app
