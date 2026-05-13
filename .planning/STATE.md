@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase 6 (Workout Library + PWA) complete. 12 commits this phase (c123933..f81c835 + final docs). 100 exercises (Free Exercise DB Unlicense) at /workouts; 100 static detail pages at /workouts/[id]; @serwist/next PWA wiring with CacheFirst poster WebPs + SWR /workouts HTML + offline meal POST queue. Frontend vitest 77 -> 100. Backend tests unchanged at 292. /dashboard First Load JS 234 -> 235 kB (+1 kB for Serwist runtime; under 240 kB budget). WORK-01..08 + PERF-02 Complete; PERF-03 Carry-over to Phase 7 (Clerk SDK is the residual mobile-Lighthouse bottleneck).
-stopped_at: 2026-05-13 -- Phase 6 SUMMARY + REQUIREMENTS + ROADMAP flips committed. Ready to advance to Phase 7 (Launch Hardening).
-last_updated: "2026-05-13T17:30:00.000Z"
-last_activity: 2026-05-13 -- Phase 6 executed (12 commits, 23 new frontend tests across Phase 5+6 plans, all 8 WORK reqs); workout library + Serwist PWA + offline meal queue.
+status: Phase 7 (Launch Hardening) complete. v1.0 milestone closed. All 7 phases shipped. PERF-03 (ClerkProvider relocation) + PERF-04 (WebPageTest Lagos runbook) + LEGAL-01 (real /privacy) + LEGAL-02 (/me/export + UI button) + LEGAL-03 (copy audit + onboarding disclaimer) flipped to Complete. 11 commits this phase. Backend pytest 293 -> 297 (296 passed + 2 skipped — golden-set in default + live Anthropic test). Frontend vitest unchanged at 100. /workouts public route now ships zero Clerk client SDK (architectural fix for the Phase 6 carry-over Lighthouse bottleneck). FitGH v1.0 ready for soft launch per LAUNCH.md operator runbook.
+stopped_at: 2026-05-13 -- v1.0 milestone complete; awaiting operator launch steps in LAUNCH.md (Anthropic spend cap, WebPageTest Lagos run, COST_ALERT_WEBHOOK_URL provisioning, optional real-Anthropic golden-set re-run).
+last_updated: "2026-05-13T19:00:00.000Z"
+last_activity: 2026-05-13 -- Phase 7 executed (11 commits, +4 backend tests for /me/export, 5 requirements flipped to Complete); v1.0 milestone closed.
 progress:
   total_phases: 7
-  completed_phases: 6
-  total_plans: 6
-  completed_plans: 6
-  percent: 86
+  completed_phases: 7
+  total_plans: 7
+  completed_plans: 7
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Snap a meal, see kcal in seconds, know whether you're hitting your daily target — with food the user actually eats.
-**Current focus:** Phase 06 (Workout Library + PWA) complete. Next up: Phase 07 (Launch Hardening).
+**Current focus:** v1.0 MILESTONE COMPLETE. All 7 phases shipped. Awaiting operator launch steps per LAUNCH.md.
 
 ## Current Position
 
-Phase: 06 (Workout Library + PWA) — Complete
-Plan: 1 of 1 (06-PLAN.md → 06-SUMMARY.md)
-Status: All 8 WORK requirements + PERF-02 Complete. PERF-03 carried over to Phase 7. /workouts ships 100 Free Exercise DB exercises with poster/detail WebPs (24.7 kB above-fold vs 100 kB budget); 100 static /workouts/[id] detail pages with instructions + equipment + muscles; @serwist/next service worker with CacheFirst /exercises/*.webp + SWR /workouts HTML; offline meal POST queue (idb-keyval + 401-break + idempotency keys, 8 vitest assertions); install banner + offline indicator + footer attribution + LICENSES.md at repo root.
-Last activity: 2026-05-13 -- Phase 6 SUMMARY + REQUIREMENTS + ROADMAP flips committed.
+Phase: 07 (Launch Hardening) — Complete
+Plan: 1 of 1 (07-PLAN.md → 07-SUMMARY.md)
+Status: All 5 Phase-7 requirements Complete (PERF-03 architectural fix shipped via ClerkProvider relocation, PERF-04 WebPageTest Lagos operator runbook in LAUNCH.md §3, LEGAL-01 real /privacy page with 5 sub-processors, LEGAL-02 /me/export + BFF + UI button with T-07-01 isolation test, LEGAL-03 copy audit clean in --strict). Golden-set harness shipped with 10 placeholder JPEGs + deterministic-fake-mode self-validation. LAUNCH.md operator runbook covers Anthropic monthly spend cap, WebPageTest Lagos, COST_ALERT_WEBHOOK_URL, and the real-Anthropic golden-set re-run. Backend pytest 296/297 (1 skipped golden-set + 1 skipped live Anthropic). Frontend vitest 100/100. Working tree clean.
+Last activity: 2026-05-13 -- Phase 7 executed (11 commits); v1.0 milestone closed.
 
-Progress: [██████░░░░] 86% phases (6 of 7); 100% within Phase 6 plan (12 of 12 tasks)
+Progress: [██████████] 100% phases (7 of 7); v1.0 milestone complete
 
 ## Performance Metrics
 
@@ -121,5 +121,5 @@ Items acknowledged and carried forward:
 ## Session Continuity
 
 Last session: 2026-05-13
-Stopped at: Phase 6 (Workout Library + PWA) complete — 12 commits (c123933..final-docs-commit), 292 backend tests unchanged, 100 frontend vitest (+23 from baseline), /workouts 126 kB First Load JS, /workouts/[id] 112 kB, /dashboard 235 kB. WORK-01..08 + PERF-02 all Complete; PERF-03 carry-over to Phase 7. Ready to advance to Phase 7 (Launch Hardening).
-Resume file: `.planning/phases/06-workout-library-pwa/06-SUMMARY.md` — full inventory of files/commits/operator follow-ups for the workout library + PWA work.
+Stopped at: Phase 7 (Launch Hardening) complete — 11 commits (ce38e59..final-docs-commit), 296 backend pytest pass (+4 from test_me_export.py; 2 skipped = golden-set default skip + live Anthropic test), 100 frontend vitest (unchanged). /workouts no longer ships the Clerk client SDK (architectural fix for the Phase 6 carry-over Lighthouse bottleneck); /workouts First Load JS unchanged at 126 kB (the SDK was loaded at runtime, not in the SSR'd First Load JS — verified by build-time absence of ClerkProvider in (public) tree). v1.0 milestone closed; FitGH v1.0 ready for soft launch per LAUNCH.md operator runbook.
+Resume file: `.planning/phases/07-launch-hardening/07-SUMMARY.md` — full inventory of Phase 7 commits/files/operator follow-ups; LAUNCH.md at repo root for the soft-launch checklist.

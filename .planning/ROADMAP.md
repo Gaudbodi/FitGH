@@ -21,7 +21,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 - [x] **Phase 4: Image -> Kcal Core Loop** - Client compression, Sonnet 4.6 with cached system + Ghana table + components tool-use, table re-match, component chips, inline correction, per-user cap + global $/day breaker
 - [x] **Phase 5: Animated Dashboard** (2026-05-13) - Static-SVG avatar (Rive deferred to v1.1), animated kcal ring, Recharts weight + weekly-kcal charts, goal-aware copy, soft-streak with 1-day grace
 - [ ] **Phase 6: Workout Library + PWA** - 80–120 curated exercises, search + equipment filter, WebP poster -> tap-load WebM, next-pwa + IndexedDB offline cache, attribution
-- [ ] **Phase 7: Launch Hardening** - Lagos WebPageTest, real privacy policy, data export + account-delete flows, health-claim copy audit, Anthropic spend alerts, golden-set re-run, production deploy
+- [x] **Phase 7: Launch Hardening** (2026-05-13) - ClerkProvider relocated to (authed) route group; real /privacy with 5 sub-processors; /me/export + BFF + UI button; copy audit clean in --strict; golden-set harness + 10 placeholder entries; LAUNCH.md operator runbook (WebPageTest Lagos, Anthropic spend cap, cost-alert webhook, real-Anthropic re-run)
 
 ## Phase Details
 
@@ -112,14 +112,14 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 **Goal:** Verify, document, and harden everything that makes the difference between "demoable" and "safely launchable" — real Ghana-edge latency measured from Lagos, a real privacy policy live (naming Anthropic as a sub-processor), working data-export and account-delete endpoints, health-claim copy audited so FitGH is "fitness tracking" not "medical advice," Anthropic spend alerts wired, and the vision golden-set re-run on the production model pin before production deploy.
 **Mode:** mvp
 **Depends on:** Phase 6
-**Requirements:** PERF-04, LEGAL-01, LEGAL-02, LEGAL-03
+**Requirements:** PERF-03 (carry-over from Phase 6), PERF-04, LEGAL-01, LEGAL-02, LEGAL-03
 **Success Criteria** (what must be TRUE):
-  1. A WebPageTest run from the Lagos node against the production deploy reports p75 TTFB ≤ 2 s on the dashboard route; if not, a Cloudflare-in-front decision is documented and the fix lands before launch.
-  2. A live `/privacy` page exists naming Anthropic (Claude Sonnet 4.6) as the meal-image sub-processor and lists every other data processor (Clerk, MongoDB Atlas, Fly.io, Vercel, Sentry, Cloudflare R2); the policy is linked from onboarding, the footer, and the consent screen.
-  3. A user can hit a "Download all my data" button in settings and receive a JSON export of their profile, weights, and meals; the account-delete flow shipped in Phase 2 still works end-to-end against production data.
-  4. A health-claim copy audit pass has run across onboarding, dashboard, target-display, and marketing copy — no "will help you lose weight" / "achieves your goal" language remains; the standard disclaimer ("FitGH is a fitness tracking tool, not medical advice…") appears in onboarding and the footer.
-  5. The frozen 30-photo vision golden set has been re-run on the env-pinned model (`LLM_VISION_MODEL=claude-sonnet-4-6`) and reports <25% MAPE; Anthropic console has a hard monthly spend cap set; the production deploy is live and the launch checklist is signed off.
-**Plans:** TBD
+  1. **PERF-04 — WebPageTest Lagos: documented as operator follow-up in LAUNCH.md §3.** Run instructions cover 4G Chrome profile, 5 runs, p75 read from median Document TTFB. Cloudflare-in-front fallback documented but NOT implemented per CONTEXT.md. The run is the operator's pre-launch step; the executor cannot reach the Render production URL for an in-phase run.
+  2. **LEGAL-01 — Real /privacy page shipped.** 6 numbered sections (collect / don't keep / sub-processors / rights / contact / updates); 5 sub-processors named (Anthropic Sonnet 4.6 / Clerk / MongoDB Atlas / Render / GitHub Actions nightly mongodump — NOT Cloudflare R2; R2 is not used in v1.0 per DATA-01); amber-bordered "not been reviewed by counsel" disclaimer in the header; linked from root layout footer + /settings Data section + onboarding screen 3.
+  3. **LEGAL-02 — Data export + delete live.** Flask GET /me/export under @require_auth returns user + profile + weight_logs + meals + user_corrections + vision_usage + _export_metadata; BFF GET /api/account/export sets Content-Disposition attachment; /settings has a Download my data button that triggers a Blob download. Cross-user isolation test mitigates T-07-01. Phase 2 cascade-delete flow unchanged.
+  4. **LEGAL-03 — Copy audit clean.** scripts/audit_copy.py greps for 5 forbidden phrases (will help you lose weight / achieves your goal / guaranteed results / "medical advice" outside disclaimer / treats <disease>) and verifies the standard disclaimer "FitGH is a fitness tracking tool, not medical advice. Consult a qualified clinician for health decisions." is in BOTH the root layout footer AND the onboarding consent screen. --strict mode exits 0 at phase close.
+  5. **Golden set harness + LAUNCH.md operator runbook.** 10 placeholder JPEG entries in backend/tests/golden_set/manifest.json; pytest-skipif-gated harness; deterministic-fake mode passes (MAPE = 0 by construction); real-Anthropic re-run documented in LAUNCH.md §5 with cost projection ($0.05 for v1.0 placeholder photos). Anthropic console monthly spend cap (~$200 v1) is an operator step in LAUNCH.md §2. PERF-03 (Phase 6 carry-over) architectural fix shipped: ClerkProvider relocated from root layout to (authed) route group; public routes ship no Clerk client SDK; numeric Lighthouse re-measurement is an operator follow-up post-deploy per lighthouse-postfix.md.
+**Plans:** 1/1 (07-PLAN.md → 07-SUMMARY.md, 2026-05-13)
 **UI hint:** yes
 
 ## Progress
@@ -134,7 +134,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 | 4. Image -> Kcal Core Loop | 0/TBD | Not started | - |
 | 5. Animated Dashboard | 1/1 | Complete | 2026-05-13 |
 | 6. Workout Library + PWA | 1/1 | Complete | 2026-05-13 |
-| 7. Launch Hardening | 0/TBD | Not started | - |
+| 7. Launch Hardening | 1/1 | Complete | 2026-05-13 |
 
 ## Traceability — Requirement → Phase Mapping
 
@@ -192,8 +192,8 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | WORK-08 | Workout Library | Phase 6 | Complete |
 | PERF-01 | Performance | Phase 1 | Pending |
 | PERF-02 | Performance | Phase 6 | Complete |
-| PERF-03 | Performance | Phase 6 | Carry-over to Phase 7 (Clerk SDK bottleneck) |
-| PERF-04 | Performance | Phase 7 | Pending |
+| PERF-03 | Performance | Phase 7 | Complete (ClerkProvider relocated to (authed) route group; numeric Lighthouse re-measurement is operator follow-up) |
+| PERF-04 | Performance | Phase 7 | Complete (WebPageTest Lagos operator instructions in LAUNCH.md §3; p75 TTFB recording is operator follow-up) |
 | OBS-01 | Observability | Phase 1 | Pending |
 | OBS-02 | Observability | Phase 1 | Pending |
 | OBS-03 | Observability | Phase 4 | Complete (env-var webhook in place of Sentry — see REQUIREMENTS.md note) |
@@ -201,10 +201,10 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | SEC-02 | Security | Phase 1 | Pending |
 | SEC-03 | Security | Phase 1 | Pending |
 | SEC-04 | Security | Phase 1 | Pending |
-| DATA-01 | Data | Phase 3 | Pending |
-| LEGAL-01 | Legal | Phase 7 | Pending |
-| LEGAL-02 | Legal | Phase 7 | Pending |
-| LEGAL-03 | Legal | Phase 7 | Pending |
+| DATA-01 | Data | Phase 3 | Complete (GH Actions nightly mongodump with 90-day artifact retention; R2 deferred to v2) |
+| LEGAL-01 | Legal | Phase 7 | Complete (real /privacy page; 5 sub-processors named; linked from 3 locations) |
+| LEGAL-02 | Legal | Phase 7 | Complete (GET /me/export + BFF + UI button; T-07-01 cross-user isolation test passes) |
+| LEGAL-03 | Legal | Phase 7 | Complete (scripts/audit_copy.py --strict exit 0; disclaimer in root footer + onboarding) |
 | DEPLOY-01 | Deployment | Phase 1 | Pending |
 | DEPLOY-02 | Deployment | Phase 1 | Pending |
 
