@@ -27,6 +27,7 @@ from datetime import UTC, datetime
 
 from flask import Blueprint, g, jsonify
 
+from app import db as db_mod
 from app.db import users
 from app.middleware.auth import require_auth
 
@@ -86,3 +87,85 @@ def get_me():
         upsert=True,
     )
     return jsonify({"email": email})
+
+
+@bp.delete("/me")
+@require_auth
+def delete_me():
+    """Cascade-delete the signed-in user's FitGH data + Clerk auth record.
+
+    Phase 2 Plan 02 — Task P2-A.5.
+
+    Trust anchor: g.clerk_user_id is set by @require_auth from the verified
+    JWT. The endpoint NEVER reads clerk_id from request body or query
+    (T-02-01 / T-02-06). Steps:
+
+      1. weight_logs.delete_many({user_id})  — captures deleted count
+      2. profiles.delete_one({clerk_id})     — 0 or 1
+      3. users.delete_one({clerk_id})        — 0 or 1
+      4. clerk.users.delete(user_id=...)     — Clerk SDK
+
+    If step 4 fails, Mongo data is already deleted (best-effort cascade);
+    return 502 with {error: clerk_delete_failed, mongo_deleted: true} so
+    the FE can show the user a clear "data deleted, auth not" message.
+
+    Idempotent: re-calling after a successful delete returns success because
+    Mongo deletes are no-ops and the Clerk SDK call is wrapped in a 404-
+    tolerant try/except.
+
+    Per D-NO-WEBHOOKS + memory/render-only-rewrite: this is the ONLY path
+    that deletes a Clerk user. There is no user.deleted webhook handler.
+    """
+    clerk_id = g.clerk_user_id
+
+    weight_count = db_mod.weight_logs.delete_many({"user_id": clerk_id}).deleted_count
+    profile_count = db_mod.profiles.delete_one({"clerk_id": clerk_id}).deleted_count
+    user_count = db_mod.users.delete_one({"clerk_id": clerk_id}).deleted_count
+
+    # Clerk SDK delete — best-effort, idempotent. Errors after this point
+    # are reported but Mongo data is already gone.
+    clerk_deleted = False
+    clerk_error: str | None = None
+    try:
+        from app.middleware.auth import _get_clerk
+
+        _get_clerk().users.delete(user_id=clerk_id)
+        clerk_deleted = True
+    except Exception as e:  # noqa: BLE001 — broad on purpose; we report it
+        # Treat "already deleted" (HTTP 404 from Clerk) as success.
+        msg = str(e)
+        status_code = getattr(e, "status_code", None)
+        if status_code == 404 or "not found" in msg.lower():
+            _log.info("Clerk user %s already absent; treating delete as success", clerk_id)
+            clerk_deleted = True
+        else:
+            _log.warning(
+                "Clerk users.delete failed for %s: %s", clerk_id, msg
+            )
+            clerk_error = msg
+
+    if not clerk_deleted:
+        return (
+            jsonify({
+                "error": "clerk_delete_failed",
+                "mongo_deleted": True,
+                "detail": clerk_error,
+                "deleted": {
+                    "weight_logs": weight_count,
+                    "profile": profile_count,
+                    "user": user_count,
+                    "clerk": False,
+                },
+            }),
+            502,
+        )
+
+    return jsonify({
+        "ok": True,
+        "deleted": {
+            "weight_logs": weight_count,
+            "profile": profile_count,
+            "user": user_count,
+            "clerk": True,
+        },
+    }), 200
