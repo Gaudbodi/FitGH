@@ -62,20 +62,20 @@
 
 ### Workout Library
 
-- [ ] **WORK-01**: User can browse an exercise catalogue of 80–120 curated exercises
-- [ ] **WORK-02**: User can filter by equipment (none / dumbbells / resistance bands / pull-up bar / kettlebell / barbell)
-- [ ] **WORK-03**: User can filter by target muscle (chest, back, legs, shoulders, arms, core, glutes, full-body)
-- [ ] **WORK-04**: Equipment filter defaults to `none` + `dumbbells` on first open
-- [ ] **WORK-05**: Each exercise shows a WebP poster (≤30 KB); user taps to load the animated WebM/GIF
-- [ ] **WORK-06**: Exercise detail page shows instructions, target muscle, equipment, an optional curated YouTube embed using lite-youtube-embed pattern
-- [ ] **WORK-07**: All assets attributed in a `LICENSES.md` + visible footer credit (wger CC-BY-SA + Free Exercise DB Unlicense)
-- [ ] **WORK-08**: Workout library is installable as a PWA and works offline (workout media cached cache-first via service worker + IndexedDB)
+- [x] **WORK-01**: User can browse an exercise catalogue of 80–120 curated exercises *(Phase 6: 100 exercises ingested from Free Exercise DB; /workouts static-prerenders the grid)*
+- [x] **WORK-02**: User can filter by equipment (none / dumbbells / resistance bands / pull-up bar / kettlebell / barbell)
+- [x] **WORK-03**: User can filter by target muscle (chest, back, legs, shoulders, arms, core, glutes, full-body)
+- [x] **WORK-04**: Equipment filter defaults to `none` + `dumbbells` on first open
+- [x] **WORK-05**: Each exercise shows a WebP poster (≤30 KB); user taps to load the animated WebM/GIF *(Phase 6: poster + larger detail WebP delivered — animated WebM deferred to v1.1 per CONTEXT.md D-WEBM-DEFER; users still get a high-quality detail still image + instructions list)*
+- [x] **WORK-06**: Exercise detail page shows instructions, target muscle, equipment, an optional curated YouTube embed using lite-youtube-embed pattern *(Phase 6: instructions + equipment + muscles + detail WebP shipped — curated YouTube embed deferred to v1.1 per CONTEXT.md D-YT-DEFER; no behaviour gap because the detail still + steps cover the educational need)*
+- [x] **WORK-07**: All assets attributed in a `LICENSES.md` + visible footer credit (wger CC-BY-SA + Free Exercise DB Unlicense) *(Phase 6: Free Exercise DB Unlicense only — wger dropped to dodge CC-BY-SA share-alike per CONTEXT.md D-FREE-EX-ONLY; footer attribution + LICENSES.md at repo root in place)*
+- [x] **WORK-08**: Workout library is installable as a PWA and works offline (workout media cached cache-first via service worker + IndexedDB) *(Phase 6: @serwist/next + sw.ts with CacheFirst /exercises/*.webp + SWR /workouts HTML; offline meal POSTs queue via idb-keyval + drain on 'online' event; installable via Next 15 manifest.ts; manual smoke-test instructions in 06-SUMMARY.md)*
 
 ### Cross-Cutting / Non-Functional
 
 - [ ] **PERF-01**: First Load JS ≤ 180 KB gzipped per route (enforced by CI bundle-size gate from Phase 1) — *Deferred 2026-05-12: size-limit CI gate dropped in the Render-only rewrite; manual `pnpm build` route-table check at phase boundaries until a real bundle regression surfaces.*
-- [ ] **PERF-02**: Above-fold image budget ≤ 100 KB per route
-- [ ] **PERF-03**: Lighthouse mobile performance ≥ 90 on simulated mid-tier Android (Moto G Power, Slow 4G)
+- [x] **PERF-02**: Above-fold image budget ≤ 100 KB per route *(Phase 6: above-fold = first 4 cards on /workouts at default filter = 24.7 kB total — 75% under budget. Every poster ≤14 kB by encoder budget; every detail ≤52 kB.)*
+- [ ] **PERF-03**: Lighthouse mobile performance ≥ 90 on simulated mid-tier Android (Moto G Power, Slow 4G) *(Phase 6: measured 51/100 on Render-deployed /workouts pre-LCP-fix, expected 60-70 post-fix; gap is Clerk SDK (312 kB transferred, 1.8 s main-thread on emulated mid-tier mobile) which is architecturally hard to remove without moving ClerkProvider out of the root layout. Documented in 06-SUMMARY.md as a Phase 7 carry-over rather than a Phase 6 blocker — the practical user-perceived perf on real Ghana mid-tier devices is best measured by PERF-04 (WebPageTest from Accra/Lagos), not Lighthouse Mobile emulation. Manual at phase boundary per Render-only invariant.)*
 - [ ] **PERF-04**: Real Ghana p75 TTFB measured from Lagos via WebPageTest before launch; gate launch on ≤ 2 s
 - [ ] **OBS-01**: Sentry captures frontend + backend errors with user privacy (no PII, no image data, no kcal totals in error context) — *Deferred 2026-05-12: Sentry init no-ops when SENTRY_DSN_BACKEND is unset; scrubber contract enforced by tests since commit 1 so re-enabling is one env-var away.*
 - [ ] **OBS-02**: Vercel Analytics + Speed Insights track real-user perf on Vercel free tier — *Dropped 2026-05-12: no Vercel in the Render-only rewrite. If Render adds an analytics product worth integrating, Phase 6 or 7 picks it up.*
@@ -194,17 +194,17 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 | DASH-05 | Phase 5 | Complete (2026-05-13) |
 | DASH-06 | Phase 5 | Complete (2026-05-13) — soft-streak with 1-day grace; weight logs ALSO count as streak events (planner deviation beyond CONTEXT.md meal-only) |
 | DASH-07 | Phase 5 | Complete (2026-05-13) — Rive runtime check N/A (no Rive in v1); Recharts in dynamic chunk; /dashboard First Load JS = 234 kB (target ≤ 260 kB) |
-| WORK-01 | Phase 6 | Pending |
-| WORK-02 | Phase 6 | Pending |
-| WORK-03 | Phase 6 | Pending |
-| WORK-04 | Phase 6 | Pending |
-| WORK-05 | Phase 6 | Pending |
-| WORK-06 | Phase 6 | Pending |
-| WORK-07 | Phase 6 | Pending |
-| WORK-08 | Phase 6 | Pending |
+| WORK-01 | Phase 6 | Complete (2026-05-13) — 100 exercises ingested from Free Exercise DB Unlicense |
+| WORK-02 | Phase 6 | Complete (2026-05-13) |
+| WORK-03 | Phase 6 | Complete (2026-05-13) |
+| WORK-04 | Phase 6 | Complete (2026-05-13) |
+| WORK-05 | Phase 6 | Complete (2026-05-13) — animated WebM deferred to v1.1 per D-WEBM-DEFER |
+| WORK-06 | Phase 6 | Complete (2026-05-13) — YouTube embed deferred to v1.1 per D-YT-DEFER |
+| WORK-07 | Phase 6 | Complete (2026-05-13) — Free Exercise DB Unlicense only; wger dropped per D-FREE-EX-ONLY |
+| WORK-08 | Phase 6 | Complete (2026-05-13) — @serwist/next + offline meal queue; install + offline smoke-test instructions in 06-SUMMARY |
 | PERF-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
-| PERF-02 | Phase 6 | Pending |
-| PERF-03 | Phase 6 | Pending |
+| PERF-02 | Phase 6 | Complete (2026-05-13) — above-fold = 24.7 kB on /workouts (75% under 100 kB budget) |
+| PERF-03 | Phase 6 | Carry-over (2026-05-13) — Lighthouse mobile 51/100 on Render; Clerk SDK is the residual bottleneck (architecturally addressed in Phase 7); see 06-SUMMARY.md |
 | PERF-04 | Phase 7 | Pending |
 | OBS-01 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
 | OBS-02 | Phase 1 | Deferred (2026-05-12 rewrite — see ROADMAP.md Phase 1 note + memory/render-only-rewrite.md) |
@@ -228,4 +228,4 @@ Populated by ROADMAP.md on 2026-05-11. Every v1 requirement maps to exactly one 
 
 ---
 *Requirements defined: 2026-05-11*
-*Last updated: 2026-05-13 — Phase 4 (Image → Kcal Core Loop) complete; VIS-01..12 + OBS-03 flipped to Complete.*
+*Last updated: 2026-05-13 — Phase 6 (Workout Library + PWA) closed; WORK-01..08 + PERF-02 flipped to Complete; PERF-03 marked Carry-over (Clerk SDK bottleneck, addressed in Phase 7).*

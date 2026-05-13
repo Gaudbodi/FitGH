@@ -39,3 +39,7 @@ backend/__pycache__/
 # --- OS ---
 Thumbs.db
 .DS_Store
+
+# --- Lighthouse / perf measurement (Phase 6 + 7 manual runs) ---
+lighthouse-*.json
+lighthouse-*.html

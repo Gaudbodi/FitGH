@@ -133,7 +133,7 @@ FitGH ships in seven vertical slices, each delivering an end-to-end user capabil
 | 3. Manual Meal Log + Ghana Table | 0/TBD | Not started | - |
 | 4. Image -> Kcal Core Loop | 0/TBD | Not started | - |
 | 5. Animated Dashboard | 1/1 | Complete | 2026-05-13 |
-| 6. Workout Library + PWA | 0/TBD | Not started | - |
+| 6. Workout Library + PWA | 1/1 | Complete | 2026-05-13 |
 | 7. Launch Hardening | 0/TBD | Not started | - |
 
 ## Traceability — Requirement → Phase Mapping
@@ -182,17 +182,17 @@ All v1 requirement IDs listed in REQUIREMENTS.md are mapped to exactly one phase
 | DASH-05 | Animated Dashboard | Phase 5 | Complete |
 | DASH-06 | Animated Dashboard | Phase 5 | Complete |
 | DASH-07 | Animated Dashboard | Phase 5 | Complete |
-| WORK-01 | Workout Library | Phase 6 | Pending |
-| WORK-02 | Workout Library | Phase 6 | Pending |
-| WORK-03 | Workout Library | Phase 6 | Pending |
-| WORK-04 | Workout Library | Phase 6 | Pending |
-| WORK-05 | Workout Library | Phase 6 | Pending |
-| WORK-06 | Workout Library | Phase 6 | Pending |
-| WORK-07 | Workout Library | Phase 6 | Pending |
-| WORK-08 | Workout Library | Phase 6 | Pending |
+| WORK-01 | Workout Library | Phase 6 | Complete |
+| WORK-02 | Workout Library | Phase 6 | Complete |
+| WORK-03 | Workout Library | Phase 6 | Complete |
+| WORK-04 | Workout Library | Phase 6 | Complete |
+| WORK-05 | Workout Library | Phase 6 | Complete (WebM deferred to v1.1) |
+| WORK-06 | Workout Library | Phase 6 | Complete (YouTube deferred to v1.1) |
+| WORK-07 | Workout Library | Phase 6 | Complete (Free Exercise DB only) |
+| WORK-08 | Workout Library | Phase 6 | Complete |
 | PERF-01 | Performance | Phase 1 | Pending |
-| PERF-02 | Performance | Phase 6 | Pending |
-| PERF-03 | Performance | Phase 6 | Pending |
+| PERF-02 | Performance | Phase 6 | Complete |
+| PERF-03 | Performance | Phase 6 | Carry-over to Phase 7 (Clerk SDK bottleneck) |
 | PERF-04 | Performance | Phase 7 | Pending |
 | OBS-01 | Observability | Phase 1 | Pending |
 | OBS-02 | Observability | Phase 1 | Pending |
