@@ -68,6 +68,32 @@ class Config:
         default_factory=lambda: os.environ.get("FLASK_ENV", "production")
     )
 
+    # Phase 4 — Image -> Kcal Core Loop.
+    #
+    # ANTHROPIC_API_KEY: Sonnet 4.6 vision API. Mandatory in production
+    #   (validated below); tests use a stub via conftest.
+    # LLM_VISION_MODEL: env-pinned per CONTEXT D-VISION-MODEL-PIN. Bumping
+    #   requires updating MODEL_PRICING_PER_1K in app/lib/vision.py AND
+    #   re-running the golden set (Phase 7).
+    # VISION_DAILY_CAP_USD: global circuit-breaker cap; default $5/day in
+    #   code, overridable per environment.
+    # COST_ALERT_WEBHOOK_URL: optional Discord/Slack incoming webhook.
+    #   When unset, alerts WARN-log to Render stdout (still observable).
+    ANTHROPIC_API_KEY: str = field(
+        default_factory=lambda: os.environ.get("ANTHROPIC_API_KEY", "")
+    )
+    LLM_VISION_MODEL: str = field(
+        default_factory=lambda: os.environ.get("LLM_VISION_MODEL", "claude-sonnet-4-6")
+    )
+    VISION_DAILY_CAP_USD: float = field(
+        default_factory=lambda: float(
+            os.environ.get("VISION_DAILY_CAP_USD", "5.0")
+        )
+    )
+    COST_ALERT_WEBHOOK_URL: str = field(
+        default_factory=lambda: os.environ.get("COST_ALERT_WEBHOOK_URL", "")
+    )
+
     def validate(self) -> None:
         """Assert that all REQUIRED env vars are set.
 
@@ -88,6 +114,12 @@ class Config:
                 missing.append("CLERK_AUTHORIZED_PARTIES")
             if not self.MONGODB_URI:
                 missing.append("MONGODB_URI")
+            # Phase 4 — vision API key is mandatory in production. The
+            # /meals/scan route returns 503 without it (anthropic SDK
+            # construction fails fast), but failing at startup is
+            # preferable to confusing-503s in the field.
+            if not self.ANTHROPIC_API_KEY:
+                missing.append("ANTHROPIC_API_KEY")
             if missing:
                 raise RuntimeError(
                     f"Missing required env vars: {', '.join(missing)}"

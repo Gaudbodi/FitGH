@@ -20,3 +20,11 @@ httpx>=0.27
 # tzdata at OS level so this is effectively a Windows-dev / pure-Python
 # fall-back. Pin nothing — IANA tzdata is forward-compatible.
 tzdata
+# Phase 4 — Image -> Kcal Core Loop.
+# Anthropic SDK for Claude Sonnet 4.6 vision calls. Pin <1 for
+# predictable behaviour; bumping the major requires re-running the
+# golden set (Phase 7) per CONTEXT D-VISION-MODEL-PIN.
+anthropic>=0.40,<1
+# respx>=0.21 (dev) intercepts the Anthropic SDK's underlying httpx
+# transport in CI — zero real API calls during pytest. Already pulled
+# in by the Phase 1 baseline pytest dev deps.
