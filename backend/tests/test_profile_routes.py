@@ -349,3 +349,125 @@ def test_profile_isolated_by_clerk_id(
     assert r.status_code == 200
     assert r.get_json()["name"] == "Alice"
     assert r.get_json()["clerk_id"] == "user_alice"
+
+
+# ---------------------------------------------------------------------------
+# Phase 5 — streak fields on the profile doc (DASH-06 / T-05-01)
+# ---------------------------------------------------------------------------
+
+
+def test_post_profile_stamps_streak_defaults_on_first_create(
+    client, mongo_collections, monkeypatch
+):
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_streak_new")
+    r = client.post(
+        "/profile",
+        data=json.dumps(_valid_create_body()),
+        headers={
+            "Authorization": "Bearer stub",
+            "Content-Type": "application/json",
+        },
+    )
+    assert r.status_code == 201, r.get_data(as_text=True)
+    body = r.get_json()
+    assert body["streak_count"] == 0
+    assert body["streak_state"] == "active"
+    assert body["streak_last_logged_at"] is None
+    doc = mongo_collections.profiles.find_one({"clerk_id": "user_streak_new"})
+    assert doc is not None
+    assert doc["streak_count"] == 0
+    assert doc["streak_state"] == "active"
+    assert doc["streak_last_logged_at"] is None
+
+
+def test_post_profile_preserves_existing_streak_on_resubmit(
+    client, mongo_collections, monkeypatch
+):
+    """Re-POSTing /profile during onboarding edits MUST NOT reset streak."""
+    now = datetime.now(UTC)
+    mongo_collections.profiles.insert_one({
+        "clerk_id": "user_streak_keep",
+        "name": "Old",
+        "sex": "female",
+        "height_cm": 165,
+        "weight_kg": 60.0,
+        "age": 28,
+        "timezone": "Africa/Accra",
+        "locale": "ghana",
+        "activity_level": "sedentary",
+        "primary_goal": "weight_loss",
+        "daily_kcal_target": 1500,
+        "daily_protein_g_target": None,
+        "floor_hit": True,
+        "streak_count": 5,
+        "streak_state": "paused",
+        "streak_last_logged_at": now,
+        "privacy_consent_at": now,
+        "created_at": now,
+        "updated_at": now,
+    })
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_streak_keep")
+
+    r = client.post(
+        "/profile",
+        data=json.dumps(_valid_create_body(name="New", height_cm=170)),
+        headers={
+            "Authorization": "Bearer stub",
+            "Content-Type": "application/json",
+        },
+    )
+    assert r.status_code == 201, r.get_data(as_text=True)
+    body = r.get_json()
+    assert body["streak_count"] == 5
+    assert body["streak_state"] == "paused"
+    assert body["streak_last_logged_at"] is not None
+    assert body["name"] == "New"
+
+
+def test_patch_profile_rejects_streak_count(
+    client, mongo_collections, monkeypatch
+):
+    """T-05-01: PATCH body with streak_count must 422."""
+    _seed_profile(mongo_collections, "user_streak_patch1")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_streak_patch1")
+    r = client.patch(
+        "/profile",
+        data=json.dumps({"streak_count": 999}),
+        headers={
+            "Authorization": "Bearer stub",
+            "Content-Type": "application/json",
+        },
+    )
+    assert r.status_code == 422
+
+
+def test_patch_profile_rejects_streak_state(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_streak_patch2")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_streak_patch2")
+    r = client.patch(
+        "/profile",
+        data=json.dumps({"streak_state": "active"}),
+        headers={
+            "Authorization": "Bearer stub",
+            "Content-Type": "application/json",
+        },
+    )
+    assert r.status_code == 422
+
+
+def test_patch_profile_rejects_streak_last_logged_at(
+    client, mongo_collections, monkeypatch
+):
+    _seed_profile(mongo_collections, "user_streak_patch3")
+    _stub_clerk_signed_in(monkeypatch, clerk_user_id="user_streak_patch3")
+    r = client.patch(
+        "/profile",
+        data=json.dumps({"streak_last_logged_at": "2026-05-13T00:00:00Z"}),
+        headers={
+            "Authorization": "Bearer stub",
+            "Content-Type": "application/json",
+        },
+    )
+    assert r.status_code == 422

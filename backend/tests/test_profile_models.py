@@ -251,3 +251,189 @@ def test_weight_log_rejects_unknown_field():
     # surface tight in case an attacker tries {"user_id": "..."} via the BFF.
     with pytest.raises(ValidationError):
         WeightLogCreate.model_validate({"kg": 70.0, "user_id": "user_attacker"})
+
+
+# ---------------------------------------------------------------------------
+# Phase 5 — streak fields on Profile (DASH-06 / T-05-01)
+# ---------------------------------------------------------------------------
+
+
+def test_profile_model_accepts_streak_fields_with_defaults():
+    """Existing Phase 2 docs (no streak fields) deserialize via defaults."""
+    now = datetime.now(UTC)
+    doc = {
+        "clerk_id": "user_streak_default",
+        "name": "Ama",
+        "sex": "female",
+        "height_cm": 165,
+        "weight_kg": 60.5,
+        "age": 28,
+        "timezone": "Africa/Accra",
+        "locale": "ghana",
+        "activity_level": "moderately_active",
+        "primary_goal": "weight_loss",
+        "daily_kcal_target": 1800,
+        "daily_protein_g_target": 90,
+        "floor_hit": False,
+        "privacy_consent_at": now,
+        "created_at": now,
+        "updated_at": now,
+        # NOTE: no streak_* fields supplied.
+    }
+    p = Profile.model_validate(doc)
+    assert p.streak_count == 0
+    assert p.streak_last_logged_at is None
+    assert p.streak_state == "active"
+
+
+def test_profile_model_accepts_supplied_streak_fields():
+    now = datetime.now(UTC)
+    doc = {
+        "clerk_id": "user_streak_set",
+        "name": "Kofi",
+        "sex": "male",
+        "height_cm": 180,
+        "weight_kg": 75.0,
+        "age": 30,
+        "timezone": "Africa/Accra",
+        "locale": "ghana",
+        "activity_level": "moderately_active",
+        "primary_goal": "muscle_gain",
+        "daily_kcal_target": 2600,
+        "daily_protein_g_target": 120,
+        "floor_hit": False,
+        "streak_count": 7,
+        "streak_last_logged_at": now,
+        "streak_state": "active",
+        "privacy_consent_at": now,
+        "created_at": now,
+        "updated_at": now,
+    }
+    p = Profile.model_validate(doc)
+    assert p.streak_count == 7
+    assert p.streak_last_logged_at == now
+    assert p.streak_state == "active"
+
+
+def test_profile_streak_count_range_enforced():
+    now = datetime.now(UTC)
+    base = {
+        "clerk_id": "user_streak_neg",
+        "name": "x",
+        "sex": "male",
+        "height_cm": 180,
+        "weight_kg": 80.0,
+        "age": 30,
+        "timezone": "UTC",
+        "locale": "ghana",
+        "activity_level": "sedentary",
+        "primary_goal": "weight_loss",
+        "daily_kcal_target": 2000,
+        "daily_protein_g_target": None,
+        "floor_hit": False,
+        "privacy_consent_at": now,
+        "created_at": now,
+        "updated_at": now,
+    }
+    with pytest.raises(ValidationError):
+        Profile.model_validate({**base, "streak_count": -1})
+    with pytest.raises(ValidationError):
+        Profile.model_validate({**base, "streak_count": 10001})
+
+
+def test_profile_streak_state_enum_enforced():
+    now = datetime.now(UTC)
+    base = {
+        "clerk_id": "user_streak_state",
+        "name": "x",
+        "sex": "male",
+        "height_cm": 180,
+        "weight_kg": 80.0,
+        "age": 30,
+        "timezone": "UTC",
+        "locale": "ghana",
+        "activity_level": "sedentary",
+        "primary_goal": "weight_loss",
+        "daily_kcal_target": 2000,
+        "daily_protein_g_target": None,
+        "floor_hit": False,
+        "privacy_consent_at": now,
+        "created_at": now,
+        "updated_at": now,
+    }
+    with pytest.raises(ValidationError):
+        Profile.model_validate({**base, "streak_state": "nope"})
+
+
+def test_profile_create_rejects_streak_count_in_body():
+    """T-05-01: ProfileCreate (extra='forbid') refuses streak_count."""
+    with pytest.raises(ValidationError) as exc_info:
+        ProfileCreate.model_validate(
+            _valid_create_payload(streak_count=5)
+        )
+    assert "streak_count" in str(exc_info.value)
+
+
+def test_profile_create_rejects_streak_state_in_body():
+    with pytest.raises(ValidationError) as exc_info:
+        ProfileCreate.model_validate(
+            _valid_create_payload(streak_state="active")
+        )
+    assert "streak_state" in str(exc_info.value)
+
+
+def test_profile_create_rejects_streak_last_logged_at_in_body():
+    with pytest.raises(ValidationError) as exc_info:
+        ProfileCreate.model_validate(
+            _valid_create_payload(
+                streak_last_logged_at=datetime.now(UTC).isoformat()
+            )
+        )
+    assert "streak_last_logged_at" in str(exc_info.value)
+
+
+def test_profile_update_rejects_streak_count_field():
+    """T-05-01: PATCH /profile body cannot smuggle streak_count."""
+    with pytest.raises(ValidationError) as exc_info:
+        ProfileUpdate.model_validate({"streak_count": 99})
+    assert "streak_count" in str(exc_info.value)
+
+
+def test_profile_update_rejects_streak_state_field():
+    with pytest.raises(ValidationError):
+        ProfileUpdate.model_validate({"streak_state": "active"})
+
+
+def test_profile_update_rejects_streak_last_logged_at_field():
+    with pytest.raises(ValidationError):
+        ProfileUpdate.model_validate(
+            {"streak_last_logged_at": "2026-05-13T00:00:00Z"}
+        )
+
+
+def test_profile_schema_json_includes_streak_fields():
+    """The hand-mirrored shared/schemas/profile.schema.json contains all
+    three streak fields under properties (D-SHARED-SCHEMA-MANUAL-MIRROR)."""
+    import json
+    from pathlib import Path
+
+    schema_path = (
+        Path(__file__).resolve().parent.parent.parent
+        / "shared"
+        / "schemas"
+        / "profile.schema.json"
+    )
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    props = schema["properties"]
+    assert "streak_count" in props
+    assert "streak_state" in props
+    assert "streak_last_logged_at" in props
+    # streak_count constraint mirror.
+    assert props["streak_count"]["minimum"] == 0
+    assert props["streak_count"]["maximum"] == 10000
+    # streak_state enum mirror.
+    assert set(props["streak_state"]["enum"]) == {
+        "active",
+        "paused",
+        "broken",
+    }

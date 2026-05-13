@@ -131,6 +131,16 @@ def post_profile():
     privacy_consent_at = (
         existing["privacy_consent_at"] if existing else now
     )
+    # Phase 5 — preserve any in-progress streak across a profile re-submit
+    # (e.g. the user edits their height during onboarding then re-POSTs).
+    # First-create defaults to count=0, state='active', last_logged_at=None.
+    streak_count = existing.get("streak_count", 0) if existing else 0
+    streak_state = (
+        existing.get("streak_state", "active") if existing else "active"
+    )
+    streak_last_logged_at = (
+        existing.get("streak_last_logged_at") if existing else None
+    )
 
     doc = {
         "clerk_id": clerk_id,
@@ -144,6 +154,9 @@ def post_profile():
         "activity_level": payload.activity_level,
         "primary_goal": payload.primary_goal,
         **targets,
+        "streak_count": streak_count,
+        "streak_state": streak_state,
+        "streak_last_logged_at": streak_last_logged_at,
         "privacy_consent_at": privacy_consent_at,
         "created_at": created_at,
         "updated_at": now,

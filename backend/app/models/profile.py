@@ -34,6 +34,10 @@ ActivityLevelType = Literal[
     "extra_active",
 ]
 PrimaryGoal = Literal["weight_loss", "muscle_gain"]
+# Phase 5 — soft-streak with 1-day grace (DASH-06). Stamped server-side by
+# the meals/weights route handlers via app.lib.streak.compute_streak; never
+# accepted from a PATCH /profile body (T-05-01).
+StreakState = Literal["active", "paused", "broken"]
 
 
 # ---------------------------------------------------------------------------
@@ -60,6 +64,13 @@ class Profile(BaseModel):
     daily_kcal_target: int = Field(..., ge=1000, le=10000)
     daily_protein_g_target: int | None = Field(default=None, ge=0, le=600)
     floor_hit: bool = False
+    # Phase 5 streak fields — defaults so existing Phase 2 docs (which lack
+    # these fields entirely) deserialize without backfill. The first
+    # compute_streak call on POST /meals or POST /weights writes the real
+    # values.
+    streak_count: int = Field(default=0, ge=0, le=10000)
+    streak_last_logged_at: datetime | None = Field(default=None)
+    streak_state: StreakState = Field(default="active")
     privacy_consent_at: datetime
     created_at: datetime
     updated_at: datetime

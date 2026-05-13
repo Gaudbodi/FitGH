@@ -1,5 +1,5 @@
 {
-  "description": "FitGH user profile stored in the profiles collection (one per Clerk user, keyed by clerk_id). Added in Phase 2 \u2014 Onboarding + Profile + Targets. Server-computed fields (daily_kcal_target, daily_protein_g_target, floor_hit, privacy_consent_at, created_at, updated_at) are derived from the onboarding form input via app.lib.tdee and must never be accepted from request bodies (T-02-07).",
+  "description": "FitGH user profile stored in the profiles collection (one per Clerk user, keyed by clerk_id). Added in Phase 2 \u2014 Onboarding + Profile + Targets. Server-computed fields (daily_kcal_target, daily_protein_g_target, floor_hit, privacy_consent_at, created_at, updated_at) are derived from the onboarding form input via app.lib.tdee and must never be accepted from request bodies (T-02-07). Phase 5 \u2014 adds streak_count, streak_last_logged_at, streak_state (DASH-06); server-stamped only by meals/weights route handlers, NEVER from a PATCH /profile body (T-05-01).",
   "properties": {
     "clerk_id": {
       "pattern": "^user_[a-zA-Z0-9_]+$",
@@ -94,6 +94,36 @@
       "default": false,
       "title": "Floor Hit",
       "type": "boolean"
+    },
+    "streak_count": {
+      "default": 0,
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Streak Count",
+      "type": "integer"
+    },
+    "streak_last_logged_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Streak Last Logged At"
+    },
+    "streak_state": {
+      "default": "active",
+      "enum": [
+        "active",
+        "paused",
+        "broken"
+      ],
+      "title": "Streak State",
+      "type": "string"
     },
     "privacy_consent_at": {
       "format": "date-time",
