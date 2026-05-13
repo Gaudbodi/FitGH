@@ -1,79 +1,91 @@
+// /dashboard — Phase 2 Plan 02 (P2-C.3 + P2-D.2).
+//
+// Server component. Fetches /api/profile + /api/weights in parallel.
+//   401 -> redirect("/sign-in")
+//   404 -> redirect("/onboarding") (profile missing — gate per phase goal)
+//   200 -> render TargetCard + WeightLogCard
+//
+// Auth gating is double-belted: middleware.ts protects /dashboard via
+// auth.protect(); /api/profile 401 also redirects.
+
+import Link from "next/link";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { SignOutButton } from "@/components/sign-out-button";
+import type { ProfileResponse, WeightLogResponse } from "@/lib/zod-schemas";
+import { TargetCard } from "./target-card";
+import { WeightLogCard } from "./weight-log-card";
 
-// /dashboard — Phase 1 Walking Skeleton (WS-D.3).
-//
-// Server component. Calls the BFF /api/me with the inbound cookie so the
-// Clerk session is forwarded; reads {email} from the JSON; renders it next
-// to the avatar placeholder + a Sign Out button.
-//
-// Auth gating is double-belted:
-//   1) middleware.ts protects /dashboard via auth.protect() before this
-//      component renders.
-//   2) /api/me 401 -> redirect('/sign-in') below.
-//
-// Performance: this adds one same-process BFF -> Flask hop. The BFF route
-// has reuse value in Phase 2+ (client-side onboarding form, weight log)
-// where calling Flask directly would expose the Clerk JWT to the browser.
+export const dynamic = "force-dynamic";
+
+async function fetchSameOrigin(path: string, cookie: string, base: string) {
+  return fetch(`${base}${path}`, {
+    headers: { cookie },
+    cache: "no-store",
+  });
+}
+
 export default async function DashboardPage() {
   const h = await headers();
   const proto = h.get("x-forwarded-proto") ?? "http";
   const host = h.get("host");
+  const cookie = h.get("cookie") ?? "";
+  const base = `${proto}://${host}`;
 
-  // Build the same-origin absolute URL. Server components in Next.js 15
-  // require absolute URLs for fetch; headers() gives us the deployment host.
-  const res = await fetch(`${proto}://${host}/api/me`, {
-    headers: { cookie: h.get("cookie") ?? "" },
-    cache: "no-store",
-  });
+  const [profileRes, weightsRes] = await Promise.all([
+    fetchSameOrigin("/api/profile", cookie, base),
+    fetchSameOrigin("/api/weights?limit=30", cookie, base),
+  ]);
 
-  if (res.status === 401) {
+  if (profileRes.status === 401) {
     redirect("/sign-in");
   }
-
-  let email: string | undefined;
-  if (res.ok) {
-    const data = (await res.json()) as { email?: string };
-    email = data.email;
+  if (profileRes.status === 404) {
+    redirect("/onboarding");
+  }
+  if (!profileRes.ok) {
+    return (
+      <main className="flex min-h-screen items-center justify-center p-6">
+        <p className="text-sm text-destructive">
+          Could not load your profile ({profileRes.status}).
+        </p>
+      </main>
+    );
   }
 
+  const profile = (await profileRes.json()) as ProfileResponse;
+  const weightsBody = weightsRes.ok
+    ? ((await weightsRes.json()) as { entries: WeightLogResponse[] })
+    : { entries: [] };
+
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>FitGH Dashboard</CardTitle>
-          <CardDescription>
-            {email
-              ? `Signed in as ${email}`
-              : "Signed in — finishing account setup…"}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <Avatar>
-              {/* Static SVG placeholder for the Rive avatar — Phase 5 wires
-                  the real .riv runtime + state machine. Avoiding
-                  @rive-app/* import here keeps the bundle small. */}
-              <AvatarFallback aria-label="Avatar placeholder">FG</AvatarFallback>
-            </Avatar>
-            <p className="text-sm text-muted-foreground">
-              Phase 1 walking skeleton — every later feature (profile, kcal
-              tracking, vision, workouts) hangs off this proven auth + DB
-              round-trip.
-            </p>
-          </div>
+    <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-6 p-6">
+      <header className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">Hi, {profile.name}</h1>
+          <p className="text-sm text-muted-foreground">
+            FitGH dashboard
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/profile"
+            className="text-sm font-medium underline-offset-4 hover:underline"
+          >
+            Profile
+          </Link>
+          <Link
+            href="/settings"
+            className="text-sm font-medium underline-offset-4 hover:underline"
+          >
+            Settings
+          </Link>
           <SignOutButton />
-        </CardContent>
-      </Card>
+        </div>
+      </header>
+
+      <TargetCard profile={profile} />
+      <WeightLogCard recentWeights={weightsBody.entries} />
     </main>
   );
 }
