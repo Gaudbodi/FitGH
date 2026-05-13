@@ -104,6 +104,13 @@ export type WeightLogCreateInput = z.infer<typeof weightLogSchema>;
 
 // Full Profile response shape (what GET /api/profile returns). Useful for
 // typing server-component fetches and the dashboard cards.
+//
+// Phase 5: streak_count / streak_last_logged_at / streak_state added.
+// All three default to safe values server-side so existing Phase 2 docs
+// (which lack the keys) still parse against the zod mirror.
+export const STREAK_STATES = ["active", "paused", "broken"] as const;
+export type StreakState = (typeof STREAK_STATES)[number];
+
 export interface ProfileResponse {
   clerk_id: string;
   name: string;
@@ -118,10 +125,41 @@ export interface ProfileResponse {
   daily_kcal_target: number;
   daily_protein_g_target: number | null;
   floor_hit: boolean;
+  // Phase 5 — streak fields (DASH-06).
+  streak_count: number;
+  streak_last_logged_at: string | null;
+  streak_state: StreakState;
   privacy_consent_at: string;
   created_at: string;
   updated_at: string;
 }
+
+// Zod mirror — kept for runtime validation paths that need it (BFF response
+// guards if added later). The server response shape includes the three
+// streak fields after Phase 5 P5-A.3.
+export const streakStateSchema = z.enum(STREAK_STATES);
+
+export const profileResponseSchema = z.object({
+  clerk_id: z.string(),
+  name: z.string(),
+  sex: sexSchema,
+  height_cm: z.number(),
+  weight_kg: z.number(),
+  age: z.number(),
+  timezone: z.string(),
+  locale: localeSchema,
+  activity_level: activityLevelSchema,
+  primary_goal: primaryGoalSchema,
+  daily_kcal_target: z.number(),
+  daily_protein_g_target: z.number().nullable(),
+  floor_hit: z.boolean(),
+  streak_count: z.number().int().nonnegative().default(0),
+  streak_last_logged_at: z.string().nullable().default(null),
+  streak_state: streakStateSchema.default("active"),
+  privacy_consent_at: z.string(),
+  created_at: z.string(),
+  updated_at: z.string(),
+});
 
 export interface WeightLogResponse {
   user_id: string;

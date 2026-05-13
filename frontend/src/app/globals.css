@@ -128,3 +128,21 @@
     @apply font-sans;
   }
 }
+
+/* Phase 5 — reduced-motion + slow-connection override.
+   MotionDetector (P5-D.3) sets data-motion="disabled" on <html> when:
+     - prefers-reduced-motion: reduce matches, OR
+     - navigator.connection.saveData === true, OR
+     - navigator.connection.effectiveType in {2g, slow-2g, 3g}.
+   Every CSS animation and transition site-wide collapses to ~0ms, which
+   transparently disables KcalRing's 600ms ease, the avatar's breath/blink
+   keyframes, and any future Tailwind animate-* utility. Mirrors the W3C
+   pattern from web.dev's reduced-motion guide. */
+[data-motion="disabled"] *,
+[data-motion="disabled"] *::before,
+[data-motion="disabled"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
