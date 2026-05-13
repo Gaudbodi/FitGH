@@ -50,3 +50,14 @@ users: Collection = db["users"]
 #   db.weight_logs.createIndex({user_id: 1, logged_at: -1})
 profiles: Collection = db["profiles"]
 weight_logs: Collection = db["weight_logs"]
+
+# Phase 3 — Manual Meal Log + Ghana Table (Task P3-A.5).
+# `ghana_foods` is the read-only WAFCT-sourced catalogue; both its indexes
+# (food_id unique + (name, alt_names) text) are created by
+# scripts.seed_ghana_foods, NOT here. `meals` stores the day-1 multi-component
+# shape (ROADMAP Hard Constraint #3) — its compound index is operator-side:
+#   db.ghana_foods.createIndex({food_id: 1}, {unique: true})       # via seeder
+#   db.ghana_foods.createIndex({name: "text", alt_names: "text"})  # via seeder
+#   db.meals.createIndex({user_id: 1, logged_at: -1})              # mongosh
+ghana_foods: Collection = db["ghana_foods"]
+meals: Collection = db["meals"]

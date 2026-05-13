@@ -92,6 +92,8 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     fake_users = fake_db["users"]
     fake_profiles = fake_db["profiles"]
     fake_weight_logs = fake_db["weight_logs"]
+    fake_ghana_foods = fake_db["ghana_foods"]
+    fake_meals = fake_db["meals"]
 
     import app.db as db_mod
     import app.routes.me as me_route
@@ -101,14 +103,16 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     monkeypatch.setattr(db_mod, "users", fake_users, raising=False)
     monkeypatch.setattr(db_mod, "profiles", fake_profiles, raising=False)
     monkeypatch.setattr(db_mod, "weight_logs", fake_weight_logs, raising=False)
+    monkeypatch.setattr(db_mod, "ghana_foods", fake_ghana_foods, raising=False)
+    monkeypatch.setattr(db_mod, "meals", fake_meals, raising=False)
     # Patch the names the existing route modules already bound at import.
     monkeypatch.setattr(me_route, "users", fake_users, raising=False)
 
-    # Profile / weights routes import lazily inside create_app (Phase 1
-    # pattern of blueprints inside the factory), so they pick up the patched
-    # names when the app fixture re-imports them. But once imported we ALSO
-    # need to patch their module-bound references — do that opportunistically
-    # if the modules have been loaded.
+    # Profile / weights / foods / meals routes import lazily inside
+    # create_app (Phase 1 pattern of blueprints inside the factory), so they
+    # pick up the patched names when the app fixture re-imports them. But
+    # once imported we ALSO need to patch their module-bound references —
+    # do that opportunistically if the modules have been loaded.
     import sys
     if "app.routes.profile" in sys.modules:
         prof_mod = sys.modules["app.routes.profile"]
@@ -118,11 +122,21 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
         wt_mod = sys.modules["app.routes.weights"]
         monkeypatch.setattr(wt_mod, "weight_logs", fake_weight_logs, raising=False)
         monkeypatch.setattr(wt_mod, "profiles", fake_profiles, raising=False)
+    if "app.routes.foods" in sys.modules:
+        foods_mod = sys.modules["app.routes.foods"]
+        monkeypatch.setattr(foods_mod, "ghana_foods", fake_ghana_foods, raising=False)
+    if "app.routes.meals" in sys.modules:
+        meals_mod = sys.modules["app.routes.meals"]
+        monkeypatch.setattr(meals_mod, "meals", fake_meals, raising=False)
+        monkeypatch.setattr(meals_mod, "ghana_foods", fake_ghana_foods, raising=False)
+        monkeypatch.setattr(meals_mod, "profiles", fake_profiles, raising=False)
 
     yield SimpleNamespace(
         users=fake_users,
         profiles=fake_profiles,
         weight_logs=fake_weight_logs,
+        ghana_foods=fake_ghana_foods,
+        meals=fake_meals,
     )
 
 
