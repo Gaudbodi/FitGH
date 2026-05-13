@@ -36,6 +36,7 @@ from app.lib.meals import (
     compute_protein_for_component,
     recompute_meal_totals,
 )
+from app.lib.streak import compute_streak
 from app.middleware.auth import require_auth
 from app.models.meal import ComponentCreate, MealCreate, MealUpdate
 from app.models.vision import AiMetadata
@@ -228,6 +229,35 @@ def post_meal():
     }
     result = db_mod.meals.insert_one(doc)
     doc["_id"] = result.inserted_id
+
+    # Phase 5 — recompute the soft-streak on the profile doc (DASH-06).
+    # Streak day = server-now in the user's local TZ; explicitly NOT the
+    # meal's `logged_at` (T-05-07 — backdated meals MUST NOT rewrite
+    # streak history). Profile may be missing entirely if a forged BFF
+    # call lands before onboarding (defensive; the FE gate normally
+    # prevents this).
+    profile = db_mod.profiles.find_one({"clerk_id": clerk_id})
+    if profile is not None:
+        tz = profile.get("timezone") or "UTC"
+        new_count, new_state, new_last = compute_streak(
+            now_utc=now,
+            tz=tz,
+            last_logged_at_utc=profile.get("streak_last_logged_at"),
+            current_count=int(profile.get("streak_count", 0)),
+            current_state=profile.get("streak_state", "active"),
+        )
+        db_mod.profiles.update_one(
+            {"clerk_id": clerk_id},
+            {
+                "$set": {
+                    "streak_count": new_count,
+                    "streak_state": new_state,
+                    "streak_last_logged_at": new_last,
+                    "updated_at": now,
+                }
+            },
+        )
+
     return jsonify(_meal_to_json(doc)), 201
 
 

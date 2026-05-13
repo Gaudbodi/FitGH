@@ -21,6 +21,7 @@ from flask import Blueprint, g, jsonify, request
 from pydantic import ValidationError
 
 from app import db as db_mod
+from app.lib.streak import compute_streak
 from app.lib.tdee import daily_kcal_target, daily_protein_g_target
 from app.middleware.auth import require_auth
 from app.models.weight_log import WeightLogCreate
@@ -81,6 +82,21 @@ def post_weight():
         primary_goal=profile["primary_goal"],
     )
     new_protein = daily_protein_g_target(payload.kg, profile["primary_goal"])
+
+    # Phase 5 — soft-streak recompute (DASH-06). Plan deviation beyond
+    # CONTEXT.md: weight logs count as streak events alongside meal logs.
+    # Rationale: a user logging weight is engaging; cheapest correct
+    # behavior to keep the streak responsive on rest days. If undesired,
+    # remove this compute_streak call.
+    tz = profile.get("timezone") or "UTC"
+    new_count, new_state, new_last = compute_streak(
+        now_utc=now,
+        tz=tz,
+        last_logged_at_utc=profile.get("streak_last_logged_at"),
+        current_count=int(profile.get("streak_count", 0)),
+        current_state=profile.get("streak_state", "active"),
+    )
+
     db_mod.profiles.update_one(
         {"clerk_id": clerk_id},
         {
@@ -89,6 +105,9 @@ def post_weight():
                 "daily_kcal_target": new_targets["kcal_target"],
                 "daily_protein_g_target": new_protein,
                 "floor_hit": new_targets["floor_hit"],
+                "streak_count": new_count,
+                "streak_state": new_state,
+                "streak_last_logged_at": new_last,
                 "updated_at": now,
             }
         },
