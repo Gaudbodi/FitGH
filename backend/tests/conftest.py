@@ -89,13 +89,13 @@ def mongo_users(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
 
     import app.db as db_mod
     import app.routes.me as me_route
-    import app.routes.webhooks as webhooks_route
 
     monkeypatch.setattr(db_mod, "client", fake_client, raising=False)
     monkeypatch.setattr(db_mod, "db", fake_db, raising=False)
     monkeypatch.setattr(db_mod, "users", fake_users, raising=False)
-    # Patch the names the route modules already bound at import time.
+    # Patch the name the route module already bound at import time.
+    # (The webhook route was deleted in WS-E.1; sync-on-demand inside /me
+    # replaces the user.created upsert path.)
     monkeypatch.setattr(me_route, "users", fake_users, raising=False)
-    monkeypatch.setattr(webhooks_route, "users", fake_users, raising=False)
 
     yield fake_users

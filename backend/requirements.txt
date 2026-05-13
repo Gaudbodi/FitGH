@@ -10,10 +10,8 @@ pydantic>=2.9,<3
 # Clerk Python SDK for networkless JWT verification on Flask. The httpx.Request
 # quirk (Gotcha G5) is encoded in app/middleware/auth.py.
 clerk-backend-api>=5.0.6
-# svix for Clerk webhook signature verification on the BFF; the BACKEND only sees
-# the post-verify forward, but we depend on svix here too for any future server-only
-# webhook handlers.
-svix>=1.30
+# (svix dependency removed 2026-05-12: webhook route deleted in WS-E.1;
+# sync-on-demand inside /me replaces the user.created upsert path.)
 python-dotenv>=1.0
 sentry-sdk[flask]>=2.53
 httpx>=0.27

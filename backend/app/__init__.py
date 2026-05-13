@@ -50,12 +50,14 @@ def create_app(config: Config | None = None) -> Flask:
     # 3) Register blueprints. Imported here (not at module top) so that import-
     #    time side effects in app.db (singleton MongoClient) only fire when an
     #    app is actually being constructed — not on `import app`.
+    #
+    # Note: the Clerk svix webhook blueprint was dropped in the 2026-05-12
+    # Render-only rewrite (WS-E.1). User-creation now happens via
+    # sync-on-demand inside /me (see app/routes/me.py).
     from app.routes.health import bp as health_bp
     from app.routes.me import bp as me_bp
-    from app.routes.webhooks import bp as webhooks_bp
 
     app.register_blueprint(health_bp)
     app.register_blueprint(me_bp)
-    app.register_blueprint(webhooks_bp)
 
     return app
