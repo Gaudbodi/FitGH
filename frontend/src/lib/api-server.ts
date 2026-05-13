@@ -56,3 +56,53 @@ export async function forwardToFlask(
     },
   });
 }
+
+/**
+ * Forward a multipart/form-data POST to Flask, same JWT-attach shape
+ * as forwardToFlask but passing the FormData body through without
+ * re-serialisation. Phase 4 — Plan 04 (P4-C.1).
+ *
+ * Critical: do NOT set Content-Type — Node's fetch infers the
+ * multipart boundary from the FormData body. Setting it manually
+ * strips the boundary and Flask sees no parts.
+ */
+export async function forwardMultipart(
+  method: "POST",
+  path: string,
+  formData: FormData,
+): Promise<NextResponse> {
+  const { userId, getToken } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+  const token = await getToken();
+  if (!token) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    return NextResponse.json(
+      { error: "api_url_not_configured" },
+      { status: 503 },
+    );
+  }
+
+  const upstream = await fetch(`${apiUrl}${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      // No Content-Type — fetch sets the multipart boundary from FormData.
+    },
+    body: formData,
+    cache: "no-store",
+  });
+  const text = await upstream.text();
+  return new NextResponse(text, {
+    status: upstream.status,
+    headers: {
+      "content-type":
+        upstream.headers.get("content-type") ?? "application/json",
+    },
+  });
+}

@@ -200,14 +200,27 @@ export type GhanaFoodResponse = z.infer<typeof ghanaFoodSchema>;
 // ComponentCreate is a discriminated-ish union: either {food_id, portion_g}
 // or {name, portion_g, kcal_point}. The Pydantic side uses a model_validator
 // for exactly-one-of; Zod's z.union runs both branches.
+//
+// Phase 4 — both branches gain OPTIONAL vision-only fields (kcal_low,
+// kcal_high, confidence, source). When omitted (manual log path), the
+// shape matches Phase 3 verbatim. Backend ignores them when meal-level
+// `source != "ai_vision"`.
 export const componentCreateMatchedSchema = z.object({
   food_id: z.string().regex(/^gh-[a-z0-9-]+$/),
   portion_g: z.number().int().min(PORTION_MIN_G).max(PORTION_MAX_G),
+  kcal_low: z.number().int().min(0).max(5000).optional(),
+  kcal_high: z.number().int().min(0).max(5000).optional(),
+  confidence: z.number().min(0).max(1).optional(),
+  source: componentSourceSchema.optional(),
 });
 export const componentCreateFreeTextSchema = z.object({
   name: z.string().min(1).max(80),
   portion_g: z.number().int().min(PORTION_MIN_G).max(PORTION_MAX_G),
   kcal_point: z.number().int().min(0).max(5000),
+  kcal_low: z.number().int().min(0).max(5000).optional(),
+  kcal_high: z.number().int().min(0).max(5000).optional(),
+  confidence: z.number().min(0).max(1).optional(),
+  source: componentSourceSchema.optional(),
 });
 export const componentCreateSchema = z.union([
   componentCreateMatchedSchema,
@@ -215,9 +228,24 @@ export const componentCreateSchema = z.union([
 ]);
 export type ComponentCreateInput = z.infer<typeof componentCreateSchema>;
 
+// Phase 4 — AiMetadata sub-doc (carried on the meal-level POST body
+// when source="ai_vision"). Mirrors backend AiMetadata Pydantic with
+// extra="ignore" — unknown fields on the wire are silently dropped
+// server-side (T-04-05).
+export const aiMetadataSchema = z.object({
+  model: z.string().min(1).max(80),
+  prompt_hash: z.string().min(16).max(128),
+  image_dims: z.object({ w: z.number().int(), h: z.number().int() }),
+  latency_ms: z.number().int().min(0),
+  cost_usd: z.number().min(0),
+});
+export type AiMetadata = z.infer<typeof aiMetadataSchema>;
+
 export const mealCreateSchema = z.object({
   logged_at: z.string().datetime().optional(),
   components: z.array(componentCreateSchema).min(1).max(10),
+  source: mealSourceSchema.optional(),  // default "manual" server-side
+  ai_metadata: aiMetadataSchema.optional(),
 });
 export type MealCreateInput = z.infer<typeof mealCreateSchema>;
 
@@ -270,4 +298,57 @@ export interface DayMealsResponse {
 
 export interface MealsHistoryResponse {
   days: DayMealsResponse[];
+}
+
+// ===========================================================================
+// Phase 4 — Image → Kcal Core Loop (P4-C.1)
+// ===========================================================================
+//
+// Manual mirror of `shared/schemas/vision-response.schema.json` and the
+// extended meal.schema.json. The scan-sheet (P4-D.1) calls
+// fetch("/api/meals/scan") and zod-parses the response against
+// `visionScanResponseSchema`.
+
+// One component as it comes back from /api/meals/scan — post-table-rematch,
+// so kcal_point is the table value (matched path) or LLM midpoint (free-text).
+export const visionComponentSchema = z.object({
+  name: z.string().min(1).max(80),
+  matched_food_id: z.string().regex(/^gh-[a-z0-9-]+$/).nullable(),
+  portion_g: z.number().int().min(PORTION_MIN_G).max(PORTION_MAX_G),
+  kcal_low: z.number().int().min(0).nullable(),
+  kcal_high: z.number().int().min(0).nullable(),
+  kcal_point: z.number().int().min(0),
+  protein_g_point: z.number().int().min(0),
+  confidence: z.number().min(0).max(1).nullable(),
+  source: componentSourceSchema,
+});
+export type VisionComponent = z.infer<typeof visionComponentSchema>;
+
+export const visionScanResponseSchema = z.object({
+  components: z.array(visionComponentSchema).min(1).max(10),
+  ai_metadata: aiMetadataSchema,
+  vision_total_kcal_low: z.number().int().min(0),
+  vision_total_kcal_high: z.number().int().min(0),
+  user_daily_count: z.number().int().min(0),
+  user_daily_limit: z.number().int().min(1),
+});
+export type VisionScanResponse = z.infer<typeof visionScanResponseSchema>;
+
+// POST /api/corrections body shape.
+export const userCorrectionInputSchema = z.object({
+  original_name: z.string().min(1).max(80),
+  corrected_name: z.string().max(80).nullable(),
+  original_portion_g: z.number().int().min(0).max(2000),
+  corrected_portion_g: z.number().int().min(0).max(2000),
+  original_food_id: z.string().regex(/^gh-[a-z0-9-]+$/).nullable(),
+  corrected_food_id: z.string().regex(/^gh-[a-z0-9-]+$/).nullable(),
+});
+export type UserCorrectionInput = z.infer<typeof userCorrectionInputSchema>;
+
+// GET /api/scan-budget response — fuels the ServicePausedBanner.
+export interface ScanBudgetResponse {
+  spend_usd: number;
+  cap_usd: number;
+  paused: boolean;
+  date: string;
 }

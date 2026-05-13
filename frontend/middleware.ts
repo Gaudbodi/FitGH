@@ -26,6 +26,10 @@ const isProtectedRoute = createRouteMatcher([
   "/api/account(.*)",
   "/api/foods(.*)",
   "/api/meals(.*)",
+  // Phase 4 — /api/meals(.*) already covers /api/meals/scan; corrections
+  // + scan-budget are top-level BFF routes that need explicit gating.
+  "/api/corrections(.*)",
+  "/api/scan-budget(.*)",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
