@@ -41,6 +41,12 @@ export const localeSchema = z.enum(LOCALES);
 export const activityLevelSchema = z.enum(ACTIVITY_LEVELS);
 export const primaryGoalSchema = z.enum(PRIMARY_GOALS);
 
+// Convenience type aliases used by feature modules (avatar, dashboard-copy).
+export type Sex = (typeof SEXES)[number];
+export type Locale = (typeof LOCALES)[number];
+export type ActivityLevel = (typeof ACTIVITY_LEVELS)[number];
+export type PrimaryGoal = (typeof PRIMARY_GOALS)[number];
+
 // ProfileCreate — POST /api/profile body. Mirrors Pydantic ProfileCreate
 // with the privacy_consent gate (T-02-08); server stamps clerk_id,
 // daily_kcal_target, daily_protein_g_target, floor_hit, privacy_consent_at,
