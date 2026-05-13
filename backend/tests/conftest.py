@@ -103,6 +103,11 @@ def mongo_collections(monkeypatch: pytest.MonkeyPatch) -> Iterator[Any]:
     fake_ghana_foods = fake_db["ghana_foods"]
     fake_meals = fake_db["meals"]
     fake_vision_usage = fake_db["vision_usage"]
+    # Mirror the operator-side unique index Atlas has so the rate-limit
+    # conditional-upsert pattern fails as expected when count >= cap
+    # (without the index, mongomock would CREATE a duplicate doc on the
+    # 9th call and the cap would silently disappear).
+    fake_vision_usage.create_index([("user_id", 1), ("date", 1)], unique=True)
     fake_system_state = fake_db["system_state"]
     fake_user_corrections = fake_db["user_corrections"]
 

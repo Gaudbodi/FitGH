@@ -97,4 +97,16 @@ def create_app(config: Config | None = None) -> Flask:
     except ImportError:
         pass
 
+    # Phase 4 — /meals/scan + /scan-budget (P4-B.1) and /corrections (P4-B.3).
+    try:
+        from app.routes.scan import bp as scan_bp
+        app.register_blueprint(scan_bp)
+    except ImportError:
+        pass
+    try:
+        from app.routes.corrections import bp as corrections_bp
+        app.register_blueprint(corrections_bp)
+    except ImportError:
+        pass
+
     return app
